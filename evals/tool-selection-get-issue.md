@@ -11,12 +11,13 @@ Marker: the author's account login `pidanoyes` comes only from the API; the page
 | v2: "prefer it over the web page" | qa-agent only, web search off | when needed | get_issue |
 | v2 | all connectors (~100 tools), web on | when needed | read the web page, tried the API URL directly |
 | v2 | all connectors (~100 tools), web on | already loaded | read the web page |
+| v3: + assignees | all connectors, web on | "Loaded tools" step seen | page → API failed → loaded tools → get_issue (question: "Who is assigned...") |
 
 Findings:
 - With only qa-agent enabled, one sentence in the description changed the choice to get_issue.
-- With about 100 tools enabled, the model read the web page in both loading modes. The hypothesis "the model did not see the description" is not confirmed.
-- Open candidates: run-to-run variance, the server name qa-agent next to the work connector QA Agent, the generic tool name get_issue, a strong habit of reading GitHub pages.
-- The tool drops `assignees`, so the model could not answer "who is assigned".
+- With all connectors enabled, the model reads the web page first and uses get_issue only as a fallback, when the page lacks the answer.
+- The v3 trace shows a "Loaded tools" step, so tool descriptions were loaded on demand. The "already loaded" run may not have applied the setting; to recheck in a new chat.
+- Wording matters: "Who is assigned" matches "assignees" in the description.
 - One run per condition.
 
-Next: three runs per condition; change one thing at a time (tool name, then server name).
+Next: recheck "already loaded" in a new chat; three runs per condition; change one thing at a time (tool name, then server name).
