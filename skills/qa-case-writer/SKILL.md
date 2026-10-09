@@ -1,0 +1,57 @@
+---
+name: qa-case-writer
+description: Writes manual test cases from a requirement, user story, bug report or issue. Use when the user shares requirements or an issue and asks for test cases, test coverage, a test plan or a checklist.
+---
+
+# QA case writer
+
+A project-independent skill. Everything that differs between teams lives in `config/`:
+- `config/conventions.md` — how cases are written (format, titles, priority, folders).
+- `config/product.md` — product areas, roles and glossary.
+
+Read both files before writing anything. If `config/product.md` is still the empty template, work without it and say so in the output.
+
+## Workflow
+
+### 1. Understand
+Restate the requirement in 2-4 sentences: who does what, and what the product should do in response. List every testable behavior as a short bullet.
+
+### 2. Ask before writing
+List open questions: missing values and limits, undefined error behavior, unclear roles or permissions, contradictions, unclear scope (platforms, browsers, locales).
+- Number the questions and offer a suggested answer for each.
+- Do not invent behavior the requirement doesn't describe.
+- If the user asks to proceed anyway, continue with the suggested answers and mark them as assumptions.
+
+**Stop here and wait for answers** unless the user said to proceed without questions.
+
+### 3. Design coverage
+For each behavior, choose the techniques that apply:
+- equivalence classes and boundary values for inputs and limits;
+- negative cases: invalid input, missing data, errors from the server;
+- roles and permissions: who may and who may not;
+- states and transitions: empty, loading, filled, error;
+- interaction with existing features the change touches (regression risk).
+
+One behavior per case. Prefer fewer strong cases over many weak ones.
+
+### 4. Write cases
+Follow `config/conventions.md` exactly. If the conventions say nothing about a field, use the defaults below.
+
+Default case format:
+```
+ID: TC-<n>
+Title: <subject under test, short, no "Verify/Check">
+Area: <product area from config/product.md, or a proposal marked (confirm)>
+Priority: High | Medium | Low
+Preconditions: <state, data, role>
+Steps:
+1. ...
+2. ...
+Expected result: <observable outcome>
+Type: functional | negative | boundary | permissions | regression
+```
+
+### 5. Summarize coverage
+- Behaviors covered, with case IDs.
+- Behaviors not covered and why (out of scope, needs back-end check, blocked by an open question).
+- Assumptions made.
