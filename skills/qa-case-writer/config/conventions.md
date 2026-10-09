@@ -24,6 +24,7 @@ Edit this file for each team. The skill follows it over its own defaults.
 - High: core flow, data loss, security, money.
 - Medium: secondary flows, common errors.
 - Low: cosmetic, rare edge cases.
+- High stays a minority: roughly a quarter of the cases or fewer. If more, re-check each High against the definition above.
 
 ## Organization
 - Cases are grouped by product area, not by ticket.

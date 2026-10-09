@@ -7,9 +7,9 @@ description: Writes manual test cases from a requirement, user story, bug report
 
 A project-independent skill. Everything that differs between teams lives in `config/`:
 - `config/conventions.md` — how cases are written (format, titles, priority, folders).
-- `config/product.md` — product areas, roles and glossary.
+- `config/product.md` — product areas, roles, UI names and glossary.
 
-Read both files before writing anything. If `config/product.md` is still the empty template, work without it and say so in the output.
+Read both files before writing anything. If `config/product.md` is still the empty template, work without it and tell the user that the product profile is not set up yet. Talk about the product and the requirement, not about this skill or its file names.
 
 ## Workflow
 
@@ -30,12 +30,20 @@ For each behavior, choose the techniques that apply:
 - negative cases: invalid input, missing data, errors from the server;
 - roles and permissions: who may and who may not;
 - states and transitions: empty, loading, filled, error;
+- text and locales, when the feature shows or edits text: different scripts, right-to-left text, emoji, long words, mixed scripts;
 - interaction with existing features the change touches (regression risk).
 
-One behavior per case. Prefer fewer strong cases over many weak ones.
+Keep the suite small and strong:
+- **Merge** cases that differ only in input data into one case with a data table.
+- **Split** cases only when the expected result differs.
+- **Never loop inside a case** ("repeat for every font"). When coverage needs many values, pick representative ones (extremes, defaults, the riskiest) and state in one line why they were chosen.
+- Never combine every value of several parameters. Cover each parameter on its own, then add a few pairs where an interaction is likely.
+- A single small feature usually needs 15-30 cases. If you have more, look for merges before writing.
 
 ### 4. Write cases
 Follow `config/conventions.md` exactly. If the conventions say nothing about a field, use the defaults below.
+
+Product facts — UI labels, menu items, shortcuts, setting names — come from `config/product.md` or from the requirement. Any such fact taken from general knowledge instead is marked **(verify)** at its first use, so the tester checks it before running the case.
 
 Default case format:
 ```
@@ -51,7 +59,18 @@ Expected result: <observable outcome>
 Type: functional | negative | boundary | permissions | regression
 ```
 
-### 5. Summarize coverage
+### 5. Self-review
+Before showing the cases, check every one against this list and fix what fails. Do not show the list or the fixes, only the corrected cases.
+- Each step holds one action, as `config/conventions.md` requires.
+- Each expected result is observable and is not empty.
+- Priorities follow the definitions in `config/conventions.md`, and High stays a minority.
+- No two cases differ only in data; merge them.
+- No case loops over values.
+- Every product fact not backed by `config/product.md` or the requirement is marked (verify).
+- Every assumption used is listed.
+
+### 6. Summarize coverage
 - Behaviors covered, with case IDs.
 - Behaviors not covered and why (out of scope, needs back-end check, blocked by an open question).
 - Assumptions made.
+- Why representative values were chosen, where values were sampled.
