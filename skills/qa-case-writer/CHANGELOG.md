@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3 — 2026-10-09
+Based on run 2 (v0.2): 25 cases, all five run-1 defects fixed, one regression.
+
+- Step 1 now lists the existing features the change touches. Run 2 dropped groups, library items, duplication and other style changes without saying so.
+- Self-review checks that every touched feature is covered or listed under "Not covered".
+- Split rule: an expected result that needs "or" or "if" across data rows means the case must be split. Run 2 merged text in shapes with arrow labels (TC-4).
+
 ## 0.2 — 2026-10-09
 Based on run 1: Excalidraw issue #11404 (italic text), 41 cases.
 

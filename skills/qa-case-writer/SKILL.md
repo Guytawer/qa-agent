@@ -16,6 +16,8 @@ Read both files before writing anything. If `config/product.md` is still the emp
 ### 1. Understand
 Restate the requirement in 2-4 sentences: who does what, and what the product should do in response. List every testable behavior as a short bullet.
 
+Then list the existing features the change touches: everything that creates, copies, groups, stores, exports, shares or restyles the affected element. Each of them is a regression risk.
+
 ### 2. Ask before writing
 List open questions: missing values and limits, undefined error behavior, unclear roles or permissions, contradictions, unclear scope (platforms, browsers, locales).
 - Number the questions and offer a suggested answer for each.
@@ -35,7 +37,7 @@ For each behavior, choose the techniques that apply:
 
 Keep the suite small and strong:
 - **Merge** cases that differ only in input data into one case with a data table.
-- **Split** cases only when the expected result differs.
+- **Split** cases only when the expected result differs. If the expected result needs "or" or "if" to fit every data row, the rows expect different things: split the case.
 - **Never loop inside a case** ("repeat for every font"). When coverage needs many values, pick representative ones (extremes, defaults, the riskiest) and state in one line why they were chosen.
 - Never combine every value of several parameters. Cover each parameter on its own, then add a few pairs where an interaction is likely.
 - A single small feature usually needs 15-30 cases. If you have more, look for merges before writing.
@@ -65,6 +67,8 @@ Before showing the cases, check every one against this list and fix what fails. 
 - Each expected result is observable and is not empty.
 - Priorities follow the definitions in `config/conventions.md`, and High stays a minority.
 - No two cases differ only in data; merge them.
+- No expected result uses "or" or "if" to cover different data rows; split those cases.
+- Every touched existing feature from step 1 is covered by a case or listed under "Not covered" with a reason. Making the suite smaller never drops one silently.
 - No case loops over values.
 - Every product fact not backed by `config/product.md` or the requirement is marked (verify).
 - Every assumption used is listed.
