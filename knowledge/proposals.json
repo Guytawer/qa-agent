@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "area": "text-properties",
+    "fact": "Two font size presets are added after \"Very large\": \"Huge\" = 56 and \"Giant\" = 96; the existing four presets keep their labels and sizes, and there is no typed font size field.",
+    "source": "Answer on issue 10506, 2026-10-10, approved by maxxx",
+    "issue": 10506,
+    "id": 1,
+    "proposed_at": "2026-10-10T12:19:28.442Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "When the selected text is at a size between presets, or several selected texts have different sizes, no font size preset is highlighted until one is clicked, and clicking a preset sets that exact size on all of them.",
+    "source": "Answer on issue 10506, 2026-10-10, approved by maxxx",
+    "issue": 10506,
+    "id": 2,
+    "proposed_at": "2026-10-10T12:19:47.911Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "The increase and decrease font size shortcuts do not change with the \"Huge\" and \"Giant\" presets and have no upper limit at \"Giant\".",
+    "source": "Answer on issue 10506, 2026-10-10, approved by maxxx",
+    "issue": 10506,
+    "id": 3,
+    "proposed_at": "2026-10-10T12:19:55.192Z"
+  }
+]
