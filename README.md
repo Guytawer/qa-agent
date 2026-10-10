@@ -37,6 +37,7 @@ Tools for the gated workflow:
 | `submit_plan` | only after the answers are approved; a changed plan loses its approval |
 | `save_changes` | only after the current plan is approved and every planned case is in the content |
 | `get_session` | always; shows stage, approvals and history |
+| `read_change_set` | always; reads the saved change set for an issue (read-only) |
 
 Tools for memory:
 

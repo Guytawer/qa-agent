@@ -41,6 +41,16 @@ await expect("save_changes", { issue: 1, content: "C-011 TC-1 TC-2" }, false, "a
 approve("y");
 await expect("save_changes", { issue: 1, content: "C-011 TC-1 TC-2" }, true, "saving works once the current plan is approved");
 
+// The saved change set can be read back; an issue without one says so.
+const saved = await client.callTool({ name: "read_change_set", arguments: { issue: 1 } });
+assert.match(saved.content[0].text, /Plan approved by .*C-011 TC-1 TC-2/s, "read_change_set returns the saved content");
+console.log("  ok  saved change set can be read back");
+passed++;
+const none = await client.callTool({ name: "read_change_set", arguments: { issue: 99 } });
+assert.match(none.content[0].text, /No saved change set/, "read_change_set reports a missing change set");
+console.log("  ok  missing change set is reported");
+passed++;
+
 // Cases the plan names as unchanged are not required in the content.
 await expect("open_session", { issue: 2, questions: "1. Scope?" }, true, "second session opens");
 await expect("record_answers", { issue: 2, answers: "1. Toggle only" }, true, "second answers recorded");

@@ -353,6 +353,24 @@ server.registerTool(
   }
 );
 
+server.registerTool(
+  "read_change_set",
+  {
+    description:
+      "Reads the saved change set for an issue: the pending test cases and the approval line. " +
+      "Use it when the user asks to see, review or change cases that were already saved for an issue. Read-only.",
+    inputSchema: { issue: z.number().int().positive().describe("Issue number") },
+  },
+  async ({ issue }) => {
+    const target = path.join(CHANGES_DIR, `excalidraw-${issue}.md`);
+    try {
+      return text(await readFile(target, "utf8"));
+    } catch {
+      return text(`No saved change set for issue ${issue}.`);
+    }
+  }
+);
+
 // ---------------------------------------------------------------------------
 // Knowledge base: the agent reads reviewed facts and proposes new ones; a person accepts them.
 

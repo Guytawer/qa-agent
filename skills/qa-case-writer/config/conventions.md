@@ -2,6 +2,31 @@
 
 Edit this file for each team. The skill follows it over its own defaults.
 
+## Case template
+Every case uses exactly these lines, in this order. No other header lines (no separate "ID" or "Issue" line).
+
+```
+## <ID> <Title>
+Action: update C-xxx | create | retire C-xxx
+Area: <product area>
+Priority: High | Medium | Low · Type: functional | negative | boundary | permissions | regression
+Tags: #<issue number>
+
+Preconditions: <state>
+
+<data table, only if the case has one, followed by one line on why these values were chosen>
+
+Steps:
+1. <one action>
+
+Expected result:
+- <observable fact>
+```
+
+- `Action`, `Area` and `Tags` are for change sets. Cases in `cases/` keep only the heading, `Priority · Type`, preconditions, steps and expected result.
+- Group cases under a `# <Area>` heading per product area.
+- ID: the existing id for an update or retire, `TC-<n>` for a new case.
+
 ## Titles
 - Short noun phrase naming the subject: `Login form: password field`, `Export to PNG`.
 - No "Verify", "Check", "Test" prefixes. No expected result in the title.
