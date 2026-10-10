@@ -41,7 +41,7 @@ Preconditions: The canvas contains one italic text element "Size test" at font s
 
 Steps:
 1. Click "Size test".
-2. Under "Font size", click "Extra large".
+2. Under "Font size", click "Very large".
 3. Under "Font size", click "Small".
 
 Expected result:
@@ -434,7 +434,7 @@ Area: Files, sharing and export
 Priority: Medium · Type: functional
 Tags: #11404
 
-Preconditions: The canvas contains upright and italic texts in the hand-drawn and the normal font, at different sizes and colors, including the italic text "Final step" at font size Extra large.
+Preconditions: The canvas contains upright and italic texts in the hand-drawn and the normal font, at different sizes and colors, including the italic text "Final step" at font size Very large.
 
 | Way to export | How to open the result |
 |---|---|

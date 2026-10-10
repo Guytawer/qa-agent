@@ -23,7 +23,7 @@ Preconditions: The canvas contains one text element "Size test" at font size Med
 
 Steps:
 1. Click "Size test".
-2. Under "Font size", click "Extra large".
+2. Under "Font size", click "Very large".
 3. Under "Font size", click "Small".
 
 Expected result:
