@@ -75,3 +75,38 @@ Side effect: the three PO decisions from run 6 were in pending knowledge, so the
 - conventions.md: add a case template (fields, order, tag format) so the output is the same between runs.
 - MCP tool to read a saved change set (the skill could not show the run 6 cases when asked).
 - Knowledge: state rounding of the size shortcuts.
+
+## Run 8 (v0.7, same issue, knowledge base after run 7)
+
+Variable: skill v0.7 (case template, self-contained answers, merge rule on the plan, ordered TC numbers, read_change_set). The knowledge base also gained the run 7 facts (the "F" field is editable, five pending decisions), so a few differences may come from it. The session from run 7 was kept on purpose to test the new step 0.
+
+PO answers were given deliberately short: "Your suggestion" in five items, "Yes" in two, and two items with a suggestion plus an addition.
+
+| Check | Run 7 (v0.6) | Run 8 (v0.7) |
+|---|---|---|
+| Saved workflow found | refused, could not show the cases | read them with read_change_set, summarised all 17, asked "revise or start over" |
+| Old set checked against the new template | – | yes, unasked: found the three header deviations |
+| "Your suggestion" in recorded answers | rejected once in run 6 | expanded in full on the first try, each part marked (user) or (accepted suggestion) |
+| Case headers | improvised (ID line, split Priority/Type, `issue-10506`) | template line for line in all 20 cases |
+| TC numbers in file order | no | yes, grouped by area |
+| Status repeated in content | yes | no, one scope line |
+| Plan overlaps | none (after run 6 rule found by reviewer) | none; TC-2/TC-3 split with a stated reason |
+| Existing case updated instead of a new one | arrow label as new TC-4 | C-010 updated |
+| Boundary values | 70, 56, 96, 120 | adds 55 and 97, one off each new preset |
+| Shortcut values | "about", no reason | "about", with the reason: the rounding rule is unknown |
+| Plan rejected for | wrong conclusion about the "F" field | C-018 dropped its existing color check (ambiguous PO answer) |
+| Cases | 17, High 4 | 20, High 4 |
+
+### Findings
+- Every v0.7 change showed up in the output, and the human review still caught one real problem.
+- The ambiguous PO answer ("no separate color check") made the plan remove a current-behavior check from C-018. The skill said so openly ("replaces the old color check") but did not warn that existing coverage would be lost. Approved answers cannot change after a plan is submitted, so the record still says "no separate color check" while C-018 keeps it; the reason for the rejection lives only in the chat.
+- Recorded answers were compressed when expanded (a list of ways to reach a size became "however it got there"). Meaning was kept; an approver still has to read.
+- The summary miscounted (13 updates listed as 12 ids, 7 new as 8). Totals were right. Numbers in a report should come from code, not from the model.
+- TC-2/TC-3 were split because the expected highlight differs, while C-018 uses an expected-value column in its table. The split rule should say that a column with the expected value per row is fine.
+
+### Backlog
+- Skill: when an update removes a check of current behavior from an existing case, say so as a separate warning to the PO.
+- Skill: an expected-value column in a data table does not require a split.
+- Server: `npm run approve` asks for a reason on "n" and stores it in the session history.
+- Server: save_changes returns counts (updates, new, retired) computed from the plan.
+- Knowledge (proposed): rounding of the size shortcuts; the "Sticky note" tool label.
