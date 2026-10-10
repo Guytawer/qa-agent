@@ -38,6 +38,7 @@ Note: one run per version. Differences may partly be run-to-run variance.
 - Color and opacity changes not covered and not listed. Seen in runs 2 and 3.
 - search_cases: ignore words that appear in most cases ("text"), so noisy queries rank well.
 - C-006-style growth: a case that checks a behavior in two directions should use a data table.
+- Approve command: add a way to revoke an approval (`npm run revoke -- <issue>`). In run 5 a plan was approved by mistake; the only way back was to change the plan.
 
 ## Run 4 (v0.4, with the search_cases tool and 18 seed cases)
 
@@ -55,3 +56,19 @@ Note: one run per version. Differences may partly be run-to-run variance.
 | New finding | C-006 grew to 16 steps and checks two directions; could be a data table |
 
 Output saved as a pending change set: `changes/excalidraw-11404.md`, not applied to `cases/` because the feature is not released.
+
+## Run 5 (v0.5, gated workflow)
+
+Input: "Write test cases for Excalidraw issue #11404." The skill read the issue with `get_issue`.
+
+| Check | Result |
+|---|---|
+| Questions recorded with open_session, then a stop | yes |
+| Answers counted only after `npm run approve` | yes |
+| Plan reviewed by the approver | sent back once: C-004 (color) was missing, as in runs 2 to 4 |
+| Approval after a changed plan | the earlier approval no longer counted; a new one was needed |
+| save_changes blocked | once, falsely: a "Not changed" line listed case ids that the check required. The model did not work around it and offered two clean options. Fixed in the server, with a regression test |
+| Result | 12 updated (incl. C-004), 11 new, 6 unchanged with reasons, 0 retired; 6 of 23 High |
+
+Saved as `changes/excalidraw-11404.md`, replacing the run 4 version; the git history keeps both.
+
