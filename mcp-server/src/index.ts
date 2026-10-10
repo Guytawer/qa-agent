@@ -1,8 +1,16 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
+import { readdir, readFile } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const REPO = "excalidraw/excalidraw";
+
+// Folder with the test cases. Default: the cases/ folder of this repository.
+// Set QA_CASES_DIR to point the server at another team's cases without changing the code.
+const CASES_DIR =
+  process.env.QA_CASES_DIR ?? path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../cases");
 
 const server = new McpServer({ name: "qa-agent", version: "0.1.0" });
 
@@ -117,6 +125,76 @@ server.registerTool(
       ),
     };
 
+    return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
+  }
+);
+
+type TestCase = { id: string; title: string; area: string; file: string; text: string };
+
+async function loadCases(): Promise<TestCase[]> {
+  const cases: TestCase[] = [];
+  const files = (await readdir(CASES_DIR)).filter((f) => f.endsWith(".md") && f !== "README.md");
+  for (const file of files) {
+    const content = await readFile(path.join(CASES_DIR, file), "utf8");
+    const area = content.match(/^# (.+)$/m)?.[1]?.trim() ?? file;
+    // Each case starts with a "## C-<number> <title>" heading and runs until the next one.
+    for (const chunk of content.split(/^(?=## )/m).slice(1)) {
+      const heading = chunk.split("\n")[0].replace(/^## /, "").trim();
+      const [id, ...titleWords] = heading.split(" ");
+      cases.push({ id, title: titleWords.join(" "), area, file, text: chunk.trim() });
+    }
+  }
+  return cases;
+}
+
+server.registerTool(
+  "search_cases",
+  {
+    description:
+      "Searches the team's existing manual test cases, which describe how the product behaves today. " +
+      "Use it before writing test cases for a requirement or issue: find the cases that already cover the affected behavior, " +
+      "then update those cases instead of writing duplicates, and create new cases only for behavior no case describes. " +
+      "Returns the number of matching cases, the 3 best matches with their full text, and up to 10 more matches as id, title and area. " +
+      "Search with a few words about the feature or UI element, for example \"copy paste styles\" or \"font size\"; run several searches for several behaviors.",
+    inputSchema: {
+      query: z.string().min(2).describe("A few words about the behavior or UI element, for example \"font family\""),
+    },
+  },
+  async ({ query }) => {
+    let cases: TestCase[];
+    try {
+      cases = await loadCases();
+    } catch {
+      return {
+        isError: true,
+        content: [{ type: "text", text: `Cannot read the test cases folder: ${CASES_DIR}` }],
+      };
+    }
+
+    const words = query.toLowerCase().split(/\W+/).filter((w) => w.length >= 2);
+    const scored = cases
+      .map((c) => {
+        const title = c.title.toLowerCase();
+        const text = c.text.toLowerCase();
+        // A word in the title counts more than a word elsewhere in the case.
+        const score = words.reduce((sum, w) => sum + (title.includes(w) ? 3 : 0) + (text.includes(w) ? 1 : 0), 0);
+        return { c, score };
+      })
+      .filter((x) => x.score > 0)
+      .sort((a, b) => b.score - a.score);
+
+    if (scored.length === 0) {
+      return {
+        content: [{ type: "text", text: `No test cases match "${query}". Searched ${cases.length} cases. Try other words.` }],
+      };
+    }
+
+    const result = {
+      query,
+      matches: scored.length,
+      best: scored.slice(0, 3).map((x) => ({ id: x.c.id, area: x.c.area, file: x.c.file, text: x.c.text })),
+      more: scored.slice(3, 13).map((x) => ({ id: x.c.id, title: x.c.title, area: x.c.area })),
+    };
     return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
   }
 );

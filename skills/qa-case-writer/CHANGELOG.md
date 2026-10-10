@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4 — 2026-10-10
+- New step 1b: when a search tool for existing cases is available (the qa-agent MCP server's `search_cases`), search per behavior and decide create, update or retire. Without the tool, say that existing cases were not checked.
+- Case format gets an Action line; self-review checks that changed existing cases are updated, not duplicated.
+
 ## 0.3 — 2026-10-09
 Based on run 2 (v0.2): 25 cases, all five run-1 defects fixed, one regression.
 

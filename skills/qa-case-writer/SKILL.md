@@ -18,6 +18,13 @@ Restate the requirement in 2-4 sentences: who does what, and what the product sh
 
 Then list the existing features the change touches: everything that creates, copies, groups, stores, exports, shares or restyles the affected element. Each of them is a regression risk.
 
+### 1b. Check existing cases
+If a tool that searches the team's existing test cases is available (for example `search_cases`), search before designing anything: one search per behavior and per touched feature from step 1, with a few words each.
+- A behavior that an existing case already describes, and that the requirement changes: **update** that case (give its id) instead of writing a new one. One behavior, one case.
+- A behavior the requirement removes: **retire** the case that describes it.
+- A behavior no case describes: **create** a new case.
+If no such tool is available, say in the output that existing cases were not checked, and mark every case "create (check for an existing case)".
+
 ### 2. Ask before writing
 List open questions: missing values and limits, undefined error behavior, unclear roles or permissions, contradictions, unclear scope (platforms, browsers, locales).
 - Number the questions and offer a suggested answer for each.
@@ -49,7 +56,8 @@ Product facts — UI labels, menu items, shortcuts, setting names — come from 
 
 Default case format:
 ```
-ID: TC-<n>
+Action: create | update <existing id> | retire <existing id>
+ID: TC-<n> for a new case, or the existing id for an update
 Title: <subject under test, short, no "Verify/Check">
 Area: <product area from config/product.md, or a proposal marked (confirm)>
 Priority: High | Medium | Low
@@ -70,10 +78,12 @@ Before showing the cases, check every one against this list and fix what fails. 
 - No expected result uses "or" or "if" to cover different data rows; split those cases.
 - Every touched existing feature from step 1 is covered by a case or listed under "Not covered" with a reason. Making the suite smaller never drops one silently.
 - No case loops over values.
+- Every existing case found in step 1b that the requirement changes has an update; none is duplicated by a new case.
 - Every product fact not backed by `config/product.md` or the requirement is marked (verify).
 - Every assumption used is listed.
 
 ### 6. Summarize coverage
+- Existing cases updated or retired, with their ids, and new cases created.
 - Behaviors covered, with case IDs.
 - Behaviors not covered and why (out of scope, needs back-end check, blocked by an open question).
 - Assumptions made.

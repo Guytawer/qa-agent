@@ -19,6 +19,26 @@ How it works:
 
 Install: zip the `skills/qa-case-writer` folder and upload it in Claude under Customize → Skills. Fill in `config/product.md` for your product and adjust `config/conventions.md` to your team's rules.
 
+### `mcp-server`
+A local MCP server in TypeScript that gives Claude three tools:
+
+| Tool | What it does |
+|---|---|
+| `get_issue` | Reads one Excalidraw issue from the GitHub API: title, body, labels, state, author, assignees, comments |
+| `list_issues` | Lists issues with filters (state, labels, title words) and returns `total_count` for statistics |
+| `search_cases` | Searches the existing test cases in `cases/` so the skill updates them instead of writing duplicates |
+
+Build with `npm install` and `npm run build` in `mcp-server`, then add it to Claude Desktop's `claude_desktop_config.json`:
+```json
+"mcpServers": {
+  "qa-agent": { "command": "node", "args": ["<path>/mcp-server/dist/index.js"] }
+}
+```
+Set `QA_CASES_DIR` in the server's `env` to search another team's case folder.
+
+### `cases`
+Manual test cases for the current behavior of Excalidraw, one markdown file per product area.
+
 ## How quality is measured
 
 Every change to the skill is tested on the same input with the same product-owner decisions, then compared with the previous run. See [`evals/`](evals/).
@@ -37,9 +57,9 @@ One run per version, so some differences may be run-to-run variance. The changel
 
 ## Roadmap
 
-- [x] Skill: test case writer, three eval-driven iterations
+- [x] Skill: test case writer, eval-driven iterations; uses the MCP server to update existing cases
 - [ ] Skill: ticket completeness review
-- [ ] MCP server (TypeScript): read issues, search existing cases
+- [x] MCP server (TypeScript): read issues, list issues with counts, search existing cases
 - [ ] Stateful workflow: analysis → questions → approval → case plan → approval, with gates enforced in code
 - [ ] Knowledge base with reviewed updates
 - [ ] Security: prompt-injection handling, least privilege, audit log
