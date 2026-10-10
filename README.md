@@ -38,7 +38,14 @@ Tools for the gated workflow:
 | `save_changes` | only after the current plan is approved and every planned case is in the content |
 | `get_session` | always; shows stage, approvals and history |
 
-Approvals never come from the model. A person runs `npm run approve -- <issue>` in a terminal, sees the answers or the plan, and confirms. The approval stores who, when and a fingerprint of the approved text, so any later change to the text withdraws it. State lives in `state/` (not committed). `npm test` checks that every gate holds.
+Tools for memory:
+
+| Tool | What it does |
+|---|---|
+| `read_knowledge` | Reads reviewed facts about the product by area, plus pending knowledge for unreleased features |
+| `propose_knowledge` | Proposes one fact with its source; it stays inactive until a person accepts it with `npm run review-knowledge` |
+
+Approvals never come from the model. A person runs `npm run approve -- <issue>` in a terminal, sees the answers or the plan, and confirms. The approval stores who, when and a fingerprint of the approved text, so any later change to the text withdraws it. State lives in `state/` (not committed). `npm test` checks that every gate holds and that proposed facts stay inactive until reviewed.
 
 Build with `npm install` and `npm run build` in `mcp-server`, then add it to Claude Desktop's `claude_desktop_config.json`:
 ```json
@@ -47,6 +54,9 @@ Build with `npm install` and `npm run build` in `mcp-server`, then add it to Cla
 }
 ```
 Set `QA_CASES_DIR` in the server's `env` to search another team's case folder.
+
+### `knowledge`
+Reviewed facts about Excalidraw, one file per area, each with its source and reviewer. Facts about unreleased features wait in `knowledge/pending/`.
 
 ### `cases` and `changes`
 `cases/` holds manual test cases for the current behavior of Excalidraw, one markdown file per product area. Cases for a feature that is not released yet wait in `changes/`, one file per ticket, and are applied to `cases/` when the feature ships. This keeps the case set a true picture of the product today.
@@ -73,7 +83,7 @@ One run per version, so some differences may be run-to-run variance. The changel
 - [ ] Skill: ticket completeness review
 - [x] MCP server (TypeScript): read issues, list issues with counts, search existing cases
 - [x] Stateful workflow: questions → approved answers → approved plan → saved cases, with gates enforced in code and approvals only from a person
-- [ ] Knowledge base with reviewed updates
+- [x] Knowledge base: the agent proposes facts, a person accepts them; facts about unreleased features stay pending
 - [ ] Security: prompt-injection handling, least privilege, audit log
 - [ ] Eval suite with several reference issues and repeated runs
 - [ ] Autonomous mode via the Claude Agent SDK

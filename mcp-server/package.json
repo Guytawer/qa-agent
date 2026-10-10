@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node test/gates.mjs",
+    "test": "node test/gates.mjs && node test/knowledge.mjs",
     "build": "tsc",
-    "approve": "node dist/approve.js"
+    "approve": "node dist/approve.js",
+    "review-knowledge": "node dist/review-knowledge.js"
   },
   "keywords": [],
   "author": "",

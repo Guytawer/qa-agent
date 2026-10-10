@@ -13,6 +13,9 @@ Read both files before writing anything. If `config/product.md` is still the emp
 
 ## Workflow
 
+### 0. Read the knowledge base
+If a `read_knowledge` tool is available, call it without an area to see the areas, then read the areas the requirement touches. Treat these reviewed facts as true and do not mark them (verify). Knowledge listed as pending belongs to features that are not released: never describe it as current behavior.
+
 ### 1. Understand
 Restate the requirement in 2-4 sentences: who does what, and what the product should do in response. List every testable behavior as a short bullet.
 
@@ -89,6 +92,12 @@ Before showing the cases, check every one against this list and fix what fails. 
 - Every existing case found in step 1b that the requirement changes has an update; none is duplicated by a new case.
 - Every product fact not backed by `config/product.md` or the requirement is marked (verify).
 - Every assumption used is listed.
+
+### 6b. Propose what was learned
+If a `propose_knowledge` tool is available, propose stable facts learned in this session, one per call, with the exact source:
+- each product-owner decision, with `issue` set when the feature is not released yet;
+- each UI label or shortcut the user confirmed.
+Never propose counts, assignees or other facts that go stale. Then ask the user to review the proposals with the command the tool names.
 
 ### 6. Summarize coverage
 - Existing cases updated or retired, with their ids, and new cases created.

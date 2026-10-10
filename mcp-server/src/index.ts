@@ -4,6 +4,7 @@ import { z } from "zod";
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { addProposal, listAreas, readArea, readPending } from "./knowledge.js";
 import { CHANGES_DIR, fingerprint, loadSession, saveSession, validApproval, type Session } from "./sessions.js";
 
 const REPO = "excalidraw/excalidraw";
@@ -349,6 +350,58 @@ server.registerTool(
   async ({ issue }) => {
     const s = await loadSession(issue);
     return s ? text(describe(s)) : text(`No session for issue ${issue}.`);
+  }
+);
+
+// ---------------------------------------------------------------------------
+// Knowledge base: the agent reads reviewed facts and proposes new ones; a person accepts them.
+
+server.registerTool(
+  "read_knowledge",
+  {
+    description:
+      "Reads the team's reviewed facts about the product: UI labels, shortcuts, rules of behavior and known quirks, each with its source. " +
+      "Use it before analysing a requirement, and prefer these facts over general knowledge; a fact found here needs no (verify) mark. " +
+      "Without an area, lists the areas and any pending knowledge. Pending knowledge belongs to features that are not released: never treat it as current behavior.",
+    inputSchema: {
+      area: z
+        .string()
+        .regex(/^[a-z0-9-]+$/)
+        .optional()
+        .describe('Area name as listed, for example "text-properties". Leave out to list the areas.'),
+    },
+  },
+  async ({ area }) => {
+    if (!area) {
+      const areas = await listAreas();
+      const pending = await readPending();
+      return text(
+        JSON.stringify({ areas, pending_knowledge: pending.length > 0 ? pending : "none" }, null, 2) +
+          (areas.length === 0 ? "\nThe knowledge base is empty." : "")
+      );
+    }
+    const content = await readArea(area);
+    return content ? text(content) : text(`No knowledge for area "${area}". Call read_knowledge without an area to list the areas.`);
+  }
+);
+
+server.registerTool(
+  "propose_knowledge",
+  {
+    description:
+      "Proposes one fact for the knowledge base. It is not used until a person accepts it with npm run review-knowledge. " +
+      "Propose stable facts only: UI labels, shortcuts, rules of behavior, team decisions. Never propose facts that go stale, such as counts, assignees or dates of activity. " +
+      "Give the exact source: a product owner's answer, an issue, or a check in the product. For a decision about a feature that is not released, set issue.",
+    inputSchema: {
+      area: z.string().regex(/^[a-z0-9-]+$/).describe('Area, matching the case files where possible, for example "text-properties"'),
+      fact: z.string().min(5).describe("One fact in one sentence"),
+      source: z.string().min(3).describe('Where it comes from, for example "PO answer on issue 11404" or "checked on excalidraw.com"'),
+      issue: z.number().int().positive().optional().describe("Issue number, only for facts about a feature that is not released yet"),
+    },
+  },
+  async ({ area, fact, source, issue }) => {
+    const p = await addProposal({ area, fact, source, ...(issue ? { issue } : {}) });
+    return text(`Proposed fact #${p.id} for "${area}". It is not active yet. Ask the user to run this in a terminal, in the mcp-server folder: npm run review-knowledge`);
   }
 );
 

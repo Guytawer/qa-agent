@@ -1,0 +1,117 @@
+[
+  {
+    "id": 1,
+    "area": "text-properties",
+    "fact": "The \"Font family\" picker shows three families: hand-drawn (Excalifont), Normal (Nunito) and Code (Comic Shanns).",
+    "source": "general knowledge of Excalidraw, not checked in the product",
+    "proposed_at": "2026-10-10T11:30:00.000Z"
+  },
+  {
+    "id": 2,
+    "area": "text-properties",
+    "fact": "Font size presets are Small, Medium, Large and Extra large.",
+    "source": "general knowledge of Excalidraw, not checked in the product",
+    "proposed_at": "2026-10-10T11:30:00.000Z"
+  },
+  {
+    "id": 3,
+    "area": "text-properties",
+    "fact": "Text align offers left, center and right.",
+    "source": "general knowledge of Excalidraw, not checked in the product",
+    "proposed_at": "2026-10-10T11:30:00.000Z"
+  },
+  {
+    "id": 4,
+    "area": "text-properties",
+    "fact": "New text uses the last chosen text style, such as font family and size.",
+    "source": "case C-006, general knowledge of Excalidraw, not checked in the product",
+    "proposed_at": "2026-10-10T11:30:00.000Z"
+  },
+  {
+    "id": 5,
+    "area": "text-properties",
+    "fact": "A style change applies to every selected text element at once.",
+    "source": "case C-005, general knowledge of Excalidraw, not checked in the product",
+    "proposed_at": "2026-10-10T11:30:00.000Z"
+  },
+  {
+    "id": 6,
+    "area": "styles-and-history",
+    "fact": "Copy styles is Ctrl+Alt+C (Cmd+Option+C on macOS) and paste styles is Ctrl+Alt+V (Cmd+Option+V).",
+    "source": "general knowledge of Excalidraw, not checked in the product",
+    "proposed_at": "2026-10-10T11:30:00.000Z"
+  },
+  {
+    "id": 7,
+    "area": "styles-and-history",
+    "fact": "Undo is Ctrl+Z and redo is Ctrl+Shift+Z (Cmd on macOS).",
+    "source": "general knowledge of Excalidraw, not checked in the product",
+    "proposed_at": "2026-10-10T11:30:00.000Z"
+  },
+  {
+    "id": 8,
+    "area": "styles-and-history",
+    "fact": "Ctrl+D duplicates the selection, and Alt+drag (Option+drag) drags out a copy.",
+    "source": "general knowledge of Excalidraw, not checked in the product",
+    "proposed_at": "2026-10-10T11:30:00.000Z"
+  },
+  {
+    "id": 9,
+    "area": "bound-text",
+    "fact": "Double-clicking a shape adds text inside it; the text wraps to the shape width and the shape grows taller when needed.",
+    "source": "case C-007, general knowledge of Excalidraw, not checked in the product",
+    "proposed_at": "2026-10-10T11:30:00.000Z"
+  },
+  {
+    "id": 10,
+    "area": "bound-text",
+    "fact": "An arrow label stays at the middle of the arrow when the arrow moves.",
+    "source": "case C-010, general knowledge of Excalidraw, not checked in the product",
+    "proposed_at": "2026-10-10T11:30:00.000Z"
+  },
+  {
+    "id": 11,
+    "area": "files-and-export",
+    "fact": "The main menu has \"Open\", \"Save to...\", \"Export image...\" and \"Reset the canvas\".",
+    "source": "general knowledge of Excalidraw, not checked in the product",
+    "proposed_at": "2026-10-10T11:30:00.000Z"
+  },
+  {
+    "id": 12,
+    "area": "files-and-export",
+    "fact": "The scene is kept in the browser and survives a page reload.",
+    "source": "case C-014, general knowledge of Excalidraw, not checked in the product",
+    "proposed_at": "2026-10-10T11:30:00.000Z"
+  },
+  {
+    "id": 13,
+    "area": "project",
+    "fact": "The excalidraw/excalidraw repository has not applied the \"bug\" label to new issues since July 2025, so counts by that label miss recent bugs.",
+    "source": "list_issues and a browser count on 2026-10-10: newest bug-labelled issue #9757 is from 2025-07-17",
+    "proposed_at": "2026-10-10T11:30:00.000Z"
+  },
+  {
+    "id": 14,
+    "area": "text-properties",
+    "fact": "Italic is one property of the whole text element, set by an \"Italic\" toggle in the properties panel and by Ctrl+I / Cmd+I; there is no separate italic font.",
+    "source": "PO answer on issue 11404, 2026-10-10",
+    "proposed_at": "2026-10-10T11:30:00.000Z",
+    "issue": 11404
+  },
+  {
+    "id": 15,
+    "area": "text-properties",
+    "fact": "Fonts without an italic face get a synthetic slant, and italic text must stay readable and unclipped in every script.",
+    "source": "PO answer on issue 11404, 2026-10-10",
+    "proposed_at": "2026-10-10T11:30:00.000Z",
+    "issue": 11404
+  },
+  {
+    "id": 16,
+    "area": "text-properties",
+    "fact": "The last chosen italic value becomes the default for new text.",
+    "source": "PO answer on issue 11404, 2026-10-10",
+    "proposed_at": "2026-10-10T11:30:00.000Z",
+    "issue": 11404
+  }
+]

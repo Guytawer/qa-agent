@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6 — 2026-10-10
+- Step 0: read the reviewed knowledge base before analysing; facts found there need no (verify) mark; pending knowledge is never current behavior.
+- Step 6b: propose stable facts learned in the session (product-owner decisions, confirmed UI labels) for a person to review. Run 5 marked several labels (verify) that the team already knew.
+
 ## 0.5 — 2026-10-10
 - Gated workflow: when the qa-agent server's session tools are available, the skill records questions, answers and the case plan through them. The server blocks each next step until the user approves with the `npm run approve` command, so the stop is enforced in code, not only asked for in this file.
 
