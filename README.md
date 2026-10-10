@@ -36,8 +36,8 @@ Build with `npm install` and `npm run build` in `mcp-server`, then add it to Cla
 ```
 Set `QA_CASES_DIR` in the server's `env` to search another team's case folder.
 
-### `cases`
-Manual test cases for the current behavior of Excalidraw, one markdown file per product area.
+### `cases` and `changes`
+`cases/` holds manual test cases for the current behavior of Excalidraw, one markdown file per product area. Cases for a feature that is not released yet wait in `changes/`, one file per ticket, and are applied to `cases/` when the feature ships. This keeps the case set a true picture of the product today.
 
 ## How quality is measured
 
