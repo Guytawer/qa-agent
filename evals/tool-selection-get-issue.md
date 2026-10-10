@@ -12,6 +12,10 @@ Marker: the author's account login `pidanoyes` comes only from the API; the page
 | v2 | all connectors (~100 tools), web on | when needed | read the web page, tried the API URL directly |
 | v2 | all connectors (~100 tools), web on | already loaded | read the web page |
 | v3: + assignees | all connectors, web on | "Loaded tools" step seen | page → API failed → loaded tools → get_issue (question: "Who is assigned...") |
+| v3 | all connectors, web on | already loaded, set in a new chat | read the web page only; no "Loaded tools" step |
+| get_issue v3 | all connectors, web on | already loaded, set in a new chat | read the web page only; no "Loaded tools" step |
+| list_issues v1 | qa-agent, agent mode (shell, browser) | already loaded | wrote its own curl in the cloud shell (blocked), added a repo, then 9 browser actions; 184 |
+| list_issues v1 | explicit "use list_issues" | already loaded | list_issues, 1 call; 184, matches the browser count |
 
 Findings:
 - With only qa-agent enabled, one sentence in the description changed the choice to get_issue.
