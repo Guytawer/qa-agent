@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "test": "node test/gates.mjs",
+    "build": "tsc",
+    "approve": "node dist/approve.js"
   },
   "keywords": [],
   "author": "",

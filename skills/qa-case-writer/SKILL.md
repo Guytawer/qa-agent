@@ -33,6 +33,14 @@ List open questions: missing values and limits, undefined error behavior, unclea
 
 **Stop here and wait for answers** unless the user said to proceed without questions.
 
+### Gated workflow (when the session tools are available)
+If the tools `open_session`, `record_answers`, `submit_plan` and `save_changes` are available, the server enforces the stops. Follow it:
+1. After step 2, call `open_session` with the questions, show them to the user and stop.
+2. When the user answers, call `record_answers` with their answers in their own words, never invented ones. Then ask the user to run the approve command the tool names, and wait.
+3. After the answers are approved, design coverage (step 3) and call `submit_plan` with one line per case: `update C-xxx: <what changes>`, `retire C-xxx: <why>` or `create TC-n: <title>`. Show the plan, ask the user to approve it the same way, and wait.
+4. After the plan is approved, write the cases (steps 4 to 6) and save them with `save_changes`. Every case id in the plan must be in the saved content.
+If a tool answers "Blocked", tell the user what is missing. Never try to get around a gate, and never claim something is approved that the tool has not confirmed.
+
 ### 3. Design coverage
 For each behavior, choose the techniques that apply:
 - equivalence classes and boundary values for inputs and limits;

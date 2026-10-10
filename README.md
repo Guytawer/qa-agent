@@ -20,13 +20,25 @@ How it works:
 Install: zip the `skills/qa-case-writer` folder and upload it in Claude under Customize → Skills. Fill in `config/product.md` for your product and adjust `config/conventions.md` to your team's rules.
 
 ### `mcp-server`
-A local MCP server in TypeScript that gives Claude three tools:
+A local MCP server in TypeScript. Tools for data:
 
 | Tool | What it does |
 |---|---|
 | `get_issue` | Reads one Excalidraw issue from the GitHub API: title, body, labels, state, author, assignees, comments |
 | `list_issues` | Lists issues with filters (state, labels, title words) and returns `total_count` for statistics |
 | `search_cases` | Searches the existing test cases in `cases/` so the skill updates them instead of writing duplicates |
+
+Tools for the gated workflow:
+
+| Tool | Allowed when |
+|---|---|
+| `open_session` | always; records the open questions for an issue |
+| `record_answers` | after the questions; the answers count only once a person approves them |
+| `submit_plan` | only after the answers are approved; a changed plan loses its approval |
+| `save_changes` | only after the current plan is approved and every planned case is in the content |
+| `get_session` | always; shows stage, approvals and history |
+
+Approvals never come from the model. A person runs `npm run approve -- <issue>` in a terminal, sees the answers or the plan, and confirms. The approval stores who, when and a fingerprint of the approved text, so any later change to the text withdraws it. State lives in `state/` (not committed). `npm test` checks that every gate holds.
 
 Build with `npm install` and `npm run build` in `mcp-server`, then add it to Claude Desktop's `claude_desktop_config.json`:
 ```json
@@ -60,7 +72,7 @@ One run per version, so some differences may be run-to-run variance. The changel
 - [x] Skill: test case writer, eval-driven iterations; uses the MCP server to update existing cases
 - [ ] Skill: ticket completeness review
 - [x] MCP server (TypeScript): read issues, list issues with counts, search existing cases
-- [ ] Stateful workflow: analysis → questions → approval → case plan → approval, with gates enforced in code
+- [x] Stateful workflow: questions → approved answers → approved plan → saved cases, with gates enforced in code and approvals only from a person
 - [ ] Knowledge base with reviewed updates
 - [ ] Security: prompt-injection handling, least privilege, audit log
 - [ ] Eval suite with several reference issues and repeated runs

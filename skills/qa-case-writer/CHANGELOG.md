@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.5 — 2026-10-10
+- Gated workflow: when the qa-agent server's session tools are available, the skill records questions, answers and the case plan through them. The server blocks each next step until the user approves with the `npm run approve` command, so the stop is enforced in code, not only asked for in this file.
+
 ## 0.4 — 2026-10-10
 - New step 1b: when a search tool for existing cases is available (the qa-agent MCP server's `search_cases`), search per behavior and decide create, update or retire. Without the tool, say that existing cases were not checked.
 - Case format gets an Action line; self-review checks that changed existing cases are updated, not duplicated.
