@@ -1,16 +1,1 @@
-[
-  {
-    "area": "text-properties",
-    "fact": "Each press of Ctrl+Shift+> multiplies the font size by 1.1 and each press of Ctrl+Shift+< divides it by 1.1, rounded to a whole number every time: from 96, up gives 106 then 117, down gives 87.",
-    "source": "excalidraw source at commit 4c00f31 (2026-10-08): actions/actionProperties.tsx line 182 (FONT_SIZE_RELATIVE_INCREASE_STEP = 0.1) and the perform functions of increaseFontSize and decreaseFontSize (Math.round)",
-    "id": 6,
-    "proposed_at": "2026-10-10T15:44:33.000Z"
-  },
-  {
-    "area": "bound-text",
-    "fact": "The toolbar tool that creates sticky notes is labelled \"Sticky note\".",
-    "source": "excalidraw source at commit 4c00f31 (2026-10-08): locales/en.json toolBar.stickynote = \"Sticky note\"",
-    "id": 7,
-    "proposed_at": "2026-10-10T15:44:33.000Z"
-  }
-]
+[]
