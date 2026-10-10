@@ -19,10 +19,21 @@ export type Proposal = {
 };
 
 export async function loadProposals(): Promise<Proposal[]> {
+  let raw: string;
   try {
-    return JSON.parse(await readFile(PROPOSALS(), "utf8")) as Proposal[];
+    raw = await readFile(PROPOSALS(), "utf8");
   } catch {
-    return [];
+    return []; // no file yet: the queue is empty
+  }
+  // A file that exists but cannot be read (for example, git conflict markers after a merge)
+  // must stop the caller. Treating it as empty would hide the waiting proposals,
+  // and the next proposal would overwrite them.
+  try {
+    return JSON.parse(raw) as Proposal[];
+  } catch {
+    throw new Error(
+      `${PROPOSALS()} is not valid JSON (a git merge conflict?). Fix the file before reviewing or proposing facts; nothing was changed.`
+    );
   }
 }
 

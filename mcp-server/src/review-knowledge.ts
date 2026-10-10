@@ -5,7 +5,13 @@ import { createInterface } from "node:readline";
 import { userInfo } from "node:os";
 import { acceptProposal, loadProposals, saveProposals } from "./knowledge.js";
 
-const proposals = await loadProposals();
+let proposals;
+try {
+  proposals = await loadProposals();
+} catch (error) {
+  console.error((error as Error).message);
+  process.exit(1);
+}
 if (proposals.length === 0) {
   console.log("No proposed facts waiting for review.");
   process.exit(0);

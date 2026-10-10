@@ -418,7 +418,12 @@ server.registerTool(
     },
   },
   async ({ area, fact, source, issue }) => {
-    const p = await addProposal({ area, fact, source, ...(issue ? { issue } : {}) });
+    let p;
+    try {
+      p = await addProposal({ area, fact, source, ...(issue ? { issue } : {}) });
+    } catch (error) {
+      return text(`Not proposed: ${(error as Error).message} Tell the user.`, true);
+    }
     return text(`Proposed fact #${p.id} for "${area}". It is not active yet. Ask the user to run this in a terminal, in the mcp-server folder: npm run review-knowledge`);
   }
 );

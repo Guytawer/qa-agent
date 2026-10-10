@@ -28,5 +28,15 @@ check((await call("read_knowledge", {})).includes("whole text element"), "it is 
 check(!(await call("read_knowledge", { area: "text-properties" })).includes("A wrong fact"), "a rejected fact never becomes active");
 check(review([]).includes("No proposed facts"), "the queue is empty after review");
 
+// A broken queue file (for example, git conflict markers) is reported, never treated as empty.
+const { writeFileSync, readFileSync } = await import("node:fs");
+const broken = "<<<<<<< HEAD\n[]\n=======\n[]\n>>>>>>> other\n";
+writeFileSync(path.join(dir, "proposals.json"), broken);
+let failed = false;
+try { review([]); } catch (error) { failed = String(error.stderr).includes("not valid JSON"); }
+check(failed, "review stops on a broken queue file");
+const answer = await client.callTool({ name: "propose_knowledge", arguments: { area: "text-properties", fact: "Another fact.", source: "test" } });
+check(answer.isError && readFileSync(path.join(dir, "proposals.json"), "utf8") === broken, "a new proposal does not overwrite a broken queue file");
+
 await client.close();
 console.log(`\n${passed} checks passed`);

@@ -1,47 +1,4 @@
-<<<<<<< HEAD
-[]
-=======
 [
-  {
-    "area": "styles-and-history",
-    "fact": "Copies of a text made with Ctrl+C then Ctrl+V, Ctrl+D, Alt+drag or from the library keep its \"Huge\" or \"Giant\" font size.",
-    "source": "Approved answer 7 in the issue 10506 session, 2026-10-10",
-    "issue": 10506,
-    "id": 1,
-    "proposed_at": "2026-10-10T15:42:28.453Z"
-  },
-  {
-    "area": "styles-and-history",
-    "fact": "Paste styles carries the \"Huge\" and \"Giant\" font sizes to another text, and that preset is then highlighted on the target.",
-    "source": "Approved answer 10 in the issue 10506 session, 2026-10-10",
-    "issue": 10506,
-    "id": 2,
-    "proposed_at": "2026-10-10T15:42:31.620Z"
-  },
-  {
-    "area": "styles-and-history",
-    "fact": "Undo of a font size change restores the previous size together with its highlighted preset, and redo restores the new size and its preset.",
-    "source": "Approved answer 10 in the issue 10506 session, 2026-10-10",
-    "issue": 10506,
-    "id": 3,
-    "proposed_at": "2026-10-10T15:42:34.373Z"
-  },
-  {
-    "area": "files-and-export",
-    "fact": "In live collaboration, a font size change to \"Giant\" made by one user reaches the other users.",
-    "source": "Approved answer 7 in the issue 10506 session, 2026-10-10",
-    "issue": 10506,
-    "id": 4,
-    "proposed_at": "2026-10-10T15:42:36.921Z"
-  },
-  {
-    "area": "bound-text",
-    "fact": "At \"Giant\", text inside a shape wraps to the shape's width and the shape grows taller while its width stays the same, and an arrow label grows and stays at the middle of the arrow.",
-    "source": "Approved answer 5 in the issue 10506 session, 2026-10-10",
-    "issue": 10506,
-    "id": 5,
-    "proposed_at": "2026-10-10T15:42:38.976Z"
-  },
   {
     "area": "text-properties",
     "fact": "Each press of Ctrl+Shift+> multiplies the font size by 1.1 and each press of Ctrl+Shift+< divides it by 1.1, rounded to a whole number every time: from 96, up gives 106 then 117, down gives 87.",
@@ -57,4 +14,3 @@
     "proposed_at": "2026-10-10T15:44:33.000Z"
   }
 ]
->>>>>>> 16312f5c09b70a716ce04cc8d871ffe9bd921940
