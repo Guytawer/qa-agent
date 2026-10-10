@@ -41,5 +41,13 @@ await expect("save_changes", { issue: 1, content: "C-011 TC-1 TC-2" }, false, "a
 approve("y");
 await expect("save_changes", { issue: 1, content: "C-011 TC-1 TC-2" }, true, "saving works once the current plan is approved");
 
+// Cases the plan names as unchanged are not required in the content.
+await expect("open_session", { issue: 2, questions: "1. Scope?" }, true, "second session opens");
+await expect("record_answers", { issue: 2, answers: "1. Toggle only" }, true, "second answers recorded");
+execFileSync("node", ["dist/approve.js", "2"], { input: "y\n", env });
+await expect("submit_plan", { issue: 2, plan: "- update C-001: italic\n- create TC-1: toggle\nNot changed: C-003, C-005" }, true, "plan with a 'Not changed' line");
+execFileSync("node", ["dist/approve.js", "2"], { input: "y\n", env });
+await expect("save_changes", { issue: 2, content: "C-001 TC-1" }, true, "unchanged cases are not required in the content");
+
 await client.close();
 console.log(`\n${passed} checks passed`);

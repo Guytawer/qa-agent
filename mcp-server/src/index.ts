@@ -306,7 +306,7 @@ server.registerTool(
   {
     description:
       "Saves the written test cases for an issue as a pending change set in the changes folder. " +
-      "Allowed only when the user has approved the current plan. Every case id named in the plan (C-xxx, TC-x) must appear in the content.",
+      "Allowed only when the user has approved the current plan. Every case id on an update, create or retire line of the plan must appear in the content.",
     inputSchema: {
       issue: z.number().int().positive().describe("Issue number"),
       content: z.string().min(1).describe("The full test cases as markdown, each with its Action line"),
@@ -319,7 +319,10 @@ server.registerTool(
     if (!approval || s.stage !== "plan_approved") {
       return text(`Blocked: the current plan for issue ${issue} is not approved (stage "${s.stage}"). ${APPROVE_HINT(issue)}`, true);
     }
-    const ids = [...new Set(s.plan!.match(/\b(?:C|TC)-\d+\b/g) ?? [])];
+    // Only cases the plan acts on must be in the content: lines that start with update, create or retire.
+    // A line such as "Not changed: C-003, C-005" names cases that are deliberately left out.
+    const actionLines = s.plan!.split("\n").filter((line) => /^\s*(?:[-*]\s*)?(?:update|create|retire)\b/i.test(line));
+    const ids = [...new Set(actionLines.join("\n").match(/\b(?:C|TC)-\d+\b/g) ?? [])];
     const missing = ids.filter((id) => !content.includes(id));
     if (missing.length > 0) {
       return text(`Blocked: the content does not match the approved plan. Missing cases: ${missing.join(", ")}.`, true);
