@@ -2,7 +2,7 @@
   {
     "area": "text-properties",
     "fact": "The \"F\" field in the \"Properties\" panel (Alt+/) is editable: typing a number there sets that exact font size on the selected text.",
-    "source": "User (maxxx) confirmation during the issue 10506 session, 2026-10-10",
+    "source": "User (maxxx) confirmation during the issue 10506 session, 2026-10-10; checked in excalidraw source at commit 4c00f31 (2026-10-08): components/Stats/FontSize.tsx lines 96-107 (StatsDragInput with handleFontSizeChange), components/Stats/DragInput.tsx line 367 (<input>)",
     "id": 1,
     "proposed_at": "2026-10-10T14:05:05.206Z"
   },
