@@ -1,7 +1,7 @@
 // Human approval command. Run it yourself in a terminal:
 //   npm run approve -- 11404
 // The model in the chat cannot run it, so an approval always comes from a person.
-import { createInterface } from "node:readline/promises";
+import { createInterface } from "node:readline";
 import { userInfo } from "node:os";
 import { fingerprint, loadSession, saveSession } from "./sessions.js";
 
@@ -31,15 +31,26 @@ console.log("-".repeat(60));
 console.log(text);
 console.log("-".repeat(60));
 
-const rl = createInterface({ input: process.stdin, output: process.stdout });
+const rl = createInterface({ input: process.stdin });
+// Read line by line, so it works both when typing and when answers are piped in.
+const lines = rl[Symbol.asyncIterator]();
+async function ask(question: string): Promise<string> {
+  process.stdout.write(question);
+  const next = await lines.next();
+  return next.done ? "" : next.value.trim();
+}
 const label = what === "answers" ? "these answers" : "this plan";
-const reply = (await rl.question(`\nApprove ${label}? (y/n) `)).trim().toLowerCase();
-rl.close();
+const reply = (await ask(`\nApprove ${label}? (y/n) `)).toLowerCase();
 
 if (reply !== "y") {
-  console.log("Not approved. Tell the agent in the chat what to change.");
+  const reason = await ask("Why? One line for the record (Enter to skip): ");
+  rl.close();
+  const who = userInfo().username;
+  await saveSession(session, `${what} rejected by ${who}${reason ? `: ${reason}` : ""}`);
+  console.log("Not approved. The reason is in the session history. Tell the agent in the chat what to change.");
   process.exit(0);
 }
+rl.close();
 
 const by = userInfo().username;
 session.approvals.push({ what, hash: fingerprint(text), by, at: new Date().toISOString() });

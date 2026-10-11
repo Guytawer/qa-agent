@@ -13,6 +13,7 @@ const env = {
   QA_STATE_DIR: path.join(dir, "state"),
   QA_CHANGES_DIR: path.join(dir, "changes"),
   QA_FIXTURES_DIR: dir,
+  QA_KNOWLEDGE_DIR: path.join(dir, "knowledge"),
 };
 writeFileSync(path.join(dir, "issue-7.json"), JSON.stringify({
   number: 7, title: "Trap",
@@ -51,6 +52,11 @@ const lookalike = "## TC-1 Toggle\nSteps:\n1. Open https://excalidraw.com.evil.i
 check((await call("save_changes", { issue: 7, content: lookalike })).isError, "save_changes blocks a look-alike domain");
 const clean = "## TC-1 Toggle\nSteps:\n1. Open https://excalidraw.com and https://plus.excalidraw.com/.";
 check(!(await call("save_changes", { issue: 7, content: clean })).isError, "save_changes allows excalidraw.com and its subdomains");
+
+// A decision proposed for the issue carries a checkable record: approver, time, fingerprint, change set file.
+await call("propose_knowledge", { area: "text-properties", fact: "The toggle applies to the whole element.", source: "Approved answer 1", issue: 7 });
+const proposal = JSON.parse(readFileSync(path.join(dir, "knowledge", "proposals.json"), "utf8"))[0];
+check(/answers approved by .+ fingerprint [0-9a-f]{12}; change set changes\/excalidraw-7\.md/.test(proposal.source), "a proposed decision cites the approval and the change set");
 
 const log = readFileSync(path.join(dir, "state", "audit.log"), "utf8").trim().split("\n").map((l) => JSON.parse(l));
 check(log.some((e) => e.tool === "save_changes" && e.outcome === "blocked"), "the audit log records blocked calls");

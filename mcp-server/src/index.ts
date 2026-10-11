@@ -5,6 +5,7 @@ import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { addProposal, listAreas, readArea, readPending } from "./knowledge.js";
+import { caseHeadings, describeCounts, parsePlan } from "./plan.js";
 import { audit, findNotices, outsideUrls, URL_ALLOWLIST, type Notice } from "./security.js";
 import { CHANGES_DIR, fingerprint, loadSession, saveSession, validApproval, type Session } from "./sessions.js";
 
@@ -296,7 +297,8 @@ server.registerTool(
   {
     description:
       "Records the user's answers to the open questions, quoted from the user's message. Never invent answers. " +
-      "The answers count only after the user approves them with the approve command, so after this call ask the user to run it.",
+      "The answers count only after the user approves them with the approve command, so after this call ask the user to run it. " +
+      "Answers may be extended after a plan was submitted (for example, for a question found while planning); that withdraws the plan and its approval.",
     inputSchema: {
       issue: z.number().int().positive().describe("Issue number"),
       answers: z.string().min(1).describe("The user's answers, as markdown, in their own words"),
@@ -305,13 +307,22 @@ server.registerTool(
   async ({ issue, answers }) => {
     const s = await loadSession(issue);
     if (!s) return text(`No session for issue ${issue}. Call open_session first.`, true);
-    if (!["questions_open", "answers_waiting_approval", "answers_approved"].includes(s.stage)) {
-      return text(`Answers cannot change at stage "${s.stage}": a plan has already been submitted.`, true);
+    if (s.stage === "saved") {
+      return text(`The workflow for issue ${issue} is already saved. Start a new session with open_session to change it.`, true);
     }
+    // Answers may change after a plan (for example, a question found while planning).
+    // The plan was built on the old answers, so it is withdrawn together with its approval.
+    const hadPlan = s.plan !== null;
     s.answers = answers;
+    s.plan = null;
+    s.approvals = s.approvals.filter((a) => a.what !== "plan");
     s.stage = "answers_waiting_approval";
-    await saveSession(s, "answers recorded");
-    return text(`Answers recorded for issue ${issue}. ${APPROVE_HINT(issue)}`);
+    await saveSession(s, hadPlan ? "answers changed after the plan; plan and its approval withdrawn" : "answers recorded");
+    return text(
+      `Answers recorded for issue ${issue}.` +
+        (hadPlan ? " The earlier plan was withdrawn: after the answers are approved, submit the plan again." : "") +
+        ` ${APPROVE_HINT(issue)}`
+    );
   }
 );
 
@@ -319,12 +330,13 @@ server.registerTool(
   "submit_plan",
   {
     description:
-      "Records the case plan for an issue: which existing cases to update or retire (with ids) and which new cases to create, one line each. " +
+      "Records the case plan for an issue, one case per line: 'update C-011: ...', 'retire C-004: ...', 'create TC-3: ...', or 'keep TC-1: ...' for a case carried over unchanged from the saved change set. " +
+      "Cases deliberately left out go on one 'Not changed: C-003, C-005' line. Headings and prose lines are allowed; any other line that names a case id, or a range such as 'TC-1 to TC-12', is rejected. " +
       "Allowed only after the user has approved the answers. Submitting a changed plan withdraws an earlier plan approval. " +
       "After this call, show the plan and ask the user to approve it with the approve command.",
     inputSchema: {
       issue: z.number().int().positive().describe("Issue number"),
-      plan: z.string().min(1).describe("The plan as markdown, for example a list of 'update C-011: ...' and 'create: ...' lines"),
+      plan: z.string().min(1).describe("The plan as markdown: one 'update', 'retire', 'create' or 'keep' line per case, with its id"),
     },
   },
   async ({ issue, plan }) => {
@@ -333,10 +345,14 @@ server.registerTool(
     if (!validApproval(s, "answers")) {
       return text(`Blocked: the answers for issue ${issue} are not approved yet (stage "${s.stage}"). ${APPROVE_HINT(issue)}`, true);
     }
+    const { entries, errors } = parsePlan(plan);
+    if (errors.length > 0) {
+      return text(`Plan not recorded. Fix these lines and submit again:\n- ${errors.join("\n- ")}`, true);
+    }
     s.plan = plan;
     s.stage = "plan_waiting_approval";
-    await saveSession(s, `plan submitted (fingerprint ${fingerprint(plan)})`);
-    return text(`Plan recorded for issue ${issue}. Show it to the user. ${APPROVE_HINT(issue)}`);
+    await saveSession(s, `plan submitted (fingerprint ${fingerprint(plan)}; ${describeCounts(entries)})`);
+    return text(`Plan recorded for issue ${issue}: ${describeCounts(entries)}. Show it to the user with these counts. ${APPROVE_HINT(issue)}`);
   }
 );
 
@@ -345,7 +361,7 @@ server.registerTool(
   {
     description:
       "Saves the written test cases for an issue as a pending change set in the changes folder. " +
-      "Allowed only when the user has approved the current plan. Every case id on an update, create or retire line of the plan must appear in the content.",
+      "Allowed only when the user has approved the current plan. The content must hold exactly the planned cases, each under a '## <id> <title>' heading, and no links outside the allowed domains.",
     inputSchema: {
       issue: z.number().int().positive().describe("Issue number"),
       content: z.string().min(1).describe("The full test cases as markdown, each with its Action line"),
@@ -358,13 +374,20 @@ server.registerTool(
     if (!approval || s.stage !== "plan_approved") {
       return text(`Blocked: the current plan for issue ${issue} is not approved (stage "${s.stage}"). ${APPROVE_HINT(issue)}`, true);
     }
-    // Only cases the plan acts on must be in the content: lines that start with update, create or retire.
-    // A line such as "Not changed: C-003, C-005" names cases that are deliberately left out.
-    const actionLines = s.plan!.split("\n").filter((line) => /^\s*(?:[-*]\s*)?(?:update|create|retire)\b/i.test(line));
-    const ids = [...new Set(actionLines.join("\n").match(/\b(?:C|TC)-\d+\b/g) ?? [])];
-    const missing = ids.filter((id) => !content.includes(id));
-    if (missing.length > 0) {
-      return text(`Blocked: the content does not match the approved plan. Missing cases: ${missing.join(", ")}.`, true);
+    // The saved content must hold exactly the cases of the approved plan, each under its own heading.
+    const { entries } = parsePlan(s.plan!);
+    const planned = entries.map((e) => e.id);
+    const headings = caseHeadings(content);
+    const missing = planned.filter((id) => !headings.includes(id));
+    const extra = [...new Set(headings.filter((id) => !planned.includes(id)))];
+    if (missing.length > 0 || extra.length > 0) {
+      return text(
+        "Blocked: the content does not match the approved plan." +
+          (missing.length > 0 ? ` Missing case headings: ${missing.join(", ")}.` : "") +
+          (extra.length > 0 ? ` Cases not in the plan: ${extra.join(", ")}.` : "") +
+          ' Each planned case needs a "## <id> <title>" heading.',
+        true
+      );
     }
     // Test cases must never send a tester to an outside site (for example, to sign in there).
     const badUrls = outsideUrls(content);
@@ -384,7 +407,7 @@ server.registerTool(
     await writeFile(target, header + content, "utf8");
     s.stage = "saved";
     await saveSession(s, `change set saved to ${target}`);
-    return text(`Saved to ${target}. The workflow for issue ${issue} is complete.`);
+    return text(`Saved to ${target}: ${describeCounts(entries)}. Report these counts to the user. The workflow for issue ${issue} is complete.`);
   }
 );
 
@@ -467,13 +490,27 @@ server.registerTool(
   async ({ area, fact, source, issue }) => {
     let p;
     try {
-      p = await addProposal({ area, fact, source, ...(issue ? { issue } : {}) });
+      p = await addProposal({ area, fact, source: issue ? await withProvenance(issue, source) : source, ...(issue ? { issue } : {}) });
     } catch (error) {
       return text(`Not proposed: ${(error as Error).message} Tell the user.`, true);
     }
     return text(`Proposed fact #${p.id} for "${area}". It is not active yet. Ask the user to run this in a terminal, in the qa-agent folder: npm run review-knowledge`);
   }
 );
+
+// Adds a checkable record to the source of a decision about an issue: who approved the answers, when,
+// the fingerprint of the approved text, and the change set file if one is saved.
+async function withProvenance(issue: number, source: string): Promise<string> {
+  const s = await loadSession(issue);
+  const approval = s ? validApproval(s, "answers") : null;
+  const changeSet = path.join(CHANGES_DIR, `excalidraw-${issue}.md`);
+  const saved = await readFile(changeSet, "utf8").then(() => true).catch(() => false);
+  const parts = [
+    approval ? `answers approved by ${approval.by} at ${approval.at}, fingerprint ${approval.hash}` : "no approved answers found for this issue",
+    ...(saved ? [`change set changes/excalidraw-${issue}.md`] : []),
+  ];
+  return `${source} [${parts.join("; ")}]`;
+}
 
 const transport = new StdioServerTransport();
 await server.connect(transport);

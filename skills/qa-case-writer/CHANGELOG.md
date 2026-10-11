@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.9 — 2026-10-11
+Based on runs 8 to 11, together with stricter server checks.
+
+- Plan lines follow a strict format: `update`, `retire`, `create` or the new `keep` (a case carried over unchanged when a saved set is revised), plus one `Not changed:` line. No ranges, no case ids on other lines. In run 11 the plan said "kept as saved" for 24 cases, which the server could not check.
+- Counts of cases come from the server's answers, not from the model. Runs 8, 10 and 11 had wrong intermediate counts.
+- A question found after the plan is recorded as extended answers; the server withdraws the plan for a new approval. In run 10 a real gap (font change with a chosen line height) could not be added.
+- A plan that removes a check of current behavior from an existing case carries a separate warning. In run 8 C-018 nearly lost its color check.
+- An expected-value column in a data table does not require a split. Run 8 split TC-2/TC-3 while C-018 used such a column.
+
 ## 0.8 — 2026-10-11
 Based on runs 9 and 10 (security traps #99001 and #99002).
 

@@ -33,9 +33,9 @@ Tools for the gated workflow:
 | Tool | Allowed when |
 |---|---|
 | `open_session` | always; records the open questions for an issue |
-| `record_answers` | after the questions; the answers count only once a person approves them |
-| `submit_plan` | only after the answers are approved; a changed plan loses its approval |
-| `save_changes` | only after the current plan is approved, every planned case is in the content, and no case links outside the allowed domains |
+| `record_answers` | after the questions; the answers count only once a person approves them. Extending them after a plan withdraws the plan |
+| `submit_plan` | only after the answers are approved; one `update` / `retire` / `create` / `keep` line per case, so the server can check completeness and count cases; a changed plan loses its approval |
+| `save_changes` | only after the current plan is approved, the content holds exactly the planned cases (by heading), and no case links outside the allowed domains; returns the counts |
 | `get_session` | always; shows stage, approvals and history |
 | `read_change_set` | always; reads the saved change set for an issue (read-only) |
 
@@ -46,7 +46,7 @@ Tools for memory:
 | `read_knowledge` | Reads reviewed facts about the product by area, plus pending knowledge for unreleased features |
 | `propose_knowledge` | Proposes one fact with its source; it stays inactive until a person accepts it with `npm run review-knowledge` |
 
-Approvals never come from the model. A person runs `npm run approve -- <issue>` in a terminal (from the repository root or `mcp-server`), sees the answers or the plan, and confirms. The approval stores who, when and a fingerprint of the approved text, so any later change to the text withdraws it. State lives in `state/` (not committed). `npm test` checks that every gate holds and that proposed facts stay inactive until reviewed.
+Approvals never come from the model. A person runs `npm run approve -- <issue>` in a terminal (from the repository root or `mcp-server`), sees the answers or the plan, and confirms. The approval stores who, when and a fingerprint of the approved text, so any later change to the text withdraws it. A rejection asks for a one-line reason and keeps it in the session history. A decision proposed for the knowledge base cites the approval and the change set file, so its source can be checked. State lives in `state/` (not committed). `npm test` checks that every gate holds and that proposed facts stay inactive until reviewed.
 
 Build with `npm install` and `npm run build` in `mcp-server`, then add it to Claude Desktop's `claude_desktop_config.json`:
 ```json
