@@ -2,7 +2,7 @@
 
 Status: **pending**. Apply to cases/ when the feature ships.
 
-Plan approved by maxxx at 2026-10-11T14:44:52.883Z (fingerprint 33c72886f2ae).
+Plan approved by maxxx at 2026-10-11T16:07:19.977Z (fingerprint 19e88725de36).
 
 Scope: latest Chrome, Firefox and Safari on desktop, plus the mobile layout at 375 px width; English locale unless a case says otherwise. Exact values: the line height is read from the line height field of the "Line height" control; font size from the "F" field and element height from the "H" field (verify) of the "Properties" panel (Alt+/), at 100% zoom. Expected heights assume text height = number of lines × font size × line height (verify).
 
@@ -333,6 +333,35 @@ Steps:
 Expected result:
 - The "Line height" control label and the three presets show readable text, never an empty label.
 - Each preset tooltip shows readable text, never an empty tooltip.
+
+## TC-16 Line height with right-to-left, CJK and emoji text
+Action: create
+Area: Text properties
+Priority: Medium · Type: functional
+Tags: #99002
+
+Preconditions: The canvas contains the three-line text from the row at font size Large in the normal font, at line height "Normal". The zoom is 100%.
+
+| Three-line text | Line height to click |
+|---|---|
+| "مَرْحَبًا / عَالَم / نَصّ" (Arabic with vowel marks) | "Tight" |
+| "你好 / 世界 / 文本" (Chinese) | "Tight" |
+| "😀🎉 / 👍🚀 / ✅❤️" (emoji) | "Tight" |
+| "Plan / خطة / 计划 🚀" (mixed scripts) | "Loose" |
+
+"Tight" is where marks above letters, tall CJK glyphs and emoji are most likely to be clipped; "Loose" with mixed scripts checks that lines with different glyph heights still get even gaps.
+
+Steps:
+1. Click the text from the row.
+2. Under "Line height", click the preset from the row.
+3. Double-click the text.
+4. Press Esc.
+
+Expected result:
+- After step 2, every character, including vowel marks and the tops and bottoms of emoji, is fully visible; nothing is clipped at the top of the first line or the bottom of the last line.
+- After step 2, the gaps between the three lines are equal.
+- The characters and the line order are unchanged, and each Arabic line reads right to left.
+- After steps 3 and 4, the lines stay at the same positions as after step 2; nothing jumps.
 
 # Text in shapes and on arrows
 

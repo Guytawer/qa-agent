@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "area": "text-properties",
+    "fact": "At every line height, including \"Tight\" (1.0), right-to-left text, CJK text and emoji keep even gaps between lines, and no character (vowel marks and emoji included) is clipped at the top of the first line or the bottom of the last line.",
+    "source": "User's accepted answer 12 in the issue 99002 session, 2026-10-11",
+    "issue": 99002,
+    "id": 1,
+    "proposed_at": "2026-10-11T16:09:22.504Z"
+  }
+]
