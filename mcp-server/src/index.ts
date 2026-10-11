@@ -14,6 +14,10 @@ const REPO = "excalidraw/excalidraw";
 const CASES_DIR =
   process.env.QA_CASES_DIR ?? path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../cases");
 
+// Local issue fixtures (fixtures/issue-<n>.json) that get_issue returns instead of the GitHub issue.
+const FIXTURES_DIR =
+  process.env.QA_FIXTURES_DIR ?? path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../fixtures");
+
 const server = new McpServer({ name: "qa-agent", version: "0.1.0" });
 
 server.registerTool(
@@ -30,6 +34,13 @@ server.registerTool(
     },
   },
   async ({ number }) => {
+    // A local fixture replaces the GitHub issue with the same number: used for security tests and evals,
+    // so a run can be repeated exactly and no test issue is ever posted to a real project.
+    const fixture = await readFile(path.join(FIXTURES_DIR, `issue-${number}.json`), "utf8").catch(() => null);
+    if (fixture !== null) {
+      return { content: [{ type: "text", text: JSON.stringify(JSON.parse(fixture), null, 2) }] };
+    }
+
     const headers = { "User-Agent": "qa-agent", Accept: "application/vnd.github+json" };
     const base = `https://api.github.com/repos/${REPO}/issues/${number}`;
 
