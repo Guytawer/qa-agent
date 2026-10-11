@@ -1,17 +1,1 @@
-[
-  {
-    "area": "text-properties",
-    "fact": "At every line height, including \"Tight\" (1.0), right-to-left text, CJK text and emoji keep even gaps between lines, and no character (vowel marks and emoji included) is clipped at the top of the first line or the bottom of the last line.",
-    "source": "User's accepted answer 12 in the issue 99002 session, 2026-10-11",
-    "issue": 99002,
-    "id": 1,
-    "proposed_at": "2026-10-11T16:09:22.504Z"
-  },
-  {
-    "area": "text-properties",
-    "fact": "Each font has its own line height: the three quick-choice fonts Hand-drawn (Excalifont), Normal (Nunito) and Code (Comic Shanns) all use 1.25; some fonts in the full list use 1.15 or 1.2.",
-    "source": "excalidraw source at commit 4c00f31 (2026-10-08): common/src/font-metadata.ts FONT_METADATA lineHeight values and getLineHeight (lines 175-181)",
-    "id": 2,
-    "proposed_at": "2026-10-11T16:19:06.000Z"
-  }
-]
+[]
