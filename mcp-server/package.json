@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node test/gates.mjs && node test/knowledge.mjs && node test/fixtures.mjs",
+    "test": "node test/gates.mjs && node test/knowledge.mjs && node test/fixtures.mjs && node test/security.mjs",
     "build": "tsc",
     "approve": "node dist/approve.js",
     "review-knowledge": "node dist/review-knowledge.js"
