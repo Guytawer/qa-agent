@@ -24,4 +24,12 @@ check(failed.includes("every case has steps and an expected result"), "a case wi
 check(failed.includes("C-002 is updated"), "an existing case created instead of updated fails");
 check(failed.includes("giant") && failed.includes("both"), "missing coverage fails");
 check(failed.includes("invented name"), "forbidden content fails");
+
+// Discovery checks (touched features nobody mentioned) are a group of their own, counted in metrics.
+const dspec = { ...spec, must_cover: [...spec.must_cover, { name: "editor", source: "discovery", any: ["double-click"] }] };
+const missed = grade(dspec, ok("C-002", "update C-002", "Huge") + ok("TC-1", "create", "Giant"));
+const editor = missed.checks.find((c) => c.name === "editor");
+check(editor.group === "discovery" && !editor.pass, "a missed discovery fails in its own group");
+check(missed.metrics.discovery.found === 0 && missed.metrics.discovery.total === 1, "discovery is counted as found of total");
+check(missed.checks.find((c) => c.name === "giant").group === "coverage", "a check without a source is a decision");
 console.log(`\n${passed} checks passed`);

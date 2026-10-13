@@ -24,6 +24,7 @@
   "must_cover": [
     {
       "name": "both new presets",
+      "source": "decision",
       "all": [
         "\\bHuge\\b",
         "\\bGiant\\b"
@@ -31,6 +32,7 @@
     },
     {
       "name": "exact sizes 56 and 96",
+      "source": "decision",
       "all": [
         "\\b56\\b",
         "\\b96\\b"
@@ -38,6 +40,7 @@
     },
     {
       "name": "no preset highlighted for mixed or in-between sizes",
+      "source": "decision",
       "any": [
         "no (font size )?preset is highlighted",
         "no preset highlighted"
@@ -45,6 +48,7 @@
     },
     {
       "name": "size shortcuts",
+      "source": "decision",
       "any": [
         "Ctrl\\+Shift\\+[>.]",
         "Cmd\\+Shift\\+[>.]"
@@ -52,12 +56,14 @@
     },
     {
       "name": "sticky note",
+      "source": "decision",
       "any": [
         "sticky note"
       ]
     },
     {
       "name": "text inside a shape",
+      "source": "decision",
       "any": [
         "inside (a|the) (rectangle|shape|ellipse|diamond)",
         "in a shape",
@@ -67,6 +73,7 @@
     },
     {
       "name": "arrow label",
+      "source": "decision",
       "any": [
         "arrow label",
         "label[^\\n]{0,40}arrow"
@@ -74,6 +81,7 @@
     },
     {
       "name": "paste styles",
+      "source": "decision",
       "any": [
         "paste styles",
         "Ctrl\\+Alt\\+V"
@@ -81,36 +89,42 @@
     },
     {
       "name": "undo and redo",
+      "source": "decision",
       "any": [
         "Ctrl\\+Z"
       ]
     },
     {
       "name": "reload",
+      "source": "decision",
       "any": [
         "reload"
       ]
     },
     {
       "name": "saved file",
+      "source": "decision",
       "any": [
         "\\.excalidraw\\b"
       ]
     },
     {
       "name": "image export",
+      "source": "decision",
       "any": [
         "\\bPNG\\b"
       ]
     },
     {
       "name": "live collaboration",
+      "source": "decision",
       "any": [
         "collaboration"
       ]
     },
     {
       "name": "mobile layout",
+      "source": "decision",
       "any": [
         "mobile",
         "375"

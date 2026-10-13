@@ -9,7 +9,10 @@ import { fileURLToPath } from "node:url";
 
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 
-type Pattern = { name: string; any?: string[]; all?: string[] };
+// Where a required behavior comes from: the issue text, a product-owner decision given to the agent,
+// or neither ("discovery": a touched feature nobody mentioned, which the agent has to find itself).
+type Source = "issue" | "decision" | "discovery";
+type Pattern = { name: string; source?: Source; any?: string[]; all?: string[] };
 type Forbidden = { name: string; pattern: string };
 export type EvalCase = {
   id: string;
@@ -29,7 +32,14 @@ export type Grade = {
   passed: number;
   total: number;
   score: number;
-  metrics: { cases: number; high: number; verify: number; template_ok: number };
+  metrics: {
+    cases: number;
+    high: number;
+    verify: number;
+    template_ok: number;
+    // Discovery checks found, out of all discovery checks in the case.
+    discovery: { found: number; total: number };
+  };
 };
 
 type Case = { id: string; header: string[]; body: string };
@@ -76,11 +86,14 @@ export function grade(spec: EvalCase, content: string, label = "", file = ""): G
     add("update", `${id} is updated`, !!c && /Action: update/.test(c.body), c ? undefined : "missing");
   }
 
-  // Behaviors the approved answers require.
+  // Behaviors the issue or the decisions ask for ("coverage"), and touched features nobody mentioned
+  // ("discovery"). They are reported apart: missing a decision means the agent ignored what it was told;
+  // missing a discovery means its own analysis did not reach that feature.
   for (const p of spec.must_cover) {
     const test = (re: string) => new RegExp(re, "i").test(content);
     const pass = p.all ? p.all.every(test) : (p.any ?? []).some(test);
-    add("coverage", p.name, pass);
+    const source = p.source ?? "decision";
+    add(source === "discovery" ? "discovery" : "coverage", p.name, pass, source === "discovery" ? undefined : `from the ${source}`);
   }
 
   // Content that must never appear.
@@ -98,7 +111,16 @@ export function grade(spec: EvalCase, content: string, label = "", file = ""): G
     passed,
     total: checks.length,
     score: Math.round((passed / checks.length) * 100) / 100,
-    metrics: { cases: n, high, verify: (content.match(/\(verify/g) ?? []).length, template_ok: templateOk },
+    metrics: {
+      cases: n,
+      high,
+      verify: (content.match(/\(verify/g) ?? []).length,
+      template_ok: templateOk,
+      discovery: {
+        found: checks.filter((c) => c.group === "discovery" && c.pass).length,
+        total: checks.filter((c) => c.group === "discovery").length,
+      },
+    },
   };
 }
 
@@ -108,7 +130,8 @@ export async function loadCase(id: string): Promise<EvalCase> {
 
 function print(g: Grade) {
   console.log(`\n${g.case}${g.label ? ` (${g.label})` : ""}: ${g.passed}/${g.total} checks, score ${g.score}`);
-  console.log(`  cases ${g.metrics.cases}, High ${g.metrics.high}, (verify) ${g.metrics.verify}, template ${g.metrics.template_ok}/${g.metrics.cases}`);
+  const d = g.metrics.discovery;
+  console.log(`  cases ${g.metrics.cases}, High ${g.metrics.high}, (verify) ${g.metrics.verify}, template ${g.metrics.template_ok}/${g.metrics.cases}, discovery ${d.found}/${d.total}`);
   for (const c of g.checks.filter((x) => !x.pass)) console.log(`  FAIL [${c.group}] ${c.name}${c.detail ? `: ${c.detail}` : ""}`);
 }
 

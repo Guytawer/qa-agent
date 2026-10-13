@@ -11,7 +11,8 @@
     "grade": "node dist/grade.js",
     "freeze": "node dist/freeze.js",
     "eval": "node dist/eval-run.js",
-    "eval-report": "node dist/eval-report.js"
+    "eval-report": "node dist/eval-report.js",
+    "regrade": "node dist/eval-regrade.js"
   },
   "keywords": [],
   "author": "",

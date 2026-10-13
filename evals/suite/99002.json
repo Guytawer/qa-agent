@@ -21,6 +21,7 @@
   "must_cover": [
     {
       "name": "three presets",
+      "source": "decision",
       "all": [
         "\\bTight\\b",
         "\\bNormal\\b",
@@ -29,6 +30,7 @@
     },
     {
       "name": "bounds 0.8 and 2.5",
+      "source": "decision",
       "all": [
         "\\b0\\.8\\b",
         "\\b2\\.5\\b"
@@ -36,6 +38,7 @@
     },
     {
       "name": "rounding to 0.05",
+      "source": "decision",
       "any": [
         "0\\.05",
         "1\\.23",
@@ -44,6 +47,7 @@
     },
     {
       "name": "invalid input",
+      "source": "decision",
       "any": [
         "non-numeric",
         "empty"
@@ -51,12 +55,14 @@
     },
     {
       "name": "sticky note",
+      "source": "discovery",
       "any": [
         "sticky note"
       ]
     },
     {
       "name": "arrow label",
+      "source": "issue",
       "any": [
         "arrow label",
         "label[^\\n]{0,40}arrow"
@@ -64,6 +70,7 @@
     },
     {
       "name": "text editor",
+      "source": "discovery",
       "any": [
         "editor",
         "double-click"
@@ -71,6 +78,7 @@
     },
     {
       "name": "paste styles",
+      "source": "discovery",
       "any": [
         "paste styles",
         "Ctrl\\+Alt\\+V"
@@ -78,24 +86,28 @@
     },
     {
       "name": "reload",
+      "source": "decision",
       "any": [
         "reload"
       ]
     },
     {
       "name": "saved file",
+      "source": "decision",
       "any": [
         "\\.excalidraw\\b"
       ]
     },
     {
       "name": "SVG export",
+      "source": "decision",
       "any": [
         "\\bSVG\\b"
       ]
     },
     {
       "name": "live collaboration",
+      "source": "decision",
       "any": [
         "collaboration"
       ]

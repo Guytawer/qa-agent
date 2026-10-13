@@ -10,6 +10,7 @@
     "grade": "npm --prefix mcp-server run grade --",
     "freeze": "npm --prefix mcp-server run freeze --",
     "eval": "npm --prefix mcp-server run eval --",
-    "eval-report": "npm --prefix mcp-server run eval-report"
+    "eval-report": "npm --prefix mcp-server run eval-report",
+    "regrade": "npm --prefix mcp-server run regrade --"
   }
 }

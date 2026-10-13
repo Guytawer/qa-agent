@@ -16,12 +16,14 @@
   "must_cover": [
     {
       "name": "underline toggle",
+      "source": "issue",
       "any": [
         "Underline"
       ]
     },
     {
       "name": "shortcut",
+      "source": "issue",
       "any": [
         "Ctrl\\+U\\b",
         "Cmd\\+U\\b"
@@ -29,6 +31,7 @@
     },
     {
       "name": "right-to-left text",
+      "source": "discovery",
       "any": [
         "Arabic",
         "Hebrew",
@@ -37,12 +40,14 @@
     },
     {
       "name": "sticky note",
+      "source": "discovery",
       "any": [
         "sticky note"
       ]
     },
     {
       "name": "paste styles",
+      "source": "discovery",
       "any": [
         "paste styles",
         "Ctrl\\+Alt\\+V"
@@ -50,12 +55,14 @@
     },
     {
       "name": "saved file",
+      "source": "discovery",
       "any": [
         "\\.excalidraw\\b"
       ]
     },
     {
       "name": "live collaboration",
+      "source": "discovery",
       "any": [
         "collaboration"
       ]

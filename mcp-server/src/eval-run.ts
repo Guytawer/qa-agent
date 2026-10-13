@@ -174,7 +174,8 @@ async function runOnce(spec: EvalCase & { prompt?: string; decisions?: string[] 
   );
   rmSync(ws.dir, { recursive: true, force: true });
 
-  console.log(`  run ${n}: ${outcome}, ${g.passed}/${g.total} checks, score ${g.score}, ${g.metrics.cases} cases`);
+  const d = g.metrics.discovery;
+  console.log(`  run ${n}: ${outcome}, ${g.passed}/${g.total} checks, score ${g.score}, ${g.metrics.cases} cases, discovery ${d.found}/${d.total}`);
   for (const c of g.checks.filter((x) => !x.pass)) console.log(`    FAIL [${c.group}] ${c.name}${c.detail ? `: ${c.detail}` : ""}`);
 }
 
