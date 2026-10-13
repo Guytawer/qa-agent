@@ -1,0 +1,21 @@
+{
+  "number": 11404,
+  "title": "Add support for italic text",
+  "state": "open",
+  "labels": [],
+  "author": "pidanoyes",
+  "assignees": [],
+  "created_at": "2026-05-26T08:08:25Z",
+  "body": "Hi Excalidraw Team,\n\nI’m Arthur. Thank you for building such a great drawing tool.\n\nI would like to suggest adding support for italic text in Excalidraw. Currently, users can choose different fonts when editing text, but there does not seem to be a direct way to make text italic.\n\nThis would be very useful for creating academic figures, flowcharts, formula explanations, or emphasizing specific keywords.\n\nIt would be great if Excalidraw could support one of the following options:\n\nAdd an Italic option to the text style panel\nSupport shortcuts such as Ctrl + I / Cmd + I\nProvide a font style that supports italic text\n\nThis feature would make text formatting more flexible and improve the experience for academic and technical diagrams.\n\nThanks again for your great work!\n\nArthur",
+  "comments": [
+    {
+      "author": "ronit45",
+      "body": "I'd like to work on this by adding a toggle in the React properties panel and updating the canvas text rendering logic"
+    },
+    {
+      "author": "cunha-luiss",
+      "body": "Hi, I would love to work on this implementation making some tests to make it robust using the already commit above a5d95f045d56c4cb024381724d3d1d14ce428e16"
+    }
+  ],
+  "frozen_at": "2026-10-13T08:25:36.316Z"
+}
