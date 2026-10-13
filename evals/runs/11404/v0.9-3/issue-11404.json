@@ -1,0 +1,47 @@
+{
+  "issue": 11404,
+  "stage": "saved",
+  "questions": "1. **Which of the three proposed options ships?** The issue offers: an Italic option in the panel, Ctrl+I / Cmd+I, or an italic font. *Suggested:* an \"Italic\" toggle in the properties panel **and** Ctrl+I (Cmd+I on macOS); no separate italic font in the font list.\n2. **Scope of italic: whole element or part of the text?** *Suggested:* italic is one property of the whole text element; there is no partial italic (no rich text).\n3. **Toggle placement, label and tooltip.** *Suggested:* an \"Italic\" toggle next to the text align control, tooltip \"Italic (Ctrl+I)\"; shown when a text, a shape with text or an arrow with a label is selected, or the Text tool is active.\n4. **Ctrl+I behavior.** *Suggested:* toggles italic on the selected text and on the text being edited (even if only part of it is highlighted it applies to the whole element); with nothing selected it does nothing; the browser's own Ctrl+I action (e.g. Firefox \"Page Info\") never opens while the canvas has focus.\n5. **Fonts without a real italic face** (e.g. Hand-drawn/Excalifont, Code/Comic Shanns, fonts in the full list, CJK fallback). *Suggested:* every font can be italic; where the font has no italic face, the text is slanted (synthetic oblique). The toggle is never disabled.\n6. **Several texts selected, only some italic.** *Suggested:* toggle shows as not pressed; one click makes all italic, a second click makes all upright.\n7. **Default for new text.** *Suggested:* the last chosen italic value becomes the default for new text, like font family and size.\n8. **Layout.** *Suggested:* the slanted last character is never clipped; the text box widens to fit; text inside a shape re-wraps to the shape width (shape grows taller, width unchanged); an arrow label stays at the middle of the arrow; a sticky note's auto-fit takes italic into account.\n9. **Persistence and sharing.** *Suggested:* italic survives page reload, saved .excalidraw file, PNG and SVG export (including SVG on a computer without the fonts), copy as PNG/SVG, and live collaboration; an older Excalidraw version opens a file with italic text without error and shows it upright.\n10. **Copies, styles and history.** *Suggested:* paste styles, Ctrl+C/Ctrl+V, Ctrl+D, Alt+drag and library items carry italic; one toggle is undone with a single undo.\n11. **Scripts.** *Suggested:* right-to-left (Arabic, Hebrew), CJK and emoji render without clipping and without breaking line layout; emoji may look upright (browser decides) — no specific slant required for them.\n12. **Platforms.** *Suggested:* current desktop Chrome, Firefox, Safari and Edge on Windows and macOS, plus the mobile layout (375 px wide) where the toggle must be reachable; no locale-specific label work beyond fallback to English.\n13. **Combination with underline** (issue 99001, not released). *Suggested:* out of scope for these cases; add a combination case once underline ships.",
+  "answers": "1. (user) A panel toggle and Ctrl/Cmd+I; one italic property per text element, no separate italic font.\n2. (user) Italic applies to the whole text element only; there is no partial italic. Bold is out of scope.\n3. (accepted suggestion) An \"Italic\" toggle next to the text align control, tooltip \"Italic (Ctrl+I)\"; shown when a text, a shape with text or an arrow with a label is selected, or the Text tool is active.\n4. (accepted suggestion) Ctrl+I (Cmd+I on macOS) toggles italic on the selected text and on the text being edited (even if only part of it is highlighted, it applies to the whole element); with nothing selected it does nothing; the browser's own Ctrl+I action (e.g. Firefox \"Page Info\") never opens while the canvas has focus.\n5. (user) Synthetic oblique is allowed for fonts without an italic face; the text stays readable and unclipped. (accepted suggestion) Every font can be italic; the toggle is never disabled.\n6. (accepted suggestion) With several texts selected and only some italic, the toggle shows as not pressed; one click makes all italic, a second click makes all upright.\n7. (user) The last italic value becomes the default for new text.\n8. (accepted suggestion) The slanted last character is never clipped; the text box widens to fit; text inside a shape re-wraps to the shape width (shape grows taller, width unchanged); an arrow label stays at the middle of the arrow; a sticky note's auto-fit takes italic into account.\n9. (accepted suggestion) Italic survives page reload, a saved .excalidraw file, PNG and SVG export (including SVG opened on a computer without the fonts), copy as PNG/SVG, and live collaboration; an older Excalidraw version opens a file with italic text without error and shows it upright.\n10. (accepted suggestion) Paste styles, Ctrl+C then Ctrl+V, Ctrl+D, Alt+drag and library items carry italic; one italic toggle is undone with a single undo.\n11. (user) Italic text stays readable and unclipped in Latin, Cyrillic, Chinese, Japanese, Arabic, Hebrew (right to left), emoji and mixed scripts; text direction and alignment are unchanged. (accepted suggestion) Whether emoji look slanted is left to the browser.\n12. (accepted suggestion) Platforms: current desktop Chrome, Firefox, Safari and Edge on Windows and macOS, plus the mobile layout (375 px wide) where the toggle must be reachable; in other locales the \"Italic\" label falls back to English, never empty or a raw key.\n13. (accepted suggestion) The combination with underline (issue 99001, not released) is out of scope; add a combination case once underline ships.\n14. (user) Color and opacity changes keep italic.",
+  "plan": "## Text properties\ncreate TC-1: \"Italic\" toggle: making a text italic and upright again\ncreate TC-2: Ctrl+I / Cmd+I on a selected text in each desktop browser\ncreate TC-3: Ctrl+I while editing a text with part of it highlighted\ncreate TC-4: Ctrl+I with nothing selected\ncreate TC-5: \"Italic\" toggle: when it is shown\ncreate TC-6: Italic in fonts with and without an italic face\ncreate TC-7: Italic text in different scripts\ncreate TC-8: Several texts with mixed italic: \"Italic\" toggle\ncreate TC-9: \"Italic\" toggle in the mobile layout\ncreate TC-10: \"Italic\" label in a locale other than English\nupdate C-001: font family change on an italic text keeps it italic\nupdate C-004: color change and an opacity change on an italic text keep it italic\nupdate C-006: new text takes the last italic value, both on and off\n\n## Text in shapes and on arrows\nupdate C-007: after the text wraps, making it italic re-wraps it inside the rectangle, shape taller, width unchanged\nupdate C-009: \"Italic\" with the rectangle selected applies to its text\ncreate TC-11: Arrow label: italic\ncreate TC-12: Sticky note label: italic and auto-fit\n\n## Styles, copies and history\nupdate C-011: paste styles carries italic from \"Source\" to \"Target\"\nupdate C-012: undo and redo of an italic toggle, one undo per toggle\nupdate C-013: copies of an italic text are italic\n\n## Files, sharing and export\nupdate C-014: italic kept after a page reload\nupdate C-015: italic kept in a saved .excalidraw file\nupdate C-016: italic text in a PNG export matches the canvas\ncreate TC-13: Copy to clipboard as PNG and as SVG: italic text\nupdate C-017: italic text in an SVG export opened on another computer\nupdate C-018: italic toggle reaches other users in live collaboration\ncreate TC-14: Older Excalidraw version opens a file with italic text\n\nNot changed: C-002, C-003, C-005, C-008, C-010\n\nNo update removes an existing check: every update adds italic to the preconditions, steps or expected result and keeps all current checks.",
+  "approvals": [
+    {
+      "what": "answers",
+      "hash": "98cdbf15a444",
+      "by": "maxxx",
+      "at": "2026-10-13T11:26:06.106Z"
+    },
+    {
+      "what": "plan",
+      "hash": "5071939ad7cb",
+      "by": "maxxx",
+      "at": "2026-10-13T11:27:00.625Z"
+    }
+  ],
+  "history": [
+    {
+      "at": "2026-10-13T11:25:39.160Z",
+      "event": "session opened, questions recorded"
+    },
+    {
+      "at": "2026-10-13T11:26:02.905Z",
+      "event": "answers recorded"
+    },
+    {
+      "at": "2026-10-13T11:26:06.107Z",
+      "event": "answers approved by maxxx"
+    },
+    {
+      "at": "2026-10-13T11:26:52.736Z",
+      "event": "plan submitted (fingerprint 5071939ad7cb; 27 cases: 13 updated, 14 new, 0 retired, 0 kept unchanged)"
+    },
+    {
+      "at": "2026-10-13T11:27:00.625Z",
+      "event": "plan approved by maxxx"
+    },
+    {
+      "at": "2026-10-13T11:28:05.265Z",
+      "event": "change set saved to C:\\Users\\maxxx\\AppData\\Local\\Temp\\qa-eval-11404-3-1791890708361\\changes\\excalidraw-11404.md"
+    }
+  ]
+}

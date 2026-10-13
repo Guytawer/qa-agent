@@ -1,0 +1,58 @@
+[
+  {
+    "area": "text-properties",
+    "fact": "Italic is one property of the whole text element, turned on and off by an \"Italic\" toggle next to the text align control (tooltip \"Italic (Ctrl+I)\") or by Ctrl+I / Cmd+I; there is no partial italic, no separate italic font, and bold is out of scope.",
+    "source": "Approved answers 1 to 3 in the issue 11404 session, 2026-10-13 (product owner via user) [answers approved by maxxx at 2026-10-13T11:22:45.724Z, fingerprint 5f3ad56d5abc; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 1,
+    "proposed_at": "2026-10-13T11:24:47.458Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "Ctrl+I / Cmd+I toggles italic on the selected texts and on the text being edited (even with only part highlighted); with nothing selected it does nothing, the browser's own Ctrl+I action never opens while the canvas has focus, and the single-key I tool shortcut is not triggered.",
+    "source": "Approved answer 4 in the issue 11404 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T11:22:45.724Z, fingerprint 5f3ad56d5abc; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 2,
+    "proposed_at": "2026-10-13T11:24:49.109Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "With several texts selected and only some italic, the \"Italic\" toggle shows as not pressed; one click makes all italic and a second click makes all upright; the last chosen italic value becomes the default for new text.",
+    "source": "Approved answers 5 and 6 in the issue 11404 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T11:22:45.724Z, fingerprint 5f3ad56d5abc; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 3,
+    "proposed_at": "2026-10-13T11:24:50.661Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "Every font can be made italic, using a synthetic oblique where no italic face exists; italic text stays readable and unclipped in Latin, Cyrillic, Chinese, Japanese, Arabic, Hebrew, emoji and mixed scripts, with direction and alignment unchanged, and the canvas, editor and exports look the same.",
+    "source": "Approved answers 7 and 9 in the issue 11404 session, 2026-10-13 (product owner via user) [answers approved by maxxx at 2026-10-13T11:22:45.724Z, fingerprint 5f3ad56d5abc; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 4,
+    "proposed_at": "2026-10-13T11:24:52.459Z"
+  },
+  {
+    "area": "bound-text",
+    "fact": "Italic text inside a shape re-wraps to the shape width and the shape grows taller with its width unchanged; an italic arrow label stays at the middle of the arrow; a sticky note's auto-fit takes italic into account and never shows the label larger than the picked size.",
+    "source": "Approved answer 8 in the issue 11404 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T11:22:45.724Z, fingerprint 5f3ad56d5abc; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 5,
+    "proposed_at": "2026-10-13T11:24:53.960Z"
+  },
+  {
+    "area": "styles-and-history",
+    "fact": "Paste styles, Ctrl+C then Ctrl+V, Ctrl+D, Alt+drag and library items carry a text's italic; one italic toggle is undone with a single undo and restored with redo; color and opacity changes keep italic.",
+    "source": "Approved answer 11 in the issue 11404 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T11:22:45.724Z, fingerprint 5f3ad56d5abc; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 6,
+    "proposed_at": "2026-10-13T11:24:55.509Z"
+  },
+  {
+    "area": "files-and-export",
+    "fact": "Italic survives a page reload, a saved .excalidraw file, PNG and SVG export, copy as PNG/SVG and live collaboration; an older Excalidraw version opens a file with italic text without error and shows the text upright.",
+    "source": "Approved answer 10 in the issue 11404 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T11:22:45.724Z, fingerprint 5f3ad56d5abc; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 7,
+    "proposed_at": "2026-10-13T11:24:56.751Z"
+  }
+]

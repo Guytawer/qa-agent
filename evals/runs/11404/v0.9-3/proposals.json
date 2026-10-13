@@ -1,0 +1,74 @@
+[
+  {
+    "area": "text-properties",
+    "fact": "Italic is one property of the whole text element, set with an \"Italic\" toggle in the properties panel or Ctrl+I (Cmd+I on macOS); there is no partial italic, no separate italic font, and bold is out of scope.",
+    "source": "Product owner's answers 1 and 2 on issue 11404, 2026-10-13, approved by maxxx [answers approved by maxxx at 2026-10-13T11:26:06.106Z, fingerprint 98cdbf15a444; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 1,
+    "proposed_at": "2026-10-13T11:28:08.264Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "The \"Italic\" toggle sits next to the text align control with tooltip \"Italic (Ctrl+I)\" and is shown when a text, a shape with text or an arrow with a label is selected, or the Text tool is active; it is never disabled, for any font.",
+    "source": "Accepted suggested answers 3 and 5 on issue 11404, 2026-10-13, approved by maxxx [answers approved by maxxx at 2026-10-13T11:26:06.106Z, fingerprint 98cdbf15a444; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 2,
+    "proposed_at": "2026-10-13T11:28:09.868Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "Ctrl+I (Cmd+I) toggles italic on the selected text or on the whole text being edited, even when only part of it is highlighted; with nothing selected it does nothing, and the browser's own Ctrl+I action (such as Firefox \"Page Info\") never opens while the canvas has focus.",
+    "source": "Accepted suggested answer 4 on issue 11404, 2026-10-13, approved by maxxx [answers approved by maxxx at 2026-10-13T11:26:06.106Z, fingerprint 98cdbf15a444; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 3,
+    "proposed_at": "2026-10-13T11:28:11.620Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "Fonts without an italic face may use a synthetic slant; italic text stays readable and unclipped in Latin, Cyrillic, Chinese, Japanese, Arabic, Hebrew, emoji and mixed scripts, with direction and alignment unchanged, and whether emoji slant is left to the browser.",
+    "source": "Product owner's answers 5 and 11 on issue 11404, 2026-10-13, approved by maxxx [answers approved by maxxx at 2026-10-13T11:26:06.106Z, fingerprint 98cdbf15a444; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 4,
+    "proposed_at": "2026-10-13T11:28:13.270Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "With several texts selected and only some italic, the \"Italic\" toggle shows as not pressed; one click makes all italic and a second click makes all upright.",
+    "source": "Accepted suggested answer 6 on issue 11404, 2026-10-13, approved by maxxx [answers approved by maxxx at 2026-10-13T11:26:06.106Z, fingerprint 98cdbf15a444; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 5,
+    "proposed_at": "2026-10-13T11:28:14.571Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "The last chosen italic value, on or off, becomes the default for new text, and color and opacity changes keep a text italic.",
+    "source": "Product owner's answers 7 and 14 on issue 11404, 2026-10-13, approved by maxxx [answers approved by maxxx at 2026-10-13T11:26:06.106Z, fingerprint 98cdbf15a444; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 6,
+    "proposed_at": "2026-10-13T11:28:15.821Z"
+  },
+  {
+    "area": "bound-text",
+    "fact": "Italic text inside a shape re-wraps to the shape width (shape grows taller, width unchanged), an italic arrow label stays at the middle of the arrow, and a sticky note's auto-fit takes italic into account; a slanted last character is never clipped.",
+    "source": "Accepted suggested answer 8 on issue 11404, 2026-10-13, approved by maxxx [answers approved by maxxx at 2026-10-13T11:26:06.106Z, fingerprint 98cdbf15a444; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 7,
+    "proposed_at": "2026-10-13T11:28:17.419Z"
+  },
+  {
+    "area": "styles-and-history",
+    "fact": "Paste styles, Ctrl+C then Ctrl+V, Ctrl+D, Alt+drag and library items carry a text's italic, and one italic toggle is undone with a single undo.",
+    "source": "Accepted suggested answer 10 on issue 11404, 2026-10-13, approved by maxxx [answers approved by maxxx at 2026-10-13T11:26:06.106Z, fingerprint 98cdbf15a444; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 8,
+    "proposed_at": "2026-10-13T11:28:18.921Z"
+  },
+  {
+    "area": "files-and-export",
+    "fact": "Italic survives a page reload, a saved .excalidraw file, PNG and SVG export, copy as PNG/SVG and live collaboration; an older Excalidraw version opens a file with italic text without error and shows it upright.",
+    "source": "Accepted suggested answer 9 on issue 11404, 2026-10-13, approved by maxxx [answers approved by maxxx at 2026-10-13T11:26:06.106Z, fingerprint 98cdbf15a444; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 9,
+    "proposed_at": "2026-10-13T11:28:20.214Z"
+  }
+]
