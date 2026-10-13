@@ -10,6 +10,7 @@
 // The runner plays the product owner (it sends the case's decisions) and the approver (it runs the
 // approve command with "y"). This is only for evals: in real use, approvals come from a person.
 import { spawnSync } from "node:child_process";
+import { claudeTurn as turn } from "./claude-cli.js";
 import { randomUUID } from "node:crypto";
 import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync, appendFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -52,50 +53,8 @@ function makeWorkspace(spec: EvalCase | null, name: string): Workspace {
   return { dir, env: { ...process.env, ...env }, mcpConfig };
 }
 
-type TurnResult = { text: string; tools: string[]; isError: boolean; raw: unknown };
-
-function claudeTurn(ws: Workspace, sessionId: string, first: boolean, message: string): TurnResult {
-  const args = [
-    "-p",
-    "--output-format", "stream-json",
-    "--verbose",
-    first ? "--session-id" : "--resume", sessionId,
-    "--mcp-config", ws.mcpConfig,
-    "--strict-mcp-config",
-    "--tools", BUILTIN_TOOLS,
-    "--allowedTools", ...ALLOWED,
-    "--permission-prompts", "none",
-    "--setting-sources", SETTING_SOURCES,
-  ];
-  // On Windows "claude" is a .cmd file that needs a shell; pass one quoted command line instead of
-  // an argument list, so nothing is concatenated unescaped.
-  const quote = (a: string) => (/^[\w@%+=:,./\\-]+$/.test(a) ? a : `"${a.replace(/"/g, '\\"')}"`);
-  const run = spawnSync(["claude", ...args].map(quote).join(" "), {
-    cwd: ws.dir,
-    input: message,
-    encoding: "utf8",
-    timeout: TURN_TIMEOUT_MS,
-    maxBuffer: 64 * 1024 * 1024,
-    shell: true,
-  });
-  if (run.error) throw run.error;
-  const tools: string[] = [];
-  let result: any = null;
-  for (const line of (run.stdout ?? "").split("\n")) {
-    if (!line.trim().startsWith("{")) continue;
-    let event: any;
-    try {
-      event = JSON.parse(line);
-    } catch {
-      continue;
-    }
-    for (const part of event?.message?.content ?? []) if (part?.type === "tool_use") tools.push(part.name);
-    if (event.type === "result") result = event;
-  }
-  if (!result) {
-    throw new Error(`Claude Code returned no result (exit ${run.status}).\n${(run.stderr ?? "").slice(0, 2000)}`);
-  }
-  return { text: String(result.result ?? ""), tools, isError: !!result.is_error, raw: result };
+function claudeTurn(ws: Workspace, sessionId: string, first: boolean, message: string) {
+  return turn({ cwd: ws.dir, mcpConfig: ws.mcpConfig, sessionId, first, message, builtinTools: BUILTIN_TOOLS, allowed: ALLOWED, settingSources: SETTING_SOURCES, timeoutMs: TURN_TIMEOUT_MS });
 }
 
 function stage(ws: Workspace, issue: number): string {

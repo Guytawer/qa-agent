@@ -11,6 +11,7 @@
     "freeze": "npm --prefix mcp-server run freeze --",
     "eval": "npm --prefix mcp-server run eval --",
     "eval-report": "npm --prefix mcp-server run eval-report",
-    "regrade": "npm --prefix mcp-server run regrade --"
+    "regrade": "npm --prefix mcp-server run regrade --",
+    "auto": "npm --prefix mcp-server run auto --"
   }
 }
