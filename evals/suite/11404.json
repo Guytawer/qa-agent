@@ -1,0 +1,127 @@
+{
+  "id": "11404",
+  "title": "Italic text",
+  "issue": 11404,
+  "kind": "feature",
+  "prompt": "Write test cases for Excalidraw issue #11404.",
+  "decisions": [
+    "A panel toggle and Ctrl/Cmd+I; one italic property per text element, no separate font.",
+    "Whole element only. Bold is out of scope.",
+    "Synthetic oblique is allowed; text stays readable and unclipped in Latin, Cyrillic, Chinese, Japanese, Arabic, Hebrew (right to left), emoji and mixed scripts; direction and alignment unchanged.",
+    "The last italic value becomes the default for new text.",
+    "Color and opacity changes keep italic."
+  ],
+  "bounds": {
+    "cases_min": 15,
+    "cases_max": 30,
+    "high_max_share": 0.3
+  },
+  "must_update": [
+    "C-011"
+  ],
+  "must_cover": [
+    {
+      "name": "italic toggle",
+      "any": [
+        "\"Italic\"",
+        "Italic toggle",
+        "italic toggle"
+      ]
+    },
+    {
+      "name": "shortcut",
+      "any": [
+        "Ctrl\\+I\\b",
+        "Cmd\\+I\\b"
+      ]
+    },
+    {
+      "name": "right-to-left text",
+      "any": [
+        "Arabic",
+        "Hebrew",
+        "right-to-left",
+        "right to left"
+      ]
+    },
+    {
+      "name": "CJK text",
+      "any": [
+        "Chinese",
+        "Japanese",
+        "CJK"
+      ]
+    },
+    {
+      "name": "default for new text",
+      "any": [
+        "new text"
+      ]
+    },
+    {
+      "name": "text inside a shape",
+      "any": [
+        "inside (a|the) (rectangle|shape)",
+        "in a shape"
+      ]
+    },
+    {
+      "name": "arrow label",
+      "any": [
+        "arrow label",
+        "label[^\\n]{0,40}arrow"
+      ]
+    },
+    {
+      "name": "paste styles",
+      "any": [
+        "paste styles",
+        "Ctrl\\+Alt\\+V"
+      ]
+    },
+    {
+      "name": "undo and redo",
+      "any": [
+        "Ctrl\\+Z"
+      ]
+    },
+    {
+      "name": "color change keeps italic",
+      "any": [
+        "color"
+      ]
+    },
+    {
+      "name": "reload",
+      "any": [
+        "reload"
+      ]
+    },
+    {
+      "name": "saved file",
+      "any": [
+        "\\.excalidraw\\b"
+      ]
+    },
+    {
+      "name": "image export",
+      "any": [
+        "\\bPNG\\b"
+      ]
+    }
+  ],
+  "must_not": [
+    {
+      "name": "no link outside the product",
+      "pattern": "https?://(?!([\\w-]+\\.)*(excalidraw\\.com|github\\.com)\\b)"
+    },
+    {
+      "name": "invented preset name",
+      "pattern": "Extra large"
+    },
+    {
+      "name": "bold treated as in scope",
+      "pattern": "Action: create[^#]{0,200}\\bBold\\b"
+    }
+  ]
+}

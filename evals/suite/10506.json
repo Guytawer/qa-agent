@@ -1,0 +1,132 @@
+{
+  "id": "10506",
+  "title": "More font size presets (Huge, Giant)",
+  "issue": 10506,
+  "kind": "feature",
+  "prompt": "Write test cases for Excalidraw issue #10506.",
+  "decisions": [
+    "More presets only, no typed size field in the Font size control.",
+    "Two new presets after \"Very large\": \"Huge\" = 56 and \"Giant\" = 96. The existing four keep their labels and sizes.",
+    "A size between presets, or a selection with mixed sizes, highlights no preset until one is clicked; clicking a preset sets that exact size on every selected text. A text at exactly 56 or 96, however it got there, shows its preset highlighted.",
+    "Tooltips \"Huge\" and \"Giant\"; no new shortcuts; the increase and decrease shortcuts are unchanged and have no upper limit.",
+    "Text in shapes wraps and the shape grows taller; arrow labels stay at the middle; sticky note labels offer both presets and keep auto-fit, with the picked preset highlighted.",
+    "Copy and paste styles, copies and undo/redo carry the new sizes; reload, saved file, PNG and SVG export and live collaboration keep them.",
+    "All six presets fit the 375 px mobile panel. Latest Chrome, Firefox and Safari on desktop plus Safari on iOS. Older Excalidraw versions are out of scope."
+  ],
+  "bounds": {
+    "cases_min": 14,
+    "cases_max": 30,
+    "high_max_share": 0.3
+  },
+  "must_update": [
+    "C-002"
+  ],
+  "must_cover": [
+    {
+      "name": "both new presets",
+      "all": [
+        "\\bHuge\\b",
+        "\\bGiant\\b"
+      ]
+    },
+    {
+      "name": "exact sizes 56 and 96",
+      "all": [
+        "\\b56\\b",
+        "\\b96\\b"
+      ]
+    },
+    {
+      "name": "no preset highlighted for mixed or in-between sizes",
+      "any": [
+        "no (font size )?preset is highlighted",
+        "no preset highlighted"
+      ]
+    },
+    {
+      "name": "size shortcuts",
+      "any": [
+        "Ctrl\\+Shift\\+[>.]",
+        "Cmd\\+Shift\\+[>.]"
+      ]
+    },
+    {
+      "name": "sticky note",
+      "any": [
+        "sticky note"
+      ]
+    },
+    {
+      "name": "text inside a shape",
+      "any": [
+        "inside (a|the) (rectangle|shape)",
+        "in a shape"
+      ]
+    },
+    {
+      "name": "arrow label",
+      "any": [
+        "arrow label",
+        "label[^\\n]{0,40}arrow"
+      ]
+    },
+    {
+      "name": "paste styles",
+      "any": [
+        "paste styles",
+        "Ctrl\\+Alt\\+V"
+      ]
+    },
+    {
+      "name": "undo and redo",
+      "any": [
+        "Ctrl\\+Z"
+      ]
+    },
+    {
+      "name": "reload",
+      "any": [
+        "reload"
+      ]
+    },
+    {
+      "name": "saved file",
+      "any": [
+        "\\.excalidraw\\b"
+      ]
+    },
+    {
+      "name": "image export",
+      "any": [
+        "\\bPNG\\b"
+      ]
+    },
+    {
+      "name": "live collaboration",
+      "any": [
+        "collaboration"
+      ]
+    },
+    {
+      "name": "mobile layout",
+      "any": [
+        "mobile",
+        "375"
+      ]
+    }
+  ],
+  "must_not": [
+    {
+      "name": "no link outside the product",
+      "pattern": "https?://(?!([\\w-]+\\.)*(excalidraw\\.com|github\\.com)\\b)"
+    },
+    {
+      "name": "invented preset name",
+      "pattern": "Extra large|\\b[234]XL\\b"
+    },
+    {
+      "name": "known fact marked (verify)",
+      "pattern": "Very large\\W{0,3}\\(verify\\)|Ctrl\\+Alt\\+[CV][^\\n]{0,20}\\(verify\\)"
+    }
+  ]
+}
