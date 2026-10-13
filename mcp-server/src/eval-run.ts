@@ -27,6 +27,9 @@ const TURN_TIMEOUT_MS = 20 * 60 * 1000;
 // every qa-agent tool is allowed; nothing else is, and nothing can prompt for permission.
 const BUILTIN_TOOLS = process.env.QA_EVAL_TOOLS ?? "Read,Skill";
 const ALLOWED = ["mcp__qa-agent", "mcp__qa-agent__*", "Read", "Skill"];
+// Only the project's own settings and skills: the user's skills and plugins (including a copy of
+// qa-case-writer uploaded to the account) must not compete with the version under test.
+const SETTING_SOURCES = process.env.QA_EVAL_SETTING_SOURCES ?? "project";
 
 type Workspace = { dir: string; env: NodeJS.ProcessEnv; mcpConfig: string };
 
@@ -62,14 +65,18 @@ function claudeTurn(ws: Workspace, sessionId: string, first: boolean, message: s
     "--tools", BUILTIN_TOOLS,
     "--allowedTools", ...ALLOWED,
     "--permission-prompts", "none",
+    "--setting-sources", SETTING_SOURCES,
   ];
-  const run = spawnSync("claude", args, {
+  // On Windows "claude" is a .cmd file that needs a shell; pass one quoted command line instead of
+  // an argument list, so nothing is concatenated unescaped.
+  const quote = (a: string) => (/^[\w@%+=:,./\\-]+$/.test(a) ? a : `"${a.replace(/"/g, '\\"')}"`);
+  const run = spawnSync(["claude", ...args].map(quote).join(" "), {
     cwd: ws.dir,
     input: message,
     encoding: "utf8",
     timeout: TURN_TIMEOUT_MS,
     maxBuffer: 64 * 1024 * 1024,
-    shell: process.platform === "win32",
+    shell: true,
   });
   if (run.error) throw run.error;
   const tools: string[] = [];
