@@ -2,8 +2,8 @@
 //   npm run regrade -- "why the checks changed"
 // Each row is graded again from the change set it names (a file in evals/runs, or "git show <commit>:<path>").
 // Rows keep their time, label, tools and process checks; the reason is appended to the row's note.
-// A row whose file no longer holds its own change set (note says "overwritten") is not regraded from the
-// file; only its failed checks are regrouped by the current suite.
+// A row whose file no longer holds its own change set (note says "overwritten") keeps its old result,
+// with discovery unknown.
 import { execSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
@@ -49,19 +49,17 @@ for (const row of rows) {
     g.score = Math.round((g.passed / g.total) * 100) / 100;
     next = { ...row, ...g, checks: g.checks.filter((c) => !c.pass), metrics: g.metrics };
   } else {
-    // Regroup only: same pass/fail, current groups.
-    const discovery = new Set(spec.must_cover.filter((p) => p.source === "discovery").map((p) => p.name));
-    const checks = oldFailed.map((c) => (discovery.has(c.name) ? { ...c, group: "discovery", detail: undefined } : c));
-    const missed = checks.filter((c) => c.group === "discovery").length;
-    next = { ...row, checks, metrics: { ...row.metrics, discovery: { found: discovery.size - missed, total: discovery.size } } };
+    // Without the file, checks added since the row was graded cannot be evaluated: keep the old result
+    // and leave discovery unknown (null), so the report does not count it.
+    next = { ...row, metrics: { ...row.metrics, discovery: null } };
   }
 
-  next.note = [row.note, `regraded ${today}: ${reason}${content === null ? " (regrouped only, file not available)" : ""}`]
+  next.note = [row.note, `regraded ${today}: ${reason}${content === null ? " (not regraded: file not available)" : ""}`]
     .filter(Boolean)
     .join("; ");
   if (next.score !== row.score) console.log(`  ${row.case} ${row.label}: score ${row.score} -> ${next.score}`);
   const d = next.metrics.discovery;
-  console.log(`  ${row.case} ${row.label}: discovery ${d.found}/${d.total}`);
+  console.log(`  ${row.case} ${row.label}: discovery ${d ? `${d.found}/${d.total}` : "unknown"}`);
   // Keep the field order of the runner's rows: time first, tools last.
   const { tools, note, ...rest } = next;
   out.push(JSON.stringify({ ...rest, ...(note ? { note } : {}), ...(tools ? { tools } : {}) }));

@@ -111,6 +111,28 @@
       "any": [
         "collaboration"
       ]
+    },
+    {
+      "name": "control label in another language",
+      "source": "discovery",
+      "any": [
+        "locale",
+        "translat",
+        "language (other than|setting|selector|menu)",
+        "(another|a different|other) (UI )?language"
+      ]
+    },
+    {
+      "name": "where the control is shown",
+      "source": "discovery",
+      "any": [
+        "(where|when) (it|the control|the toggle|the \"[^\"]+\" (toggle|control)) is shown",
+        "is (not )?shown (only )?(when|for|in the)",
+        "not shown",
+        "is hidden",
+        "does not appear",
+        "(toggle|control) is (not )?visible"
+      ]
     }
   ],
   "must_not": [

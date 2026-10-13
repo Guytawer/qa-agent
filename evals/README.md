@@ -56,7 +56,31 @@ case | label | runs | mean score | min-max | cases (min-max) | required kept | d
 
 `required kept` covers every check the agent was told about (shape, updates, coverage, forbidden content, process). `discovery found` is the share of discovery checks found across runs, with the per-run counts.
 
-A discovery check exists only when the decisions leave room to find something. `10506` has none: its decisions list every touched feature. In `99001` ("accept all your suggested answers") and `99002` ("accept your suggestions for everything else") the agent's own questions decide what gets covered, so what it forgets to ask about is never covered.
+A discovery check exists only when the decisions leave room to find something. The `10506` decisions list nearly every touched feature, so it has one. In `99001` ("accept all your suggested answers") and `99002` ("accept your suggestions for everything else") the agent's own questions decide what gets covered, so what it forgets to ask about is never covered.
+
+### Checks from the variance between runs
+
+With the first discovery checks, skill v0.9 scored 100% on everything but one run: the suite had hit its ceiling and could not show an improvement. The case titles and contents of all 15 saved runs were then compared, looking for touched features that some runs cover and others miss. Two came up in every case:
+
+| Check | Found in | Why it matters |
+|---|---|---|
+| control label in another language | 6 of 15 runs | a new control without a translation shows English or a raw key such as `labels.italic`. The skill's "text and locales" technique covers the text people type (Arabic, Chinese), and the agent does not apply it to the product's own labels |
+| where the control is shown | 9 of 12 runs (not 10506: its controls already existed) | a new toggle shown for a rectangle without text, or hidden for a sticky note |
+
+A third candidate (underline next to an element link, 1 of 3 runs in 99001) was left out: not clearly a real risk.
+
+These checks were drawn from the same runs they now grade, so they fit those runs by construction. The test of them is the next skill version: v1.0 changes one thing (a checklist of touched features), and its runs should find more than v0.9 did.
+
+### Skill v0.9 baseline
+
+| Case | Runs | Required kept | Discovery found | Cases |
+|---|---|---|---|---|
+| 10506 | 2 | 100% | 0 of 1 (one run graded; the other run's file was overwritten) | 19-21 |
+| 11404 | 3 | 100% | 93% (8/9, 8/9, 9/9) | 24-27 |
+| 99001 | 2 | 100% | 86% (6/7, 6/7) | 23-24 |
+| 99002 | 2 | 100% | 70% (3/5, 4/5) | 23-26 |
+
+The agent does what it is told in every run. What varies is its own analysis, and the translation of new labels is the most common gap.
 
 When a check changes, `npm run regrade -- "<reason>"` grades every row of `results.jsonl` again from the change set it names and appends the reason to the row's note.
 

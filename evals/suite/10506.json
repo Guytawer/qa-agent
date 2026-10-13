@@ -129,6 +129,16 @@
         "mobile",
         "375"
       ]
+    },
+    {
+      "name": "control label in another language",
+      "source": "discovery",
+      "any": [
+        "locale",
+        "translat",
+        "language (other than|setting|selector|menu)",
+        "(another|a different|other) (UI )?language"
+      ]
     }
   ],
   "must_not": [
