@@ -1,0 +1,31 @@
+{"at":"2026-10-13T12:39:02.007Z","tool":"get_session","args":"{\"issue\":11404}","outcome":"ok"}
+{"at":"2026-10-13T12:39:02.214Z","tool":"get_issue","args":"{\"number\":11404}","outcome":"ok"}
+{"at":"2026-10-13T12:39:03.662Z","tool":"read_knowledge","args":"{}","outcome":"ok"}
+{"at":"2026-10-13T12:39:05.209Z","tool":"read_knowledge","args":"{\"area\":\"text-properties\"}","outcome":"ok"}
+{"at":"2026-10-13T12:39:05.607Z","tool":"read_knowledge","args":"{\"area\":\"bound-text\"}","outcome":"ok"}
+{"at":"2026-10-13T12:39:05.957Z","tool":"read_knowledge","args":"{\"area\":\"styles-and-history\"}","outcome":"ok"}
+{"at":"2026-10-13T12:39:06.360Z","tool":"read_knowledge","args":"{\"area\":\"files-and-export\"}","outcome":"ok"}
+{"at":"2026-10-13T12:39:06.549Z","tool":"read_knowledge","args":"{\"area\":\"project\"}","outcome":"ok"}
+{"at":"2026-10-13T12:39:08.158Z","tool":"search_cases","args":"{\"query\":\"italic text\"}","outcome":"ok"}
+{"at":"2026-10-13T12:39:08.601Z","tool":"search_cases","args":"{\"query\":\"font family\"}","outcome":"ok"}
+{"at":"2026-10-13T12:39:08.891Z","tool":"search_cases","args":"{\"query\":\"copy paste styles text\"}","outcome":"ok"}
+{"at":"2026-10-13T12:39:09.291Z","tool":"search_cases","args":"{\"query\":\"text keyboard shortcuts\"}","outcome":"ok"}
+{"at":"2026-10-13T12:39:09.643Z","tool":"search_cases","args":"{\"query\":\"export text PNG SVG\"}","outcome":"ok"}
+{"at":"2026-10-13T12:39:09.928Z","tool":"search_cases","args":"{\"query\":\"text inside shape container\"}","outcome":"ok"}
+{"at":"2026-10-13T12:39:11.678Z","tool":"search_cases","args":"{\"query\":\"sticky note arrow label\"}","outcome":"ok"}
+{"at":"2026-10-13T12:39:11.901Z","tool":"search_cases","args":"{\"query\":\"collaboration\"}","outcome":"ok"}
+{"at":"2026-10-13T12:39:26.514Z","tool":"open_session","args":"{\"issue\":11404,\"questions\":\"1. **Form of the feature.** The issue offers three options (an \\\"Italic\\\" toggle in the style panel, a Ctrl+I shortcut, an italic font). Which ships? *Suggested:* an \\\"Italic\\\" toggle in the properties panel next to the text align control, tooltip \\\"Italic (Ctrl+I)\\\", plu","outcome":"ok"}
+{"at":"2026-10-13T12:39:52.573Z","tool":"record_answers","args":"{\"issue\":11404,\"answers\":\"Answers from the product owner, relayed by the user; for questions they do not cover, the user accepted the suggested answer.\\n\\n1. **Form of the feature.** (user) A toggle in the properties panel and the Ctrl+I / Cmd+I shortcut; italic is one property per text element; the","outcome":"ok"}
+{"at":"2026-10-13T12:40:06.607Z","tool":"search_cases","args":"{\"query\":\"undo redo style change\"}","outcome":"ok"}
+{"at":"2026-10-13T12:40:07.001Z","tool":"search_cases","args":"{\"query\":\"copies keep style duplicate\"}","outcome":"ok"}
+{"at":"2026-10-13T12:40:07.402Z","tool":"search_cases","args":"{\"query\":\"text style kept reload saved file\"}","outcome":"ok"}
+{"at":"2026-10-13T12:40:07.902Z","tool":"search_cases","args":"{\"query\":\"several text elements new text last style\"}","outcome":"ok"}
+{"at":"2026-10-13T12:40:08.176Z","tool":"search_cases","args":"{\"query\":\"text align left center right\"}","outcome":"ok"}
+{"at":"2026-10-13T12:40:40.425Z","tool":"submit_plan","args":"{\"issue\":11404,\"plan\":\"# Text properties\\nupdate C-001: the text starts italic; after the font family change it is still italic\\nupdate C-004: the text starts italic; add an opacity change after the color change; italic is kept after both\\nupdate C-006: also turn on \\\"Italic\\\" before creating new te","outcome":"ok"}
+{"at":"2026-10-13T12:42:06.202Z","tool":"save_changes","args":"{\"issue\":11404,\"content\":\"Scope: excalidraw.com in a desktop browser (Chrome and Firefox) unless a case says otherwise; Windows/Linux shortcuts are given, with the macOS equivalent in brackets. Italic is one property of a whole text element; bold is out of scope.\\n\\n# Text properties\\n\\n## C-001 Fon","outcome":"ok"}
+{"at":"2026-10-13T12:42:09.399Z","tool":"propose_knowledge","args":"{\"area\":\"text-properties\",\"fact\":\"Italic is one property of the whole text element, turned on and off by an \\\"Italic\\\" toggle next to the text align control (tooltip \\\"Italic (Ctrl+I)\\\") or by Ctrl+I / Cmd+I; there is no partial italic, no separate italic font, and bold is out of scope.\",\"source\":\"P","outcome":"ok"}
+{"at":"2026-10-13T12:42:10.998Z","tool":"propose_knowledge","args":"{\"area\":\"text-properties\",\"fact\":\"Italic may be a synthetic oblique in any font; italic text stays readable and unclipped in Latin, Cyrillic, Chinese, Japanese, Arabic, Hebrew, emoji and mixed scripts, and italic never changes text direction or alignment.\",\"source\":\"PO answer 5 relayed by the user i","outcome":"ok"}
+{"at":"2026-10-13T12:42:12.297Z","tool":"propose_knowledge","args":"{\"area\":\"text-properties\",\"fact\":\"The last chosen italic value becomes the default for new text, and color and opacity changes keep a text's italic.\",\"source\":\"PO answers 7 and 10 relayed by the user in the issue 11404 session, approved 2026-10-13\",\"issue\":11404}","outcome":"ok"}
+{"at":"2026-10-13T12:42:13.898Z","tool":"propose_knowledge","args":"{\"area\":\"text-properties\",\"fact\":\"Ctrl+I / Cmd+I toggles italic on the selected text or the text being edited, even with only part of it highlighted; with nothing selected or only shapes without text it does nothing, and no browser action opens while the canvas has focus.\",\"source\":\"Approved answers","outcome":"ok"}
+{"at":"2026-10-13T12:42:15.149Z","tool":"propose_knowledge","args":"{\"area\":\"text-properties\",\"fact\":\"With several texts selected and only some italic, the \\\"Italic\\\" toggle shows as not pressed; one click makes all italic and a second click makes all upright.\",\"source\":\"Approved answer 6 in the issue 11404 session (accepted suggestion), 2026-10-13\",\"issue\":11404}","outcome":"ok"}
+{"at":"2026-10-13T12:42:16.452Z","tool":"propose_knowledge","args":"{\"area\":\"files-and-export\",\"fact\":\"Italic survives reload, a saved .excalidraw file, PNG and SVG export, copy as PNG/SVG and live collaboration; an older Excalidraw version opens a file with italic text without error and shows it upright.\",\"source\":\"Approved answer 11 in the issue 11404 session (acc","outcome":"ok"}

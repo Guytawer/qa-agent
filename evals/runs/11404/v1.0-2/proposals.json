@@ -1,0 +1,50 @@
+[
+  {
+    "area": "text-properties",
+    "fact": "Italic is one property of the whole text element, turned on and off by an \"Italic\" toggle next to the text align control (tooltip \"Italic (Ctrl+I)\") or by Ctrl+I / Cmd+I; there is no partial italic, no separate italic font, and bold is out of scope.",
+    "source": "PO answers 1 and 2 relayed by the user in the issue 11404 session, approved 2026-10-13 [answers approved by maxxx at 2026-10-13T12:39:57.185Z, fingerprint d870fe37de54; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 1,
+    "proposed_at": "2026-10-13T12:42:09.399Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "Italic may be a synthetic oblique in any font; italic text stays readable and unclipped in Latin, Cyrillic, Chinese, Japanese, Arabic, Hebrew, emoji and mixed scripts, and italic never changes text direction or alignment.",
+    "source": "PO answer 5 relayed by the user in the issue 11404 session, approved 2026-10-13 [answers approved by maxxx at 2026-10-13T12:39:57.185Z, fingerprint d870fe37de54; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 2,
+    "proposed_at": "2026-10-13T12:42:10.998Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "The last chosen italic value becomes the default for new text, and color and opacity changes keep a text's italic.",
+    "source": "PO answers 7 and 10 relayed by the user in the issue 11404 session, approved 2026-10-13 [answers approved by maxxx at 2026-10-13T12:39:57.185Z, fingerprint d870fe37de54; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 3,
+    "proposed_at": "2026-10-13T12:42:12.296Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "Ctrl+I / Cmd+I toggles italic on the selected text or the text being edited, even with only part of it highlighted; with nothing selected or only shapes without text it does nothing, and no browser action opens while the canvas has focus.",
+    "source": "Approved answers 2 and 3 in the issue 11404 session (accepted suggestions), 2026-10-13 [answers approved by maxxx at 2026-10-13T12:39:57.185Z, fingerprint d870fe37de54; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 4,
+    "proposed_at": "2026-10-13T12:42:13.897Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "With several texts selected and only some italic, the \"Italic\" toggle shows as not pressed; one click makes all italic and a second click makes all upright.",
+    "source": "Approved answer 6 in the issue 11404 session (accepted suggestion), 2026-10-13 [answers approved by maxxx at 2026-10-13T12:39:57.185Z, fingerprint d870fe37de54; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 5,
+    "proposed_at": "2026-10-13T12:42:15.149Z"
+  },
+  {
+    "area": "files-and-export",
+    "fact": "Italic survives reload, a saved .excalidraw file, PNG and SVG export, copy as PNG/SVG and live collaboration; an older Excalidraw version opens a file with italic text without error and shows it upright.",
+    "source": "Approved answer 11 in the issue 11404 session (accepted suggestion), 2026-10-13 [answers approved by maxxx at 2026-10-13T12:39:57.185Z, fingerprint d870fe37de54; change set changes/excalidraw-11404.md]",
+    "issue": 11404,
+    "id": 6,
+    "proposed_at": "2026-10-13T12:42:16.452Z"
+  }
+]

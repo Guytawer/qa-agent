@@ -1,0 +1,58 @@
+[
+  {
+    "area": "text-properties",
+    "fact": "Underline is one property of the whole text element. It is set by an \"Underline\" toggle (tooltip \"Underline\") and by Ctrl+U / Cmd+U, which toggles it on a selected text or while editing, also when only part of the text is selected, without opening the browser's page source. With nothing selected, Ctrl+U does nothing in the app.",
+    "source": "Approved answers 2 and 3 in the issue 99001 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T12:43:38.344Z, fingerprint 40e3f82aae7b; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 1,
+    "proposed_at": "2026-10-13T12:45:40.249Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "The \"Underline\" toggle is shown when a text, a shape with text or an arrow with a label is selected, or the Text tool is active, and is hidden for shapes without text and when nothing is selected; with several texts of different underline values it shows a mixed state, and one click sets underline on all of them.",
+    "source": "Approved answers 1 and 7 in the issue 99001 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T12:43:38.344Z, fingerprint 40e3f82aae7b; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 2,
+    "proposed_at": "2026-10-13T12:45:41.897Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "Underline is drawn per line, as wide as that line's text and following text align, with none under empty lines. It has the text's stroke color and opacity. Its thickness and distance below the baseline scale with font size, it may cross descenders, and it is never clipped.",
+    "source": "Approved answers 4, 5 and 6 in the issue 99001 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T12:43:38.344Z, fingerprint 40e3f82aae7b; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 3,
+    "proposed_at": "2026-10-13T12:45:43.597Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "The last chosen underline value becomes the default for new text.",
+    "source": "Approved answer 8 in the issue 99001 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T12:43:38.344Z, fingerprint 40e3f82aae7b; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 4,
+    "proposed_at": "2026-10-13T12:45:44.648Z"
+  },
+  {
+    "area": "styles-and-history",
+    "fact": "Copy styles and paste styles, Ctrl+C then Ctrl+V, Ctrl+D, Alt+drag and library items carry a text's underline, and one underline toggle is undone with a single undo.",
+    "source": "Approved answer 10 in the issue 99001 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T12:43:38.344Z, fingerprint 40e3f82aae7b; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 5,
+    "proposed_at": "2026-10-13T12:45:45.999Z"
+  },
+  {
+    "area": "files-and-export",
+    "fact": "Underline survives reload, saved .excalidraw files, PNG and SVG export and live collaboration. An older Excalidraw version opens such a file showing the text without underline and with no error.",
+    "source": "Approved answer 11 in the issue 99001 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T12:43:38.344Z, fingerprint 40e3f82aae7b; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 6,
+    "proposed_at": "2026-10-13T12:45:47.449Z"
+  },
+  {
+    "area": "bound-text",
+    "fact": "Underline works on text inside shapes, arrow labels and sticky note labels. It does not change sticky note auto-fit and always stays inside the shape or note.",
+    "source": "Approved answers 5 and 9 in the issue 99001 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T12:43:38.344Z, fingerprint 40e3f82aae7b; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 7,
+    "proposed_at": "2026-10-13T12:45:48.598Z"
+  }
+]

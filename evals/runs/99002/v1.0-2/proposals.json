@@ -1,0 +1,50 @@
+[
+  {
+    "area": "text-properties",
+    "fact": "The \"Line height\" control in the text properties panel applies to the whole text element and offers presets \"Tight\" = 1.0, \"Normal\" = 1.25 and \"Loose\" = 1.5, plus a number field that accepts a typed value from 0.8 to 2.5 in steps of 0.05.",
+    "source": "PO answer on issue 99002, approved 2026-10-13 by maxxx [answers approved by maxxx at 2026-10-13T12:53:50.612Z, fingerprint f9cb73c20c43; change set changes/excalidraw-99002.md]",
+    "issue": 99002,
+    "id": 1,
+    "proposed_at": "2026-10-13T12:55:47.452Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "In the \"Line height\" field, values below 0.8 become 0.8, values above 2.5 become 2.5, values between steps round to the nearest 0.05, a comma decimal such as \"1,5\" is read as 1.5, and empty or non-numeric input keeps the previous value.",
+    "source": "PO answer 3 on issue 99002, approved 2026-10-13 by maxxx [answers approved by maxxx at 2026-10-13T12:53:50.612Z, fingerprint f9cb73c20c43; change set changes/excalidraw-99002.md]",
+    "issue": 99002,
+    "id": 2,
+    "proposed_at": "2026-10-13T12:55:49.102Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "New text keeps its font's own line height until a line height is chosen, after which the last chosen value is the default; a text whose line height was set keeps it when its font family changes, while a never-set text follows the new font's line height.",
+    "source": "PO answer 2 on issue 99002, approved 2026-10-13 by maxxx [answers approved by maxxx at 2026-10-13T12:53:50.612Z, fingerprint f9cb73c20c43; change set changes/excalidraw-99002.md]",
+    "issue": 99002,
+    "id": 3,
+    "proposed_at": "2026-10-13T12:55:50.752Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "The \"Line height\" control is shown when a text, a shape with text, an arrow with a label or a sticky note is selected or the Text tool is active, not for shapes without text, images or an empty selection; with several texts at different line heights no preset is highlighted and one choice sets all of them.",
+    "source": "Approved answers 4 and 7 in the issue 99002 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T12:53:50.612Z, fingerprint f9cb73c20c43; change set changes/excalidraw-99002.md]",
+    "issue": 99002,
+    "id": 4,
+    "proposed_at": "2026-10-13T12:55:52.451Z"
+  },
+  {
+    "area": "bound-text",
+    "fact": "A larger line height makes a shape holding text grow taller with the same width and a smaller one lets it shrink back; an arrow label stays at the middle of the arrow; a sticky note's auto-fit takes line height into account and never shows the label larger than the picked font size.",
+    "source": "Approved answers 5 and 6 in the issue 99002 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T12:53:50.612Z, fingerprint f9cb73c20c43; change set changes/excalidraw-99002.md]",
+    "issue": 99002,
+    "id": 5,
+    "proposed_at": "2026-10-13T12:55:54.053Z"
+  },
+  {
+    "area": "files-and-export",
+    "fact": "Line height survives a page reload, a saved .excalidraw file, PNG and SVG export and live collaboration; paste styles, copies and library items carry it and undo/redo restore it; older Excalidraw versions are out of scope.",
+    "source": "Approved answers 11 and 12 in the issue 99002 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T12:53:50.612Z, fingerprint f9cb73c20c43; change set changes/excalidraw-99002.md]",
+    "issue": 99002,
+    "id": 6,
+    "proposed_at": "2026-10-13T12:55:55.438Z"
+  }
+]

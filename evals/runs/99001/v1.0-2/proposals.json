@@ -1,0 +1,58 @@
+[
+  {
+    "area": "text-properties",
+    "fact": "Underline is one property of the whole text element, set by an \"Underline\" toggle (tooltip \"Underline — Ctrl+U\") in the properties panel and by Ctrl+U / Cmd+U; the toggle is shown when a text, a shape with text or an arrow with a label is selected, or the Text tool is active, and hidden otherwise.",
+    "source": "Approved answers 1 in the issue 99001 session, 2026-10-13 (PO answers relayed by maxxx) [answers approved by maxxx at 2026-10-13T12:47:03.424Z, fingerprint 320720e37093; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 1,
+    "proposed_at": "2026-10-13T12:48:43.208Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "Ctrl+U / Cmd+U toggles underline when a text, a shape with text or an arrow label is selected or a text is being edited, and then the browser's page source does not open; with nothing or only non-text elements selected it does nothing in the app, and touch devices have no shortcut.",
+    "source": "Approved answers 2 and 12 in the issue 99001 session, 2026-10-13 (PO answers relayed by maxxx) [answers approved by maxxx at 2026-10-13T12:47:03.424Z, fingerprint 320720e37093; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 2,
+    "proposed_at": "2026-10-13T12:48:45.007Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "The underline has the text color, its thickness and offset scale with the font size, each line of multi-line or wrapped text has its own underline as wide as that line's text, spaces are underlined and empty lines are not, and it may cross descenders.",
+    "source": "Approved answers 3 and 10 in the issue 99001 session, 2026-10-13 (PO answers relayed by maxxx) [answers approved by maxxx at 2026-10-13T12:47:03.424Z, fingerprint 320720e37093; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 3,
+    "proposed_at": "2026-10-13T12:48:46.610Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "With several texts selected and only some underlined, the \"Underline\" toggle shows a mixed state; one click underlines all of them and a second click removes underline from all; the last chosen underline value is the default for new text.",
+    "source": "Approved answers 4 and 5 in the issue 99001 session, 2026-10-13 (PO answers relayed by maxxx) [answers approved by maxxx at 2026-10-13T12:47:03.424Z, fingerprint 320720e37093; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 4,
+    "proposed_at": "2026-10-13T12:48:48.158Z"
+  },
+  {
+    "area": "bound-text",
+    "fact": "Underline works on text inside shapes, arrow labels and sticky note labels without changing wrapping or the shape's size, and a sticky note label shown smaller by auto-fit gets a matching smaller underline.",
+    "source": "Approved answer 6 in the issue 99001 session, 2026-10-13 (PO answers relayed by maxxx) [answers approved by maxxx at 2026-10-13T12:47:03.424Z, fingerprint 320720e37093; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 5,
+    "proposed_at": "2026-10-13T12:48:49.709Z"
+  },
+  {
+    "area": "styles-and-history",
+    "fact": "Copy and paste styles, Ctrl+C then Ctrl+V, Ctrl+D, Alt+drag and the library carry underline, and one underline toggle is undone by a single undo and restored by redo.",
+    "source": "Approved answer 7 in the issue 99001 session, 2026-10-13 (PO answers relayed by maxxx) [answers approved by maxxx at 2026-10-13T12:47:03.424Z, fingerprint 320720e37093; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 6,
+    "proposed_at": "2026-10-13T12:48:51.259Z"
+  },
+  {
+    "area": "files-and-export",
+    "fact": "Underline survives reload and saved .excalidraw files, appears in PNG and SVG exports and in live collaboration, and an older Excalidraw version opens such a file without error, showing the text without underline.",
+    "source": "Approved answer 8 in the issue 99001 session, 2026-10-13 (PO answers relayed by maxxx) [answers approved by maxxx at 2026-10-13T12:47:03.424Z, fingerprint 320720e37093; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 7,
+    "proposed_at": "2026-10-13T12:48:52.646Z"
+  }
+]

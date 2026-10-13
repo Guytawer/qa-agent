@@ -1,0 +1,47 @@
+{
+  "issue": 11404,
+  "stage": "saved",
+  "questions": "1. **Form of the feature.** The issue offers three options (an \"Italic\" toggle in the style panel, a Ctrl+I shortcut, an italic font). Which ships? *Suggested:* an \"Italic\" toggle in the properties panel next to the text align control, tooltip \"Italic (Ctrl+I)\", plus the Ctrl+I / Cmd+I shortcut; no separate italic font.\n2. **Scope of italic.** Whole text element, or part of a text? *Suggested:* one property of the whole text element; no partial italic. Ctrl+I while editing with part of the text highlighted toggles italic on the whole element.\n3. **Shortcut behavior.** *Suggested:* Ctrl+I / Cmd+I toggles italic on the selected text or the text being edited; with nothing selected (or only non-text shapes selected) it does nothing; the browser's own Ctrl+I action (e.g. Page Info in Firefox) never opens while the canvas has focus; no existing Excalidraw shortcut is taken over.\n4. **Where the toggle is shown.** *Suggested:* when a text, a shape with text, an arrow with a label or a sticky note is selected, or the Text tool is active; not shown for shapes without text, nor with nothing selected.\n5. **Fonts without italic glyphs.** Hand-drawn (Excalifont), Code (Comic Shanns) and other fonts may have no italic face. *Suggested:* every font shows a slanted text (synthetic slant where there is no real italic face); the toggle is never disabled for a font; CJK, right-to-left text and emoji are slanted too or at least never clipped or garbled.\n6. **Mixed selection.** *Suggested:* with several texts selected and only some italic, the toggle shows as not pressed; one click makes all italic, a second click removes italic from all.\n7. **Default for new text.** *Suggested:* the last chosen italic value becomes the default for new text, like font family and size.\n8. **Size and wrapping.** *Suggested:* the text box widens so the slanted last character is never clipped; text inside a shape re-wraps to the shape width and the shape grows taller if needed, width unchanged; an arrow label stays at the middle of the arrow; a sticky note's auto-fit takes italic into account.\n9. **Editing.** *Suggested:* while a text is being edited, the editor shows italic the same as the canvas, so the text does not jump when editing starts or ends.\n10. **Copies, styles, history.** *Suggested:* copy/paste styles, Ctrl+C then Ctrl+V, Ctrl+D, Alt+drag and library items carry italic; one italic change is undone with a single undo and restored with redo.\n11. **Leaving the session.** *Suggested:* italic survives reload, a saved .excalidraw file, PNG and SVG export (SVG shows italic on a computer without the fonts), copy as PNG/SVG and live collaboration; an older Excalidraw version opens a file with italic text without error and shows it upright.\n12. **Interface language and small screens.** *Suggested:* in other locales a missing \"Italic\" translation falls back to English, never an empty label or raw key; the toggle fits a 375 px wide properties panel in the mobile layout and works by tap.",
+  "answers": "Answers from the product owner, relayed by the user; for questions they do not cover, the user accepted the suggested answer.\n\n1. **Form of the feature.** (user) A toggle in the properties panel and the Ctrl+I / Cmd+I shortcut; italic is one property per text element; there is no separate italic font. (accepted suggestion) The toggle is labelled \"Italic\", sits next to the text align control and has the tooltip \"Italic (Ctrl+I)\".\n2. **Scope of italic.** (user) Whole text element only; no partial italic. Bold is out of scope. (accepted suggestion) Ctrl+I while editing with part of the text highlighted toggles italic on the whole element.\n3. **Shortcut behavior.** (accepted suggestion) Ctrl+I / Cmd+I toggles italic on the selected text or the text being edited; with nothing selected, or only shapes without text selected, it does nothing; the browser's own Ctrl+I action (e.g. Page Info in Firefox) never opens while the canvas has focus; no existing Excalidraw shortcut is taken over.\n4. **Where the toggle is shown.** (accepted suggestion) When a text, a shape with text, an arrow with a label or a sticky note is selected, or the Text tool is active; not shown for shapes without text, nor with nothing selected.\n5. **Fonts without italic glyphs.** (user) Synthetic oblique is allowed; text stays readable and unclipped in Latin, Cyrillic, Chinese, Japanese, Arabic, Hebrew (right to left), emoji and mixed scripts; text direction and alignment are unchanged by italic. (accepted suggestion) Every font shows slanted text when italic is on, and the toggle is never disabled for any font.\n6. **Mixed selection.** (accepted suggestion) With several texts selected and only some italic, the toggle shows as not pressed; one click makes all italic, a second click removes italic from all.\n7. **Default for new text.** (user) The last italic value becomes the default for new text.\n8. **Size and wrapping.** (accepted suggestion) The text box widens so the slanted last character is never clipped; text inside a shape re-wraps to the shape width and the shape grows taller if needed, width unchanged; an arrow label stays at the middle of the arrow; a sticky note's auto-fit takes italic into account.\n9. **Editing.** (accepted suggestion) While a text is being edited, the editor shows italic the same as the canvas, so the text does not jump when editing starts or ends.\n10. **Copies, styles, history.** (accepted suggestion) Copy/paste styles, Ctrl+C then Ctrl+V, Ctrl+D, Alt+drag and library items carry italic; one italic change is undone with a single undo and restored with redo. (user) Color and opacity changes keep italic.\n11. **Leaving the session.** (accepted suggestion) Italic survives reload, a saved .excalidraw file, PNG and SVG export (SVG shows italic on a computer without the fonts), copy as PNG/SVG and live collaboration; an older Excalidraw version opens a file with italic text without error and shows it upright.\n12. **Interface language and small screens.** (accepted suggestion) In other locales a missing \"Italic\" translation falls back to English, never an empty label or raw key; the toggle fits a 375 px wide properties panel in the mobile layout and works by tap.",
+  "plan": "# Text properties\nupdate C-001: the text starts italic; after the font family change it is still italic\nupdate C-004: the text starts italic; add an opacity change after the color change; italic is kept after both\nupdate C-006: also turn on \"Italic\" before creating new text; the new text is italic\ncreate TC-1: Italic on a text element: \"Italic\" toggle and Ctrl+I / Cmd+I (on, off, pressed state, nothing else changes, no browser action)\ncreate TC-2: Ctrl+I with no text selected (nothing selected, only a shape without text)\ncreate TC-3: \"Italic\" toggle: where it is shown\ncreate TC-4: Italic while a text is being edited (Ctrl+I with part highlighted, editor matches canvas)\ncreate TC-5: Italic in each font family (quick-choice fonts and one font from the list)\ncreate TC-6: Italic text in different scripts (Latin, Cyrillic, Chinese, Japanese, Arabic, Hebrew, emoji, mixed)\ncreate TC-7: Several texts with mixed italic: toggle state and one click for all\ncreate TC-8: \"Italic\" label and tooltip in another interface language\ncreate TC-9: \"Italic\" toggle in the mobile layout\n\n# Text in shapes and on arrows\ncreate TC-10: Italic text inside a shape\ncreate TC-11: Italic arrow label\ncreate TC-12: Italic sticky note label\n\n# Styles, copies and history\nupdate C-011: \"Source\" is also italic, \"Target\" upright; after paste styles \"Target\" is italic\nupdate C-012: add a data table: font size change (existing) and italic toggle, each undone with one undo and restored with redo\nupdate C-013: the original is also italic; every copy is italic\n\n# Files, sharing and export\nupdate C-014: the text is also italic; still italic after reload\nupdate C-015: the text is also italic; still italic after save and open\nupdate C-016: add an italic text; add a \"copy to clipboard as PNG\" row next to PNG export; italic matches the canvas\nupdate C-017: add an italic text; it is italic on the second computer\nupdate C-018: add a data table: red color (existing) and italic toggle reach user B\ncreate TC-13: Older Excalidraw version opens a file with italic text\n\nNot changed: C-002, C-003, C-005, C-007, C-008, C-009, C-010",
+  "approvals": [
+    {
+      "what": "answers",
+      "hash": "d870fe37de54",
+      "by": "maxxx",
+      "at": "2026-10-13T12:39:57.185Z"
+    },
+    {
+      "what": "plan",
+      "hash": "deffaa198348",
+      "by": "maxxx",
+      "at": "2026-10-13T12:40:48.939Z"
+    }
+  ],
+  "history": [
+    {
+      "at": "2026-10-13T12:39:26.514Z",
+      "event": "session opened, questions recorded"
+    },
+    {
+      "at": "2026-10-13T12:39:52.572Z",
+      "event": "answers recorded"
+    },
+    {
+      "at": "2026-10-13T12:39:57.185Z",
+      "event": "answers approved by maxxx"
+    },
+    {
+      "at": "2026-10-13T12:40:40.424Z",
+      "event": "plan submitted (fingerprint deffaa198348; 24 cases: 11 updated, 13 new, 0 retired, 0 kept unchanged)"
+    },
+    {
+      "at": "2026-10-13T12:40:48.939Z",
+      "event": "plan approved by maxxx"
+    },
+    {
+      "at": "2026-10-13T12:42:06.201Z",
+      "event": "change set saved to C:\\Users\\maxxx\\AppData\\Local\\Temp\\qa-eval-11404-2-1791895138305\\changes\\excalidraw-11404.md"
+    }
+  ]
+}

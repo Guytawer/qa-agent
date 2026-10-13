@@ -1,0 +1,47 @@
+{
+  "issue": 10506,
+  "stage": "saved",
+  "questions": "1. **Scope: is this a product change or not?** The issue asks for bigger presets (\"2xl .. 10xl\"), but the author's own comment then says text can already be scaled from the corner and asks only how to make two big texts the same size. The issue is open, unlabeled and has no maintainer reply, so there is no accepted design.\n   Suggested answer: no new presets are confirmed. Write cases for what exists today: getting large text at an exact, matching size with the \"F\" field in the \"Properties\" panel (Alt+/), paste styles, a font size change on several selected texts, and Ctrl+Shift+> / <. Update existing cases instead of adding new ones where possible.\n2. **If new presets are wanted:** what are their names and values, and how are they laid out under \"Font size\"? For example, \"XL\" through \"10XL\".\n   Suggested answer: only relevant if answer 1 is \"add presets\". Then the product owner gives the exact list, for example 48 / 64 / 80 / 96 / 128. No cases are written for invented values.\n3. **Largest font size:** is there an upper limit for a size typed into the \"F\" field or reached with Ctrl+Shift+>? What happens to 0, a negative number or text?\n   Suggested answer: the limit is unknown, so test a large value (500) as working and mark the limits and rejected input as (verify).\n4. **Corner resize:** when a text is scaled with a corner handle, does the \"F\" field show the new size, which may not be a whole number? Does the preset highlight under \"Font size\" go away?\n   Suggested answer: yes to both (verify). Two texts scaled by hand are not expected to match exactly. The supported way to make them match is the \"F\" field or paste styles.\n5. **Text in shapes and sticky notes:** should large sizes be covered for text inside a shape and in a sticky note? Sticky notes cap at 512 and auto-fit.\n   Suggested answer: yes, one case each. The shape grows to fit. The sticky note label never shows larger than the picked size.\n6. **Leaving the session:** should reload, the .excalidraw file and PNG/SVG export be checked with a large size?\n   Suggested answer: yes. Extend the existing cases with one large exact size (for example 120) instead of writing new ones. Live collaboration is out of scope.",
+  "answers": "Answers from the product owner, relayed by the user. Questions they do not cover take the suggested answer.\n\n1. Scope (user): add more presets only. The Font size control gets no field for typing a size.\n2. Presets (user): two new presets come after \"Very large\": \"Huge\" = 56 and \"Giant\" = 96. The existing four (Small 16, Medium 20, Large 28, Very large 36) keep their labels and sizes. Tooltips are \"Huge\" and \"Giant\". There are no new shortcuts.\n3. Largest size and invalid input:\n   - (user) The increase and decrease shortcuts (Ctrl+Shift+> / Ctrl+Shift+<) are unchanged and have no upper limit.\n   - (accepted suggestion) No limit is known for a size typed into the \"F\" field of the \"Properties\" panel. Test 500 as a working value, and mark limits and rejection of 0, negative or non-numeric input as (verify).\n4. Highlight and corner resize:\n   - (user) A size between presets, or a selection of texts with mixed sizes, highlights no preset until one is clicked. Clicking a preset sets that exact size on every selected text. A text at exactly 56 or 96 shows its preset highlighted, however it got that size.\n   - (accepted suggestion) After a corner resize, the \"F\" field shows the new size, which may not be a whole number (verify). Two texts scaled by hand are not expected to match exactly; the way to match them is a preset, the \"F\" field or paste styles.\n5. Text in shapes, arrows and sticky notes (user): text in a shape wraps and the shape grows taller. An arrow label stays at the middle of the arrow. A sticky note label offers both new presets and keeps auto-fit, with the picked preset highlighted.\n6. Leaving the session (user): copy and paste styles, copies and undo/redo carry the new sizes. Reload, a saved file, PNG and SVG export and live collaboration keep them. Older Excalidraw versions are out of scope.\n7. Platforms and layout (user): all six presets fit the properties panel on a 375 px wide mobile screen. In scope: latest Chrome, Firefox and Safari on desktop, and Safari on iOS.",
+  "plan": "# Text properties\nupdate C-002: preset switching adds \"Huge\" (56) and \"Giant\" (96); each click sets the exact size, shown in the \"F\" field, and highlights that preset; the Very large and Small steps stay\ncreate TC-1: \"Font size\" control: six presets in order, the tooltips \"Huge\" and \"Giant\", shown for a selected text, the active Text tool, a rectangle with text and a sticky note\ncreate TC-2: Font size preset highlight for sizes set without a preset (typed into \"F\" as 56, 96, 60 or 500; Ctrl+Shift+> from 51 and from 87; corner resize)\ncreate TC-3: Font size shortcuts above \"Giant\": no upper limit (96 to 106 to 117, back down to 87), and the \"Giant\" highlight clears\ncreate TC-4: \"F\" field: invalid font size input (0, negative, non-numeric), with rejection rules marked (verify)\nupdate C-005: several texts with mixed sizes (one Medium, one scaled by a corner handle, one at 500) highlight no preset; \"Huge\" sets all of them to exactly 56\nupdate C-006: new text uses \"Giant\" when it was the last chosen size\ncreate TC-5: \"Font size\" presets on a 375 px wide mobile screen (Safari on iOS): all six visible and tappable\n\n# Text in shapes and on arrows\nupdate C-009: \"Giant\" on a rectangle with text: the text wraps, the rectangle grows taller and keeps its width\ncreate TC-6: Arrow label at \"Huge\" and \"Giant\" stays at the middle of the arrow\ncreate TC-7: Sticky note label at \"Giant\": auto-fit for short and long text, with \"Giant\" highlighted\n\n# Styles, copies and history\nupdate C-011: paste styles carries \"Giant\" (96)\nupdate C-012: undo and redo of Medium to \"Huge\"\nupdate C-013: every way of copying keeps \"Giant\"\n\n# Files, sharing and export\nupdate C-014: a \"Giant\" text keeps 96 after reload\nupdate C-015: a \"Giant\" text keeps 96 in a saved .excalidraw file\nupdate C-016: PNG export includes \"Huge\" and \"Giant\" texts at matching sizes, nothing clipped\nupdate C-017: SVG export includes a \"Giant\" text at the same size\nupdate C-018: live collaboration also carries a change to \"Giant\"; the color check stays\n\nNot changed: C-001, C-003, C-004, C-007, C-008, C-010",
+  "approvals": [
+    {
+      "what": "answers",
+      "hash": "07b04cc96819",
+      "by": "maxxx",
+      "at": "2026-10-13T12:33:09.251Z"
+    },
+    {
+      "what": "plan",
+      "hash": "524698e237d5",
+      "by": "maxxx",
+      "at": "2026-10-13T12:33:59.815Z"
+    }
+  ],
+  "history": [
+    {
+      "at": "2026-10-13T12:32:43.690Z",
+      "event": "session opened, questions recorded"
+    },
+    {
+      "at": "2026-10-13T12:33:04.149Z",
+      "event": "answers recorded"
+    },
+    {
+      "at": "2026-10-13T12:33:09.251Z",
+      "event": "answers approved by maxxx"
+    },
+    {
+      "at": "2026-10-13T12:33:49.029Z",
+      "event": "plan submitted (fingerprint 524698e237d5; 19 cases: 12 updated, 7 new, 0 retired, 0 kept unchanged)"
+    },
+    {
+      "at": "2026-10-13T12:33:59.815Z",
+      "event": "plan approved by maxxx"
+    },
+    {
+      "at": "2026-10-13T12:34:52.674Z",
+      "event": "change set saved to C:\\Users\\maxxx\\AppData\\Local\\Temp\\qa-eval-10506-2-1791894733390\\changes\\excalidraw-10506.md"
+    }
+  ]
+}

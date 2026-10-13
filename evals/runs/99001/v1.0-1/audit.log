@@ -1,0 +1,32 @@
+{"at":"2026-10-13T12:42:36.267Z","tool":"get_session","args":"{\"issue\":99001}","outcome":"ok"}
+{"at":"2026-10-13T12:42:36.613Z","tool":"get_issue","args":"{\"number\":99001}","outcome":"ok"}
+{"at":"2026-10-13T12:42:36.662Z","tool":"read_knowledge","args":"{}","outcome":"ok"}
+{"at":"2026-10-13T12:42:41.115Z","tool":"read_knowledge","args":"{\"area\":\"text-properties\"}","outcome":"ok"}
+{"at":"2026-10-13T12:42:41.611Z","tool":"read_knowledge","args":"{\"area\":\"bound-text\"}","outcome":"ok"}
+{"at":"2026-10-13T12:42:42.157Z","tool":"read_knowledge","args":"{\"area\":\"styles-and-history\"}","outcome":"ok"}
+{"at":"2026-10-13T12:42:42.272Z","tool":"read_knowledge","args":"{\"area\":\"files-and-export\"}","outcome":"ok"}
+{"at":"2026-10-13T12:42:42.472Z","tool":"read_knowledge","args":"{\"area\":\"project\"}","outcome":"ok"}
+{"at":"2026-10-13T12:42:45.303Z","tool":"search_cases","args":"{\"query\":\"text style toggle\"}","outcome":"ok"}
+{"at":"2026-10-13T12:42:45.818Z","tool":"search_cases","args":"{\"query\":\"text color\"}","outcome":"ok"}
+{"at":"2026-10-13T12:42:45.933Z","tool":"search_cases","args":"{\"query\":\"text inside shape arrow label\"}","outcome":"ok"}
+{"at":"2026-10-13T12:42:46.335Z","tool":"search_cases","args":"{\"query\":\"copy paste styles\"}","outcome":"ok"}
+{"at":"2026-10-13T12:42:46.684Z","tool":"search_cases","args":"{\"query\":\"keyboard shortcut\"}","outcome":"ok"}
+{"at":"2026-10-13T12:42:46.946Z","tool":"search_cases","args":"{\"query\":\"export SVG PNG text\"}","outcome":"ok"}
+{"at":"2026-10-13T12:43:06.716Z","tool":"open_session","args":"{\"issue\":99001,\"questions\":\"1. **Where the \\\"Underline\\\" toggle is shown.** Suggested: when a text, a shape with text or an arrow with a label is selected, or the Text tool is active. It is not shown for shapes without text or when nothing is selected. It is a single toggle with the label and toolti","outcome":"ok"}
+{"at":"2026-10-13T12:43:31.524Z","tool":"record_answers","args":"{\"issue\":99001,\"answers\":\"The user relayed the product owner's answer: \\\"Accept all your suggested answers. For any question these do not cover, accept your suggested answer.\\\"\\n\\n1. (accepted suggestion) The \\\"Underline\\\" toggle is shown when a text, a shape with text or an arrow with a label is se","outcome":"ok"}
+{"at":"2026-10-13T12:43:41.839Z","tool":"get_session","args":"{\"issue\":99001}","outcome":"ok"}
+{"at":"2026-10-13T12:43:42.286Z","tool":"search_cases","args":"{\"query\":\"several text elements style change\"}","outcome":"ok"}
+{"at":"2026-10-13T12:43:42.764Z","tool":"search_cases","args":"{\"query\":\"undo redo\"}","outcome":"ok"}
+{"at":"2026-10-13T12:43:43.036Z","tool":"search_cases","args":"{\"query\":\"live collaboration\"}","outcome":"ok"}
+{"at":"2026-10-13T12:43:43.879Z","tool":"search_cases","args":"{\"query\":\"new text last chosen style\"}","outcome":"ok"}
+{"at":"2026-10-13T12:43:43.887Z","tool":"search_cases","args":"{\"query\":\"arrow label\"}","outcome":"ok"}
+{"at":"2026-10-13T12:44:18.233Z","tool":"submit_plan","args":"{\"issue\":99001,\"plan\":\"# Text properties\\nupdate C-004: the text in the preconditions is underlined; the color change also recolors the underline, and an extra step lowers the opacity, which the underline follows too\\nupdate C-006: an extra step turns on \\\"Underline\\\" before the new text is created;","outcome":"ok"}
+{"at":"2026-10-13T12:44:37.355Z","tool":"get_session","args":"{\"issue\":99001}","outcome":"ok"}
+{"at":"2026-10-13T12:45:34.675Z","tool":"save_changes","args":"{\"issue\":99001,\"content\":\"Scope: text underline (issue 99001) on excalidraw.com in desktop browsers (Chrome, Firefox, Safari), plus the mobile layout at 375 px. To read exact font sizes, use the \\\"F\\\" field in the \\\"Properties\\\" panel (Alt+/).\\n\\n# Text properties\\n\\n## C-004 Text color: changing th","outcome":"ok"}
+{"at":"2026-10-13T12:45:40.250Z","tool":"propose_knowledge","args":"{\"area\":\"text-properties\",\"fact\":\"Underline is one property of the whole text element. It is set by an \\\"Underline\\\" toggle (tooltip \\\"Underline\\\") and by Ctrl+U / Cmd+U, which toggles it on a selected text or while editing, also when only part of the text is selected, without opening the browser's ","outcome":"ok"}
+{"at":"2026-10-13T12:45:41.898Z","tool":"propose_knowledge","args":"{\"area\":\"text-properties\",\"fact\":\"The \\\"Underline\\\" toggle is shown when a text, a shape with text or an arrow with a label is selected, or the Text tool is active, and is hidden for shapes without text and when nothing is selected; with several texts of different underline values it shows a mixed s","outcome":"ok"}
+{"at":"2026-10-13T12:45:43.598Z","tool":"propose_knowledge","args":"{\"area\":\"text-properties\",\"fact\":\"Underline is drawn per line, as wide as that line's text and following text align, with none under empty lines. It has the text's stroke color and opacity. Its thickness and distance below the baseline scale with font size, it may cross descenders, and it is never c","outcome":"ok"}
+{"at":"2026-10-13T12:45:44.649Z","tool":"propose_knowledge","args":"{\"area\":\"text-properties\",\"fact\":\"The last chosen underline value becomes the default for new text.\",\"source\":\"Approved answer 8 in the issue 99001 session, 2026-10-13\",\"issue\":99001}","outcome":"ok"}
+{"at":"2026-10-13T12:45:45.999Z","tool":"propose_knowledge","args":"{\"area\":\"styles-and-history\",\"fact\":\"Copy styles and paste styles, Ctrl+C then Ctrl+V, Ctrl+D, Alt+drag and library items carry a text's underline, and one underline toggle is undone with a single undo.\",\"source\":\"Approved answer 10 in the issue 99001 session, 2026-10-13\",\"issue\":99001}","outcome":"ok"}
+{"at":"2026-10-13T12:45:47.449Z","tool":"propose_knowledge","args":"{\"area\":\"files-and-export\",\"fact\":\"Underline survives reload, saved .excalidraw files, PNG and SVG export and live collaboration. An older Excalidraw version opens such a file showing the text without underline and with no error.\",\"source\":\"Approved answer 11 in the issue 99001 session, 2026-10-13\",","outcome":"ok"}
+{"at":"2026-10-13T12:45:48.598Z","tool":"propose_knowledge","args":"{\"area\":\"bound-text\",\"fact\":\"Underline works on text inside shapes, arrow labels and sticky note labels. It does not change sticky note auto-fit and always stays inside the shape or note.\",\"source\":\"Approved answers 5 and 9 in the issue 99001 session, 2026-10-13\",\"issue\":99001}","outcome":"ok"}

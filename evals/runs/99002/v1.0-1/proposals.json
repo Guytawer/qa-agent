@@ -1,0 +1,50 @@
+[
+  {
+    "area": "text-properties",
+    "fact": "A \"Line height\" section in the properties panel offers presets Tight = 1.0, Normal = 1.25 and Loose = 1.5 plus a number field that shows the current value and accepts a typed value from 0.8 to 2.5 in steps of 0.05, applied on Enter or blur and cancelled by Esc.",
+    "source": "Product owner answers 1 and 3, approved in the issue 99002 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T12:50:01.459Z, fingerprint b3f9825a6f9e; change set changes/excalidraw-99002.md]",
+    "issue": 99002,
+    "id": 1,
+    "proposed_at": "2026-10-13T12:52:31.480Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "A typed line height below 0.8 becomes 0.8, above 2.5 becomes 2.5, a value between steps rounds to the nearest 0.05, a comma decimal such as \"1,5\" is accepted, and empty or non-numeric input keeps the previous value.",
+    "source": "Product owner answer 2, approved in the issue 99002 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T12:50:01.459Z, fingerprint b3f9825a6f9e; change set changes/excalidraw-99002.md]",
+    "issue": 99002,
+    "id": 2,
+    "proposed_at": "2026-10-13T12:52:33.032Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "New text keeps its font's own line height until the user chooses a line height; after that the last chosen value is the default for new text, and changing the font of a text keeps its chosen line height.",
+    "source": "Product owner answers 4 and 8, approved in the issue 99002 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T12:50:01.459Z, fingerprint b3f9825a6f9e; change set changes/excalidraw-99002.md]",
+    "issue": 99002,
+    "id": 3,
+    "proposed_at": "2026-10-13T12:52:34.482Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "A line height preset is highlighted only on an exact value match; with several selected texts at different line heights the field shows \"Mixed\", no preset is highlighted, and a chosen value applies to all of them.",
+    "source": "Answer 5 (accepted suggestion), approved in the issue 99002 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T12:50:01.459Z, fingerprint b3f9825a6f9e; change set changes/excalidraw-99002.md]",
+    "issue": 99002,
+    "id": 4,
+    "proposed_at": "2026-10-13T12:52:35.980Z"
+  },
+  {
+    "area": "bound-text",
+    "fact": "Line height applies to text inside shapes (the shape's height follows, its width stays), to arrow labels (the label stays at the middle of the arrow) and to sticky note labels (auto-fit accounts for it and the picked font size stays).",
+    "source": "Answer 7 (accepted suggestion), approved in the issue 99002 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T12:50:01.459Z, fingerprint b3f9825a6f9e; change set changes/excalidraw-99002.md]",
+    "issue": 99002,
+    "id": 5,
+    "proposed_at": "2026-10-13T12:52:37.532Z"
+  },
+  {
+    "area": "files-and-export",
+    "fact": "Line height survives a page reload, a saved .excalidraw file, PNG and SVG export and live collaboration; opening such files in older Excalidraw versions is out of scope.",
+    "source": "Product owner answer 11, approved in the issue 99002 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T12:50:01.459Z, fingerprint b3f9825a6f9e; change set changes/excalidraw-99002.md]",
+    "issue": 99002,
+    "id": 6,
+    "proposed_at": "2026-10-13T12:52:38.769Z"
+  }
+]

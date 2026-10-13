@@ -1,0 +1,42 @@
+[
+  {
+    "area": "text-properties",
+    "fact": "The \"Font size\" control gets two presets after \"Very large\": \"Huge\" = 56 and \"Giant\" = 96, with tooltips \"Huge\" and \"Giant\" and no keyboard shortcuts; the existing four presets keep their labels and sizes, and the control has no typed size field.",
+    "source": "PO answers on issue 10506, recorded and approved in the issue 10506 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T12:29:26.087Z, fingerprint a969efa22f21; change set changes/excalidraw-10506.md]",
+    "issue": 10506,
+    "id": 1,
+    "proposed_at": "2026-10-13T12:31:56.884Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "A text at exactly 56 or 96, however it got there, shows \"Huge\" or \"Giant\" highlighted; a size between presets or a selection with mixed sizes highlights no preset, and clicking a preset sets that exact size on every selected text.",
+    "source": "PO answers on issue 10506, recorded and approved in the issue 10506 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T12:29:26.087Z, fingerprint a969efa22f21; change set changes/excalidraw-10506.md]",
+    "issue": 10506,
+    "id": 2,
+    "proposed_at": "2026-10-13T12:31:58.434Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "All six font size presets fit the 375 px mobile panel, and the Ctrl+Shift+> and Ctrl+Shift+< font size shortcuts have no upper limit.",
+    "source": "PO answers on issue 10506, recorded and approved in the issue 10506 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T12:29:26.087Z, fingerprint a969efa22f21; change set changes/excalidraw-10506.md]",
+    "issue": 10506,
+    "id": 3,
+    "proposed_at": "2026-10-13T12:31:59.831Z"
+  },
+  {
+    "area": "bound-text",
+    "fact": "Text in shapes, arrow labels and sticky note labels offer the \"Huge\" and \"Giant\" presets: shape text wraps and the shape grows taller, arrow labels stay at the middle, and sticky notes keep auto-fit with the picked preset highlighted.",
+    "source": "PO answers on issue 10506, recorded and approved in the issue 10506 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T12:29:26.087Z, fingerprint a969efa22f21; change set changes/excalidraw-10506.md]",
+    "issue": 10506,
+    "id": 4,
+    "proposed_at": "2026-10-13T12:32:01.383Z"
+  },
+  {
+    "area": "files-and-export",
+    "fact": "Paste styles, copies and undo/redo carry the \"Huge\" and \"Giant\" sizes, and reload, a saved file, PNG and SVG export and live collaboration keep them.",
+    "source": "PO answers on issue 10506, recorded and approved in the issue 10506 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T12:29:26.087Z, fingerprint a969efa22f21; change set changes/excalidraw-10506.md]",
+    "issue": 10506,
+    "id": 5,
+    "proposed_at": "2026-10-13T12:32:02.673Z"
+  }
+]

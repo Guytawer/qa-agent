@@ -1,0 +1,47 @@
+{
+  "issue": 10506,
+  "stage": "saved",
+  "questions": "1. **Scope.** The issue asks for larger font size presets (\"2xl .. 10xl\"); the author's follow-up says corner resizing already makes text big, and asks how to give two big texts the same size. What is in scope: (a) new larger presets in the \"Font size\" control, (b) no product change, only coverage of the existing ways to get equal large text, or (c) both? *Suggested: (c) new presets, plus regression coverage of the existing ways (multi-select + preset, the \"F\" field in the \"Properties\" panel, paste styles).*\n2. **Preset names and values.** Which new presets, with which labels and sizes? The current ones are Small 16, Medium 20, Large 28, Very large 36. *Suggested: keep the four, add three: \"2XL\" = 48, \"3XL\" = 64, \"4XL\" = 96 — not nine presets up to \"10xl\".*\n3. **Layout.** Where do the extra presets appear: in the same row of buttons, or in an overflow/dropdown? How on small screens and touch (mobile properties panel)? *Suggested: same row on desktop; on small screens the row wraps or scrolls, every preset reachable, nothing clipped.*\n4. **Tooltips and shortcuts.** Do the new presets get tooltips and keyboard shortcuts? *Suggested: tooltips with the label name, no new shortcuts.*\n5. **Upper limit.** Is there a maximum font size for the presets, the \"F\" field, Ctrl+Shift+> and corner resizing? *Suggested: no new limit is introduced; the largest preset is the largest preset size, larger sizes stay reachable via the \"F\" field, shortcuts and resizing as today.*\n6. **Highlighting.** When a text's size equals a new preset value (e.g. typed 64 in \"F\", or reached by Ctrl+Shift+>), is that preset highlighted? When it matches none, is nothing highlighted? *Suggested: yes to both.*\n7. **Mixed selection.** Several texts with different sizes selected: what does the control show, and what does clicking a new preset do? *Suggested: no preset highlighted; one click sets that size on all selected texts — this is also the answer to the author's \"two big texts with the same size\".*\n8. **Text in containers.** Are the new presets available for text in a shape, an arrow label and a sticky note? *Suggested: yes; text in a shape wraps and the shape grows taller; an arrow label stays at the middle; a sticky note keeps auto-fit (shown smaller when it does not fit, never larger than picked).*\n9. **Default for new text.** Does a new preset become the default for new text like the existing ones? *Suggested: yes, the last chosen size is the default.*\n10. **Existing drawings and older versions.** Existing text keeps its size; an older Excalidraw version opening a file with text at a new preset size shows it at that size with no preset highlighted, without error. *Suggested: yes.*\n11. **Interface language.** New labels translated in all locales; a missing translation falls back to English; long labels and right-to-left layout do not break the control. *Suggested: yes; test with German and Arabic (verify which locales have translations).*\n\nNo suspicious content found in the issue (no notices from the server).",
+  "answers": "Answers from the product owner, as given by the user. Lines marked \"(accepted suggestion)\" are suggested answers the user accepted for points the product owner's answers do not cover.\n\n1. **Scope.** The product change is more presets only; there is no typed size field in the \"Font size\" control. (user) The existing ways to give several texts the same large size (multi-select + preset, the \"F\" field in the \"Properties\" panel, paste styles) are covered as regression. (accepted suggestion)\n2. **Presets.** Two new presets after \"Very large\": \"Huge\" = 56 and \"Giant\" = 96. The existing four keep their labels and sizes (Small 16, Medium 20, Large 28, Very large 36). (user)\n3. **Layout.** On desktop the new presets are in the same row as the existing ones. (accepted suggestion) All six presets fit the 375 px mobile panel. (user) Platforms: latest Chrome, Firefox and Safari on desktop, plus Safari on iOS. (user)\n4. **Tooltips and shortcuts.** Tooltips \"Huge\" and \"Giant\"; no new shortcuts; the increase and decrease shortcuts (Ctrl+Shift+> and Ctrl+Shift+<) are unchanged. (user)\n5. **Upper limit.** The increase and decrease shortcuts have no upper limit. (user) No new limit is introduced for the \"F\" field or corner resizing either; sizes above 96 stay reachable as today. (accepted suggestion)\n6. **Highlighting.** A size between presets highlights no preset until one is clicked. A text at exactly 56 or 96, however it got there, shows its preset highlighted. (user)\n7. **Mixed selection.** A selection with mixed sizes highlights no preset until one is clicked; clicking a preset sets that exact size on every selected text. (user)\n8. **Text in containers.** Text in shapes wraps and the shape grows taller; arrow labels stay at the middle; sticky note labels offer both presets and keep auto-fit, with the picked preset highlighted. (user)\n9. **Default for new text.** The last chosen preset, including \"Huge\" or \"Giant\", becomes the default size for new text. (accepted suggestion)\n10. **Existing drawings and older versions.** Existing text keeps its size. (accepted suggestion) Older Excalidraw versions are out of scope. (user)\n11. **Interface language.** The new labels are translated in every locale; a missing translation falls back to English; long labels and the right-to-left layout do not break the control; tested with German and Arabic. (accepted suggestion)\n12. **Copies, history and leaving the session.** Copy and paste styles, copies and undo/redo carry the new sizes; reload, saved file, PNG and SVG export and live collaboration keep them. (user)",
+  "plan": "# Text properties\ncreate TC-1: \"Font size\" control: six presets with \"Huge\" and \"Giant\", in order, with tooltips, wherever the control is shown (text selected, Text tool active, sticky note selected)\nupdate C-002: preset switching extended to \"Huge\" = 56 and \"Giant\" = 96, exact sizes read in the \"F\" field, clicked preset highlighted; existing presets keep 16 and 36\ncreate TC-2: Font size preset highlight for sizes reached without clicking a preset (\"F\" field 56 / 96 / 57, Ctrl+Shift+> and Ctrl+Shift+< across 96, no upper limit above 96, corner resize)\nupdate C-005: mixed sizes selected show no highlighted preset; one click on \"Giant\" sets 96 on all of them\ncreate TC-3: Several texts set to one exact size through the \"F\" field in the \"Properties\" panel\nupdate C-006: new text uses \"Giant\" after it was last chosen\ncreate TC-4: \"Font size\" control on a 375 px mobile panel in Safari on iOS\ncreate TC-5: \"Font size\" control in German and Arabic (right-to-left) interface\n\n# Text in shapes and on arrows\nupdate C-009: rectangle text set to \"Giant\": wraps, rectangle grows taller with the same width, \"Giant\" highlighted\ncreate TC-6: Arrow label set to \"Huge\" stays at the middle of the arrow\ncreate TC-7: Sticky note label at \"Giant\" and \"Huge\": preset highlighted, auto-fit never larger than the picked size\n\n# Styles, copies and history\nupdate C-011: paste styles carries \"Giant\" (96) to the target\nupdate C-012: undo and redo of a change to \"Huge\"\nupdate C-013: copies of a text at \"Giant\" keep 96\n\n# Files, sharing and export\nupdate C-014: reload keeps a text at \"Giant\"\nupdate C-015: saved .excalidraw file keeps texts at \"Huge\" and \"Giant\"\nupdate C-016: PNG and SVG export of texts at \"Huge\" and \"Giant\" match the canvas, nothing cut off\nupdate C-018: live collaboration also carries a change to \"Giant\"\ncreate TC-8: Drawing saved before the new presets keeps its text sizes\n\nNot changed: C-001, C-003, C-004, C-007, C-008, C-010, C-017",
+  "approvals": [
+    {
+      "what": "answers",
+      "hash": "a969efa22f21",
+      "by": "maxxx",
+      "at": "2026-10-13T12:29:26.087Z"
+    },
+    {
+      "what": "plan",
+      "hash": "acf41fa254a5",
+      "by": "maxxx",
+      "at": "2026-10-13T12:30:30.261Z"
+    }
+  ],
+  "history": [
+    {
+      "at": "2026-10-13T12:28:59.254Z",
+      "event": "session opened, questions recorded"
+    },
+    {
+      "at": "2026-10-13T12:29:22.083Z",
+      "event": "answers recorded"
+    },
+    {
+      "at": "2026-10-13T12:29:26.087Z",
+      "event": "answers approved by maxxx"
+    },
+    {
+      "at": "2026-10-13T12:30:20.440Z",
+      "event": "plan submitted (fingerprint acf41fa254a5; 19 cases: 11 updated, 8 new, 0 retired, 0 kept unchanged)"
+    },
+    {
+      "at": "2026-10-13T12:30:30.261Z",
+      "event": "plan approved by maxxx"
+    },
+    {
+      "at": "2026-10-13T12:31:53.939Z",
+      "event": "change set saved to C:\\Users\\maxxx\\AppData\\Local\\Temp\\qa-eval-10506-1-1791894505244\\changes\\excalidraw-10506.md"
+    }
+  ]
+}

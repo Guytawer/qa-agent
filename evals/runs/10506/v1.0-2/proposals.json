@@ -1,0 +1,50 @@
+[
+  {
+    "area": "text-properties",
+    "fact": "Font size gets two presets after \"Very large\": \"Huge\" = 56 and \"Giant\" = 96 (tooltips \"Huge\" and \"Giant\", no shortcuts); the existing four keep their labels and sizes, and the Font size control gets no typed-size field.",
+    "source": "PO answers 1 and 2 on issue 10506, relayed by the user and approved 2026-10-13 [answers approved by maxxx at 2026-10-13T12:33:09.251Z, fingerprint 07b04cc96819; change set changes/excalidraw-10506.md]",
+    "issue": 10506,
+    "id": 1,
+    "proposed_at": "2026-10-13T12:34:55.773Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "A text at a size between presets, or a selection of texts with mixed sizes, highlights no font size preset; clicking a preset sets that exact size on every selected text, and a text at exactly 56 or 96 shows \"Huge\" or \"Giant\" highlighted however it got that size.",
+    "source": "PO answer 4 on issue 10506, relayed by the user and approved 2026-10-13 [answers approved by maxxx at 2026-10-13T12:33:09.251Z, fingerprint 07b04cc96819; change set changes/excalidraw-10506.md]",
+    "issue": 10506,
+    "id": 2,
+    "proposed_at": "2026-10-13T12:34:57.373Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "Ctrl+Shift+> and Ctrl+Shift+< are unchanged by the new presets and have no upper limit, so text can be made larger than \"Giant\" (96).",
+    "source": "PO answer 3 on issue 10506, relayed by the user and approved 2026-10-13 [answers approved by maxxx at 2026-10-13T12:33:09.251Z, fingerprint 07b04cc96819; change set changes/excalidraw-10506.md]",
+    "issue": 10506,
+    "id": 3,
+    "proposed_at": "2026-10-13T12:34:58.773Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "All six font size presets fit the properties panel on a 375 px wide mobile screen.",
+    "source": "PO answer 7 on issue 10506, relayed by the user and approved 2026-10-13 [answers approved by maxxx at 2026-10-13T12:33:09.251Z, fingerprint 07b04cc96819; change set changes/excalidraw-10506.md]",
+    "issue": 10506,
+    "id": 4,
+    "proposed_at": "2026-10-13T12:34:59.923Z"
+  },
+  {
+    "area": "bound-text",
+    "fact": "At \"Huge\" or \"Giant\", text in a shape wraps and the shape grows taller, an arrow label stays at the middle of the arrow, and a sticky note label offers both presets, keeps auto-fit and shows the picked preset highlighted.",
+    "source": "PO answer 5 on issue 10506, relayed by the user and approved 2026-10-13 [answers approved by maxxx at 2026-10-13T12:33:09.251Z, fingerprint 07b04cc96819; change set changes/excalidraw-10506.md]",
+    "issue": 10506,
+    "id": 5,
+    "proposed_at": "2026-10-13T12:35:01.424Z"
+  },
+  {
+    "area": "files-and-export",
+    "fact": "The \"Huge\" and \"Giant\" font sizes are carried by copy and paste styles, copies and undo/redo, and are kept by a reload, a saved file, PNG and SVG export and live collaboration.",
+    "source": "PO answer 6 on issue 10506, relayed by the user and approved 2026-10-13 [answers approved by maxxx at 2026-10-13T12:33:09.251Z, fingerprint 07b04cc96819; change set changes/excalidraw-10506.md]",
+    "issue": 10506,
+    "id": 6,
+    "proposed_at": "2026-10-13T12:35:02.711Z"
+  }
+]
