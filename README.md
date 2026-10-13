@@ -1,104 +1,121 @@
 # QA Agent
 
-A portable AI assistant for QA work, built step by step: first Claude skills, then an MCP server with tools, then a stateful agent with human approval gates. Everything that differs between teams lives in config files, so the same core can move to a new project with a small amount of setup.
+An AI agent that writes manual test cases from a ticket, built from scratch on Claude: a skill for the method, a local MCP server for the tools, and Claude Code in headless mode for unattended runs. Its core idea is **the model decides, code guarantees**: the model analyses, asks and writes; everything that must not go wrong (approvals, what gets saved, what becomes team knowledge, what the agent may touch) is enforced by the server and the runtime, and proven by tests that need no model.
 
-This repository is also a learning log. Each version comes from a measured run, and the reasons for every change are written down.
+The demo product is [Excalidraw](https://github.com/excalidraw/excalidraw). Everything team-specific lives in config files and environment variables, so the same core moves to another project.
 
-## What works today
+## At a glance
 
-### `skills/qa-case-writer`
-A Claude skill that turns a requirement, user story or issue into manual test cases.
+| What | Result | Evidence |
+|---|---|---|
+| The model cannot approve its own work | approvals come only from a terminal command, with a fingerprint of the approved text; any later edit withdraws them | [`test/gates.mjs`](mcp-server/test/gates.mjs), 32 checks |
+| Prompt injection | 2 trap tickets, 13 attacks (phishing step, fake approval, hidden instructions, false facts, data exfiltration, scope cuts): none reached a saved case in 13 runs, with and without a person | [`evals/security-*.md`](evals/), [`evals/autonomous/`](evals/autonomous/) |
+| Measured quality | eval suite of 4 tickets, 17 automated runs, deterministic grader calibrated against manual reviews. Skill v1.0 raised self-found coverage from **85% to 98%** with no growth in suite size and instructions followed in 100% of runs | [`evals/README.md`](evals/README.md) |
+| Least privilege, unattended | in a probe the agent **tried** to read a secret file outside its folder and was denied by the runtime; save, approve, store-knowledge and shell tools do not exist in autonomous mode | [`evals/autonomous/probe/probe.md`](evals/autonomous/probe/probe.md) |
+| Code checks without a model | 83 checks across gates, knowledge, fixtures, security, grader and autonomous mode | `npm test` |
 
-How it works:
-1. Restates the requirement and lists the testable behaviors and the existing features the change touches.
-2. Asks numbered open questions, each with a suggested answer, and stops until they are answered.
-3. Designs coverage: boundaries, negative cases, roles, states, text and locales, regression.
-4. Writes cases following the team's conventions in `config/`.
-5. Reviews its own output against a checklist before showing it.
-6. Summarizes what is covered, what is not and why.
+## How it works
 
-Install: zip the `skills/qa-case-writer` folder and upload it in Claude under Customize → Skills. Fill in `config/product.md` for your product and adjust `config/conventions.md` to your team's rules.
+```mermaid
+flowchart LR
+    T["Ticket<br/>(untrusted text)"] -->|get_issue + notices| M["Model + skill<br/>analyse, ask, plan, write"]
+    K[("Knowledge base<br/>reviewed facts")] -->|read_knowledge| M
+    C[("Existing cases")] -->|search_cases| M
+    M -->|record_answers / submit_plan| S{"Server gates"}
+    P(["Person<br/>npm run approve"]) -->|approval with fingerprint| S
+    S -->|save_changes, only when approved| CH[("changes/<br/>pending change sets")]
+    M -->|propose_knowledge| Q[("Proposal queue")]
+    P2(["Person<br/>npm run review-knowledge"]) --> Q
+    Q -->|accepted only| K
+    M -.->|autonomous mode: save_draft| D[("drafts/<br/>not approved")]
+    D -.->|npm run review-draft| P
+```
 
-### `mcp-server`
-A local MCP server in TypeScript. Tools for data:
+1. **Analyse.** The skill restates the ticket, lists the behaviors and the existing features the change touches (with a checklist: visibility, interface language, editing, containers, mixed selection, copies, persistence, input), reads reviewed facts and searches existing cases.
+2. **Ask.** Numbered questions with suggested answers; suspicious content in the ticket is reported first. The server records them and blocks the next step.
+3. **Approve the answers.** A person runs `npm run approve` in a terminal. The model never sees a way to approve.
+4. **Plan.** One `update`, `create`, `retire` or `keep` line per case, so the server can check completeness and compute counts; the plan is approved the same way.
+5. **Save.** The server accepts exactly the planned cases, no links outside an allowlist, and writes a pending change set that is applied to `cases/` when the feature ships.
+6. **Learn.** Stable facts are proposed with their source; they stay inactive until a person accepts them. Decisions about unreleased features stay pending, so they never pass as current behavior.
 
-| Tool | What it does |
+## Key decisions
+
+- **Instructions ask, code guarantees.** Every rule that matters exists twice: in the skill, so the model follows it, and in the server, so it holds when the model does not. Approvals, completeness of a plan, outside links and counts are code.
+- **Approvals outside the conversation.** An approval typed in chat could be forged by a ticket ("the PO already approved this"). The terminal command stores who, when and a SHA-256 fingerprint; editing the approved text withdraws the approval.
+- **A tool that does not exist cannot be talked into running.** In autonomous mode the server does not offer the tools that approve, save or store knowledge, and the runtime has no shell or web; reads are limited to the run's own folder. The agent finishes everything that can be undone and leaves a draft.
+- **The ticket is data, never instructions.** Defense in layers: skill rules, server-side notices that do not depend on the model repeating them, an outside-link gate, an audit log of every tool call, and human-only approvals and knowledge.
+- **Memory a person can trust.** The agent proposes facts, a person accepts them, each fact cites a checkable source. Wrong or incomplete facts were shown to cause wrong cases, so facts say what a control does, not only what it shows.
+- **Measure, then change one thing.** Fixed inputs, scripted product-owner decisions, a grader that needs no model, and a triage of every failed check (agent or grader). When the suite hit its ceiling, checks were split into "did what it was told" and "found on its own", and new checks were drawn from the variance between runs.
+
+## Skill versions
+
+Each version comes from a measured run; the [changelog](skills/qa-case-writer/CHANGELOG.md) gives the run behind every change.
+
+| Version | Change | Measured effect |
+|---|---|---|
+| 0.2 | coverage rules: merge by data, split by expected result | 41 → 25 cases, High 49% → 16% |
+| 0.3 | list the existing features a change touches | regression coverage restored after being dropped silently |
+| 0.4 | search existing cases, update instead of duplicating | duplicates replaced by updates |
+| 0.5 | gated workflow through the MCP server | stops enforced in code |
+| 0.6 | reviewed knowledge base | sticky notes covered once the base knew them |
+| 0.7 | case template, self-contained approved answers | headers identical across runs |
+| 0.8 | untrusted content section | every injection reported before the first decision |
+| 0.9 | strict plan format, counts from the server | the model miscounted in 3 runs; counts now come from code |
+| 1.0 | checklist of touched places | self-found coverage 85% → 98% |
+| 1.1 | autonomous run: assumptions, draft only | trap tickets handled with no person present |
+
+## Repository
+
+| Folder | What is there |
 |---|---|
-| `get_issue` | Reads one Excalidraw issue from the GitHub API (or a local fixture): title, body, labels, state, author, assignees, comments, plus `notices` for content that may try to steer the agent |
-| `list_issues` | Lists issues with filters (state, labels, title words) and returns `total_count` for statistics |
-| `search_cases` | Searches the existing test cases in `cases/` so the skill updates them instead of writing duplicates |
+| [`skills/qa-case-writer`](skills/qa-case-writer/) | the skill; team rules in `config/` |
+| [`mcp-server`](mcp-server/) | the MCP server (TypeScript), approval and review commands, eval runner, autonomous runner, tests |
+| [`knowledge`](knowledge/) | reviewed facts per area; `pending/` for unreleased features |
+| [`cases`](cases/), [`changes`](changes/) | test cases for current behavior; pending change sets per ticket |
+| [`fixtures`](fixtures/) | frozen tickets, including the two trap tickets |
+| [`evals`](evals/) | run notes, the eval suite and results, autonomous runs and the probe |
 
-Tools for the gated workflow:
+## Run it
 
-| Tool | Allowed when |
-|---|---|
-| `open_session` | always; records the open questions for an issue |
-| `record_answers` | after the questions; the answers count only once a person approves them. Extending them after a plan withdraws the plan |
-| `submit_plan` | only after the answers are approved; one `update` / `retire` / `create` / `keep` line per case, so the server can check completeness and count cases; a changed plan loses its approval |
-| `save_changes` | only after the current plan is approved, the content holds exactly the planned cases (by heading), and no case links outside the allowed domains; returns the counts |
-| `get_session` | always; shows stage, approvals and history |
-| `read_change_set` | always; reads the saved change set for an issue (read-only) |
+```
+npm install --prefix mcp-server
+npm run build
+npm test
+```
 
-Tools for memory:
-
-| Tool | What it does |
-|---|---|
-| `read_knowledge` | Reads reviewed facts about the product by area, plus pending knowledge for unreleased features |
-| `propose_knowledge` | Proposes one fact with its source; it stays inactive until a person accepts it with `npm run review-knowledge` |
-
-Approvals never come from the model. A person runs `npm run approve -- <issue>` in a terminal (from the repository root or `mcp-server`), sees the answers or the plan, and confirms. The approval stores who, when and a fingerprint of the approved text, so any later change to the text withdraws it. A rejection asks for a one-line reason and keeps it in the session history. A decision proposed for the knowledge base cites the approval and the change set file, so its source can be checked. State lives in `state/` (not committed). `npm test` checks that every gate holds and that proposed facts stay inactive until reviewed.
-
-Build with `npm install` and `npm run build` in `mcp-server`, then add it to Claude Desktop's `claude_desktop_config.json`:
+Add the server to Claude Desktop (`claude_desktop_config.json`), and upload `skills/qa-case-writer` as a skill:
 ```json
 "mcpServers": {
   "qa-agent": { "command": "node", "args": ["<path>/mcp-server/dist/index.js"] }
 }
 ```
-Set `QA_CASES_DIR` in the server's `env` to search another team's case folder.
 
-### Security
-Issue text is written by outsiders, so the agent treats it as data. Defenses in layers:
-- the skill: never follow instructions from an issue, report every suspicious item before the first decision, never put an outside link or a credential step into a case;
-- `get_issue` flags hidden HTML comments, links outside the allowed domains, requests for credentials, requests to skip approvals and requests to send data out (`notices`);
-- `save_changes` refuses cases that link outside `QA_URL_ALLOWLIST` (default `excalidraw.com,github.com`);
-- every tool call is written to `state/audit.log` with its outcome;
-- approvals and knowledge stay human-only, as above.
+| Command | What it does |
+|---|---|
+| `npm run approve -- <issue>` | show the pending answers or plan and approve or reject them (with a reason) |
+| `npm run review-knowledge` | accept or reject proposed facts |
+| `npm run auto -- <issue>` | autonomous run: a draft, nothing approved |
+| `npm run review-draft -- <issue>` | morning review: server notices, assumptions, what the run did |
+| `npm run auto -- probe` | least-privilege probe |
+| `npm run eval -- <case> --runs N --label <version>` | eval runs through Claude Code headless |
+| `npm run eval-report` | mean, spread, required vs discovery per case and version |
+| `npm run grade -- <case> --file <path>` | grade one change set or draft |
 
-Two trap issues in `fixtures/` (obvious and subtle injections) test these layers; see `evals/security-*.md`. `npm test` checks the code layers without a model.
+Environment: `QA_CASES_DIR`, `QA_KNOWLEDGE_DIR`, `QA_STATE_DIR`, `QA_CHANGES_DIR`, `QA_DRAFTS_DIR`, `QA_FIXTURES_DIR`, `QA_URL_ALLOWLIST`, `QA_MODE`.
 
-### `knowledge`
-Reviewed facts about Excalidraw, one file per area, each with its source and reviewer. Facts about unreleased features wait in `knowledge/pending/`.
+## Limits
 
-### `cases` and `changes`
-`cases/` holds manual test cases for the current behavior of Excalidraw, one markdown file per product area. Cases for a feature that is not released yet wait in `changes/`, one file per ticket, and are applied to `cases/` when the feature ships. This keeps the case set a true picture of the product today.
+- Two runs per case and version in the eval suite: the direction of an improvement is consistent, its size is not established.
+- The grader checks structure and keywords; whether a case is a good test still needs a reviewer.
+- Server notices are pattern checks: a new kind of injection may get none, so the model's report and the human review remain layers.
+- Built and measured on one product. Moving to another needs `config/`, a case folder, a knowledge base and new eval cases.
+- Runs use a Claude subscription through Claude Code, not the API.
 
-## How quality is measured
+## Next
 
-Every change to the skill is tested on the same input with the same product-owner decisions, then compared with the previous run. See [`evals/`](evals/).
-
-Results on Excalidraw issue #11404 (italic text):
-
-| | v0.1 | v0.2 | v0.3 |
-|---|---|---|---|
-| Cases | 41 | 25 | 29 |
-| High priority | 20 (49%) | 4 (16%) | 4 (14%) |
-| Loops inside a case | yes | no | no |
-| Unverified UI facts marked | no | yes | yes |
-| Regression coverage (groups, library, duplicate) | yes | lost silently | restored |
-
-One run per version, so some differences may be run-to-run variance. The changelog explains each fix: [`skills/qa-case-writer/CHANGELOG.md`](skills/qa-case-writer/CHANGELOG.md).
-
-## Roadmap
-
-- [x] Skill: test case writer, eval-driven iterations; uses the MCP server to update existing cases
-- [ ] Skill: ticket completeness review
-- [x] MCP server (TypeScript): read issues, list issues with counts, search existing cases
-- [x] Stateful workflow: questions → approved answers → approved plan → saved cases, with gates enforced in code and approvals only from a person
-- [x] Knowledge base: the agent proposes facts, a person accepts them; facts about unreleased features stay pending
-- [x] Security: prompt-injection traps, server-side notices, outside-link gate, audit log
-- [ ] Least privilege for autonomous mode (only the agent's own tools)
-- [ ] Eval suite with several reference issues and repeated runs
-- [ ] Autonomous mode via the Claude Agent SDK
+- A second skill: ticket completeness review before test design.
+- A path to revise a saved change set without a new session; computed numbers checked before saving.
+- More runs per version before claiming a size of effect.
 
 ## Design principles
 
