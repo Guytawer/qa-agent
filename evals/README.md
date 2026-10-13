@@ -43,7 +43,7 @@ What it cannot judge: whether a case is a good test. It catches regressions and 
 | 99002 | 10 | v0.7 | 20/20 | none |
 | 99002 | 11 | v0.8 | 20/20 | none |
 
-The grader agrees with what the reviews found by hand. Each row is one run; variance is still unknown.
+The grader agrees with what the reviews found by hand. Scores here are as first graded, before the discovery checks existed; `npm run eval-report` shows every row regraded with the current checks.
 
 ## Two kinds of coverage
 
@@ -90,6 +90,38 @@ Every failed check is triaged before the score counts: either the agent missed s
 
 `99002 v0.9 #1` failed "text editor", and this time the agent missed it: none of the 23 cases edits a text with a line height set. Run `#2` has the case (double-click, Enter, Esc, lines do not jump). The check was not in the decisions: in runs 10 and 11 the agent itself suggested it ("the editor shows the same line spacing as the canvas"), and the PO accepted the suggestion. In `#1` it never asked, so nothing was approved and nothing was written. This is why discovery became its own group.
 
-## Next: repeated runs
+## Repeated runs
 
-A runner drives Claude Code in headless mode through the whole workflow (prompt, the case's decisions, approvals by the test harness), in temporary state, changes and knowledge folders, with only the qa-agent tools allowed. Each case runs several times per skill version; the report shows the mean score and the spread.
+`npm run eval -- <case> --runs N --label <version>` drives Claude Code in headless mode through the whole workflow: the prompt, the case's decisions, and approvals by the test harness, in temporary state, changes and knowledge folders, with only Read, Skill and the qa-agent tools allowed. Each run's transcript, change set, session, audit log and proposals are kept in `evals/runs/<case>/<label>-<n>/`, and its result is appended to `results.jsonl`.
+
+## Skill v1.0 against v0.9
+
+v1.0 changed one thing: a checklist of touched places in the analysis step (visibility, interface language, editing, containers, mixed selection, creation and copies, leaving the session, input). Same cases, same decisions, same checks.
+
+| Case | v0.9 discovery | v1.0 discovery | Cases v0.9 / v1.0 |
+|---|---|---|---|
+| 10506 | 0 of 1 | 1 of 2 | 19-21 / 19 |
+| 11404 | 25 of 27 | 18 of 18 | 24-27 / 24-26 |
+| 99001 | 12 of 14 | 14 of 14 | 23-24 / 25 |
+| 99002 | 7 of 10 | 10 of 10 | 23-26 / 22-27 |
+| **All** | **44 of 52 (85%)** | **43 of 44 (98%)** | |
+
+Required checks stayed at 100% in every run of both versions.
+
+### Findings
+- Discovery went from 85% to 98%, in the same direction on all four cases. The label in another interface language, missed in 9 of 13 v0.9 runs where it could be checked, was missed once in v1.0.
+- The suite did not grow: case counts stayed in the v0.9 range. The checklist's last line (it widens the analysis, not the suite) held.
+- Checks with no item of their own in the checklist (text editor, sticky note, paste styles and the rest) did not get worse; the text editor in 99002 is now found in both runs. The gain is not only the two checks the checklist mirrors.
+- Gaps became visible even when not covered. In the one remaining miss (10506 #2) the agent did not ask about translations but listed them under "Not covered": "you weren't asked about translations of "Huge" and "Giant", so long translated labels and right-to-left layouts aren't tested". In 99002 #1 it covered where the control is shown and listed the hidden states as not covered because no answer decided them. A v0.9 miss was silent.
+- One grader false negative was found and fixed: 99002 v1.0 #1 has TC-4 "section visibility by selection", which the pattern did not match. "visibility" was added and all rows regraded.
+
+### Limits
+- Two runs per case and version. The direction is consistent across cases; the size of the gain is not established.
+- The two newest checks were drawn from the v0.9 runs, and two checklist items mirror them. The other checks, which the checklist does not name, are what shows the gain is broader.
+- Keyword checks see whether a feature is mentioned, not whether its case is a good test. Quality still needs a reviewer.
+- The grader cannot tell a silent miss from a gap disclosed under "Not covered". Both count as a miss.
+
+### Backlog
+- Skill: an item of the checklist that applies and that no answer covers should become a question in step 2, not only a "Not covered" line at the end (10506 v1.0 #2).
+- Grader: count a gap listed under "Not covered" apart from a silent miss.
+- More runs per version (3 to 5) before claiming a size of effect.

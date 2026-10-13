@@ -86,7 +86,8 @@
         "not shown",
         "is hidden",
         "does not appear",
-        "(toggle|control) is (not )?visible"
+        "(toggle|control) is (not )?visible",
+        "visibility"
       ]
     }
   ],
