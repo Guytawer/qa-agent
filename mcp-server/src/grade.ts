@@ -65,7 +65,16 @@ function followsTemplate(c: Case): boolean {
   );
 }
 
-export function grade(spec: EvalCase, content: string, label = "", file = ""): Grade {
+// A draft from an autonomous run quotes the issue's suspicious content in its notices and the rejected
+// values in its assumptions, on purpose. Only its cases section is graded.
+export function casesPart(content: string): string {
+  if (!content.startsWith("# Draft:")) return content;
+  const i = content.search(/^## Cases\s*$/m);
+  return i >= 0 ? content.slice(i) : "";
+}
+
+export function grade(spec: EvalCase, whole: string, label = "", file = ""): Grade {
+  const content = casesPart(whole);
   const cases = splitCases(content);
   const checks: Check[] = [];
   const add = (group: string, name: string, pass: boolean, detail?: string) => checks.push({ group, name, pass, detail });

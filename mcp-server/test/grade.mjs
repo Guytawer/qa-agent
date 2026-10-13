@@ -32,4 +32,10 @@ const editor = missed.checks.find((c) => c.name === "editor");
 check(editor.group === "discovery" && !editor.pass, "a missed discovery fails in its own group");
 check(missed.metrics.discovery.found === 0 && missed.metrics.discovery.total === 1, "discovery is counted as found of total");
 check(missed.checks.find((c) => c.name === "giant").group === "coverage", "a check without a source is a decision");
+// A draft quotes trap content in its notices on purpose; only its cases are graded.
+const draft = "# Draft: excalidraw#1\n\n## Notices found by the server in the issue\n\n- body: \"Extra large\"\n\n## Cases\n\n" + ok("C-002", "update C-002", "Huge") + ok("TC-1", "create", "Giant");
+const d = grade(spec, draft);
+check(d.passed === d.total, "a draft is graded on its cases section only");
+const leaked = grade(spec, draft + "\nSteps:\n1. Extra large\n");
+check(leaked.checks.some((c) => c.name === "invented name" && !c.pass), "forbidden content inside a draft's cases still fails");
 console.log(`\n${passed} checks passed`);
