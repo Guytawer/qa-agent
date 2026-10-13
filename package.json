@@ -7,6 +7,7 @@
     "review-knowledge": "npm --prefix mcp-server run review-knowledge",
     "build": "npm --prefix mcp-server run build",
     "test": "npm --prefix mcp-server test",
-    "grade": "npm --prefix mcp-server run grade --"
+    "grade": "npm --prefix mcp-server run grade --",
+    "freeze": "npm --prefix mcp-server run freeze --"
   }
 }

@@ -8,7 +8,8 @@
     "build": "tsc",
     "approve": "node dist/approve.js",
     "review-knowledge": "node dist/review-knowledge.js",
-    "grade": "node dist/grade.js"
+    "grade": "node dist/grade.js",
+    "freeze": "node dist/freeze.js"
   },
   "keywords": [],
   "author": "",
