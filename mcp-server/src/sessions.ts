@@ -8,6 +8,11 @@ import { fileURLToPath } from "node:url";
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 export const STATE_DIR = process.env.QA_STATE_DIR ?? path.join(REPO_ROOT, "state");
 export const CHANGES_DIR = process.env.QA_CHANGES_DIR ?? path.join(REPO_ROOT, "changes");
+// Drafts written by an autonomous run (no person present). Nothing in a draft is approved.
+export const DRAFTS_DIR = process.env.QA_DRAFTS_DIR ?? path.join(REPO_ROOT, "drafts");
+// "autonomous" when no person is present: the server then offers only reading tools and save_draft.
+// Set by whoever starts the server (npm run auto), never by the model.
+export const MODE: "autonomous" | "interactive" = process.env.QA_MODE === "autonomous" ? "autonomous" : "interactive";
 
 export type Stage =
   | "questions_open" // questions written, waiting for the human's answers

@@ -1,2 +1,5 @@
 # Workflow state of the agent (sessions, approvals). Local working data.
 state/
+
+# Drafts from autonomous runs: nothing in them is approved. Local working data.
+drafts/

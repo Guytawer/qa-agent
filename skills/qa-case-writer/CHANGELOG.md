@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1 — 2026-10-13
+Autonomous runs (module 8). Nothing changes when a person is present.
+
+- New section "Autonomous run": when `save_draft` is available, no person is there to answer or approve. The skill takes its suggested answers as assumptions (the narrowest reasonable ones, never values that come only from unverified issue content), writes the whole set and saves it as a draft that the server marks as not approved.
+- Gated workflow, step 0: a draft from an autonomous run is a starting point, never approved. Its notices come first, each assumption becomes a question with the assumption as the suggested answer, and only the user's answers are recorded.
+
 ## 1.0 — 2026-10-13
 Based on the eval suite (16 runs graded, skill v0.9 as the baseline).
 

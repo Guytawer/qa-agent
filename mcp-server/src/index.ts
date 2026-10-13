@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 import { addProposal, listAreas, readArea, readPending } from "./knowledge.js";
 import { caseHeadings, describeCounts, parsePlan } from "./plan.js";
 import { audit, findNotices, outsideUrls, URL_ALLOWLIST, type Notice } from "./security.js";
-import { CHANGES_DIR, fingerprint, loadSession, saveSession, validApproval, type Session } from "./sessions.js";
+import { CHANGES_DIR, DRAFTS_DIR, fingerprint, loadSession, MODE, saveSession, STATE_DIR, validApproval, type Session } from "./sessions.js";
 
 const REPO = "excalidraw/excalidraw";
 
@@ -22,22 +22,35 @@ const FIXTURES_DIR =
 
 const server = new McpServer({ name: "qa-agent", version: "0.1.0" });
 
+// Least privilege in autonomous mode: with no person present, nothing may be approved, saved as a
+// change set or stored as knowledge, so those tools are not offered at all (a tool that does not exist
+// cannot be talked into running). save_draft exists only in autonomous mode.
+const INTERACTIVE_ONLY = new Set(["open_session", "record_answers", "submit_plan", "save_changes", "propose_knowledge", "list_issues"]);
+const AUTONOMOUS_ONLY = new Set(["save_draft"]);
+const offered = (name: string) => (MODE === "autonomous" ? !INTERACTIVE_ONLY.has(name) : !AUTONOMOUS_ONLY.has(name));
+
 // Audit log: every tool call is written to state/audit.log with its outcome.
 // Wrapping registerTool once covers every tool registered below.
 const registerTool = server.registerTool.bind(server) as (...args: any[]) => any;
 (server as any).registerTool = (name: string, config: unknown, handler: (...a: any[]) => Promise<any>) =>
+  offered(name) &&
   registerTool(name, config, async (...callArgs: any[]) => {
     const result = await handler(...callArgs);
     await audit(name, callArgs[0], result?.isError ? "blocked" : "ok").catch(() => {});
     return result;
   });
 
-// Marks text in an issue that a person should see before deciding anything.
-function withNotices(issue: { body?: string | null; comments?: { author?: string; body?: string }[] }) {
+// Marks text in an issue that a person should see before deciding anything. The notices are also kept
+// in the state folder, so a draft lists what the server found, not what the model chose to repeat.
+async function withNotices(issue: { number?: number; body?: string | null; comments?: { author?: string; body?: string }[] }) {
   const notices: Notice[] = [
     ...findNotices("body", issue.body),
     ...(issue.comments ?? []).flatMap((c, i) => findNotices(`comment ${i + 1} by ${c.author ?? "unknown"}`, c.body)),
   ];
+  if (issue.number) {
+    await mkdir(STATE_DIR, { recursive: true });
+    await writeFile(noticesFile(issue.number), JSON.stringify(notices, null, 2), "utf8");
+  }
   return {
     ...issue,
     notices,
@@ -47,6 +60,8 @@ function withNotices(issue: { body?: string | null; comments?: { author?: string
         : "No suspicious content found by the server's checks.",
   };
 }
+
+const noticesFile = (issue: number) => path.join(STATE_DIR, `notices-${issue}.json`);
 
 server.registerTool(
   "get_issue",
@@ -66,7 +81,7 @@ server.registerTool(
     // so a run can be repeated exactly and no test issue is ever posted to a real project.
     const fixture = await readFile(path.join(FIXTURES_DIR, `issue-${number}.json`), "utf8").catch(() => null);
     if (fixture !== null) {
-      return { content: [{ type: "text", text: JSON.stringify(withNotices(JSON.parse(fixture)), null, 2) }] };
+      return { content: [{ type: "text", text: JSON.stringify(await withNotices(JSON.parse(fixture)), null, 2) }] };
     }
 
     const headers = { "User-Agent": "qa-agent", Accept: "application/vnd.github+json" };
@@ -99,7 +114,7 @@ server.registerTool(
       })),
     };
 
-    return { content: [{ type: "text", text: JSON.stringify(withNotices(result), null, 2) }] };
+    return { content: [{ type: "text", text: JSON.stringify(await withNotices(result), null, 2) }] };
   }
 );
 
@@ -437,6 +452,84 @@ server.registerTool(
       return text(await readFile(target, "utf8"));
     } catch {
       return text(`No saved change set for issue ${issue}.`);
+    }
+  }
+);
+
+// ---------------------------------------------------------------------------
+// Drafts: the autonomous run's whole result, with nothing approved. A person reviews it the next
+// morning (npm run review-draft) and finishes it in an interactive session, through the usual gates.
+
+server.registerTool(
+  "save_draft",
+  {
+    description:
+      "Autonomous run only: saves a draft of test cases for an issue, for a person to review later. Nothing in a draft is approved. " +
+      "Call get_issue first: the server adds the notices it found in the issue. " +
+      "assumptions: every open question with the answer you assumed (your suggested answer), numbered. " +
+      "plan: one 'update', 'retire', 'create' or 'keep' line per case, plus one 'Not changed:' line, as in a normal plan. " +
+      "content: exactly the planned cases, each under a '## <id> <title>' heading, with no links outside the allowed domains.",
+    inputSchema: {
+      issue: z.number().int().positive().describe("Issue number"),
+      assumptions: z.string().min(1).describe("The numbered open questions, each with the answer you assumed, as markdown"),
+      plan: z.string().min(1).describe("The plan: one 'update', 'retire', 'create' or 'keep' line per case"),
+      content: z.string().min(1).describe("The full test cases as markdown, each with its Action line"),
+    },
+  },
+  async ({ issue, assumptions, plan, content }) => {
+    const notices = await readFile(noticesFile(issue), "utf8").then((t) => JSON.parse(t) as Notice[]).catch(() => null);
+    if (notices === null) return text(`Blocked: read issue ${issue} with get_issue first, so the draft lists what the server found in it.`, true);
+    // The same checks as save_changes, except the approvals: a draft that would be blocked there is blocked here.
+    const { entries, errors } = parsePlan(plan);
+    if (errors.length > 0) return text(`Draft not saved. Fix these plan lines and save again:\n- ${errors.join("\n- ")}`, true);
+    const planned = entries.map((e) => e.id);
+    const headings = caseHeadings(content);
+    const missing = planned.filter((id) => !headings.includes(id));
+    const extra = [...new Set(headings.filter((id) => !planned.includes(id)))];
+    if (missing.length > 0 || extra.length > 0) {
+      return text(
+        "Draft not saved: the content does not match the plan." +
+          (missing.length > 0 ? ` Missing case headings: ${missing.join(", ")}.` : "") +
+          (extra.length > 0 ? ` Cases not in the plan: ${extra.join(", ")}.` : ""),
+        true
+      );
+    }
+    const badUrls = outsideUrls([assumptions, plan, content].join("\n"));
+    if (badUrls.length > 0) {
+      return text(`Draft not saved: links to domains outside the allowed list (${URL_ALLOWLIST.join(", ")}): ${badUrls.join(", ")}. Remove them and say in the assumptions where they came from.`, true);
+    }
+    const noticeLines =
+      notices.length > 0 ? notices.map((n) => `- ${n.where}: ${n.kind}: "${n.detail}"`).join("\n") : "None found by the server's checks.";
+    const draft =
+      `# Draft: excalidraw#${issue}\n\n` +
+      `Status: **draft, not approved**. Written by an autonomous run at ${new Date().toISOString()}, with no person present. ` +
+      `The answers below are the agent's own assumptions, and nothing here has been reviewed. ` +
+      `To use it, open an interactive session: the agent reads this draft, asks you to confirm or correct each assumption, and the usual approvals apply.\n\n` +
+      `Plan fingerprint ${fingerprint(plan)}: ${describeCounts(entries)}.\n\n` +
+      `## Notices found by the server in the issue\n\n${noticeLines}\n\n` +
+      `## Assumptions (not approved)\n\n${assumptions.trim()}\n\n` +
+      `## Plan (not approved)\n\n${plan.trim()}\n\n` +
+      `## Cases\n\n${content.trim()}\n`;
+    await mkdir(DRAFTS_DIR, { recursive: true });
+    const target = path.join(DRAFTS_DIR, `excalidraw-${issue}.md`);
+    await writeFile(target, draft, "utf8");
+    return text(`Draft saved to ${target}: ${describeCounts(entries)}, ${notices.length} notice(s). Nothing is approved. Report these counts and stop.`);
+  }
+);
+
+server.registerTool(
+  "read_draft",
+  {
+    description:
+      "Reads the draft an autonomous run wrote for an issue: server notices, the agent's assumptions, the plan and the cases, none of them approved. " +
+      "Use it when starting work on an issue: if a draft exists, show the user its notices and ask them to confirm or correct each assumption before recording any answers. Read-only.",
+    inputSchema: { issue: z.number().int().positive().describe("Issue number") },
+  },
+  async ({ issue }) => {
+    try {
+      return text(await readFile(path.join(DRAFTS_DIR, `excalidraw-${issue}.md`), "utf8"));
+    } catch {
+      return text(`No draft for issue ${issue}.`);
     }
   }
 );
