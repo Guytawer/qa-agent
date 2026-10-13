@@ -1,0 +1,58 @@
+[
+  {
+    "area": "text-properties",
+    "fact": "The \"Font size\" control has six presets in this order: Small 16, Medium 20, Large 28, Very large 36, \"Huge\" 56 and \"Giant\" 96, with tooltips \"Huge\" and \"Giant\", no shortcuts for the new presets, and no typed size field in the control.",
+    "source": "PO answer on issue 10506, relayed by the user, 2026-10-13 [answers approved by maxxx at 2026-10-13T09:33:19.421Z, fingerprint a0349cde3d1b; change set changes/excalidraw-10506.md]",
+    "issue": 10506,
+    "id": 1,
+    "proposed_at": "2026-10-13T09:36:16.351Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "A size between presets or a selection of texts with mixed sizes highlights no font size preset; clicking a preset sets that exact size on every selected text, and a text at exactly 56 or 96, however it got that size, shows \"Huge\" or \"Giant\" highlighted.",
+    "source": "PO answer on issue 10506, relayed by the user, 2026-10-13 [answers approved by maxxx at 2026-10-13T09:33:19.421Z, fingerprint a0349cde3d1b; change set changes/excalidraw-10506.md]",
+    "issue": 10506,
+    "id": 2,
+    "proposed_at": "2026-10-13T09:36:18.001Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "The font size increase and decrease shortcuts stay unchanged after the \"Huge\" and \"Giant\" presets ship and have no upper limit.",
+    "source": "PO answer on issue 10506, relayed by the user, 2026-10-13 [answers approved by maxxx at 2026-10-13T09:33:19.421Z, fingerprint a0349cde3d1b; change set changes/excalidraw-10506.md]",
+    "issue": 10506,
+    "id": 3,
+    "proposed_at": "2026-10-13T09:36:19.252Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "All six font size presets fit the 375 px mobile panel; the presets are in scope for the latest Chrome, Firefox and Safari on desktop and Safari on iOS.",
+    "source": "PO answer on issue 10506, relayed by the user, 2026-10-13 [answers approved by maxxx at 2026-10-13T09:33:19.421Z, fingerprint a0349cde3d1b; change set changes/excalidraw-10506.md]",
+    "issue": 10506,
+    "id": 4,
+    "proposed_at": "2026-10-13T09:36:20.653Z"
+  },
+  {
+    "area": "bound-text",
+    "fact": "Text in shapes at \"Huge\" or \"Giant\" wraps and the shape grows taller; arrow labels stay at the middle of the arrow; sticky note labels offer both presets, keep auto-fit and show the picked preset highlighted.",
+    "source": "PO answer on issue 10506, relayed by the user, 2026-10-13 [answers approved by maxxx at 2026-10-13T09:33:19.421Z, fingerprint a0349cde3d1b; change set changes/excalidraw-10506.md]",
+    "issue": 10506,
+    "id": 5,
+    "proposed_at": "2026-10-13T09:36:22.153Z"
+  },
+  {
+    "area": "styles-and-history",
+    "fact": "Copy styles and paste styles, copies and undo/redo carry the \"Huge\" and \"Giant\" font sizes.",
+    "source": "PO answer on issue 10506, relayed by the user, 2026-10-13 [answers approved by maxxx at 2026-10-13T09:33:19.421Z, fingerprint a0349cde3d1b; change set changes/excalidraw-10506.md]",
+    "issue": 10506,
+    "id": 6,
+    "proposed_at": "2026-10-13T09:36:23.353Z"
+  },
+  {
+    "area": "files-and-export",
+    "fact": "The \"Huge\" and \"Giant\" font sizes survive a page reload, a saved .excalidraw file, PNG and SVG export and live collaboration; older Excalidraw versions are out of scope.",
+    "source": "PO answer on issue 10506, relayed by the user, 2026-10-13 [answers approved by maxxx at 2026-10-13T09:33:19.421Z, fingerprint a0349cde3d1b; change set changes/excalidraw-10506.md]",
+    "issue": 10506,
+    "id": 7,
+    "proposed_at": "2026-10-13T09:36:24.505Z"
+  }
+]
