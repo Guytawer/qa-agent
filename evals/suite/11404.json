@@ -61,8 +61,10 @@
     {
       "name": "text inside a shape",
       "any": [
-        "inside (a|the) (rectangle|shape)",
-        "in a shape"
+        "inside (a|the) (rectangle|shape|ellipse|diamond)",
+        "in a shape",
+        "(rectangle|ellipse|diamond|shape)[^\\n]{0,80}\\binside it\\b",
+        "text in(side)? (a|the) (rectangle|shape)"
       ]
     },
     {

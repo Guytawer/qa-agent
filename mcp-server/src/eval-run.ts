@@ -202,6 +202,9 @@ else {
   const runs = i("--runs") >= 0 ? Number(args[i("--runs") + 1]) : 1;
   const label = i("--label") >= 0 ? args[i("--label") + 1] : "run";
   const spec = await loadCase(target);
-  console.log(`${spec.id}: ${spec.title}, ${runs} run(s), label "${label}"`);
-  for (let n = 1; n <= runs; n++) await runOnce(spec, label, n);
+  // Continue the numbering of earlier runs with the same label, so no run overwrites another.
+  let first = 1;
+  while (existsSync(path.join(REPO, "evals", "runs", spec.id, `${label}-${first}`))) first++;
+  console.log(`${spec.id}: ${spec.title}, ${runs} run(s), label "${label}", numbered from ${first}`);
+  for (let n = first; n < first + runs; n++) await runOnce(spec, label, n);
 }

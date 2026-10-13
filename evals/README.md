@@ -44,6 +44,10 @@ What it cannot judge: whether a case is a good test. It catches regressions and 
 
 The grader agrees with what the reviews found by hand. Each row is one run; variance is still unknown.
 
+## Reading a failed check
+
+Every failed check is triaged before the score counts: either the agent missed something, or the check is too narrow. The first automated run failed "text inside a shape", but C-009 covered it ("a rectangle ... with the text ... inside it"); the pattern was widened and the run regraded, with a note in `results.jsonl`.
+
 ## Next: repeated runs
 
 A runner drives Claude Code in headless mode through the whole workflow (prompt, the case's decisions, approvals by the test harness), in temporary state, changes and knowledge folders, with only the qa-agent tools allowed. Each case runs several times per skill version; the report shows the mean score and the spread.
