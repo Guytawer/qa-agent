@@ -29,6 +29,18 @@ Restate the requirement in 2-4 sentences: who does what, and what the product sh
 
 Then list the existing features the change touches: everything that creates, copies, groups, stores, exports, shares or restyles the affected element. Each of them is a regression risk.
 
+When the change adds or changes a control or a property of an element, go through this checklist and note each item that applies. An item that applies becomes a touched feature, a behavior or a question in step 2; skip the ones that clearly do not apply.
+- **Visibility:** where the control is shown and where it is not: each kind of selected element, nothing selected, a tool active, several elements of different kinds.
+- **Interface language:** the control's labels, tooltips and messages in another interface language: a missing translation, longer words, a right-to-left layout.
+- **Editing:** the property while the element is being edited, and when editing starts and ends.
+- **Containers:** every place the element can live: inside another element, attached to one, in a group.
+- **Mixed selection:** several selected elements with different values.
+- **Creation and copies:** every way the element is created, duplicated or restyled from another one, and undo and redo.
+- **Leaving the session:** reload, saved file, export, sharing and live collaboration, an older version opening the data.
+- **Input:** keyboard shortcuts and their conflicts, small screens and touch.
+
+The checklist widens the analysis, not the suite: the merge rules of step 3 still decide how many cases there are.
+
 ### 1b. Check existing cases
 If a tool that searches the team's existing test cases is available (for example `search_cases`), search before designing anything: one search per behavior and per touched feature from step 1, with a few words each.
 - A behavior that an existing case already describes, and that the requirement changes: **update** that case (give its id) instead of writing a new one. One behavior, one case.

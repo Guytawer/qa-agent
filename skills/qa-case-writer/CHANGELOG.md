@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0 — 2026-10-13
+Based on the eval suite (16 runs graded, skill v0.9 as the baseline).
+
+- Step 1 gets a checklist of touched places for a new or changed control: visibility, interface language, editing, containers, mixed selection, creation and copies, leaving the session, input. With v0.9 the agent did everything it was told in every run, but its own analysis varied: the control's label in another interface language was found in 6 of 15 runs, where the control is shown in 9 of 12, the text editor in 1 of 2 v0.9 runs of #99002.
+- The checklist widens the analysis, not the suite: the merge rules still decide the number of cases.
+- Only this changed, so the next eval runs measure the checklist alone.
+
 ## 0.9 — 2026-10-11
 Based on runs 8 to 11, together with stricter server checks.
 
