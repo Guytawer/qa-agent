@@ -13,7 +13,8 @@
     "eval": "node dist/eval-run.js",
     "eval-report": "node dist/eval-report.js",
     "regrade": "node dist/eval-regrade.js",
-    "auto": "node dist/auto.js"
+    "auto": "node dist/auto.js",
+    "review-draft": "node dist/review-draft.js"
   },
   "keywords": [],
   "author": "",

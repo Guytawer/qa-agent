@@ -12,6 +12,7 @@
     "eval": "npm --prefix mcp-server run eval --",
     "eval-report": "npm --prefix mcp-server run eval-report",
     "regrade": "npm --prefix mcp-server run regrade --",
-    "auto": "npm --prefix mcp-server run auto --"
+    "auto": "npm --prefix mcp-server run auto --",
+    "review-draft": "npm --prefix mcp-server run review-draft --"
   }
 }
