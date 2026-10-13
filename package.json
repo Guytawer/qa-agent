@@ -8,6 +8,8 @@
     "build": "npm --prefix mcp-server run build",
     "test": "npm --prefix mcp-server test",
     "grade": "npm --prefix mcp-server run grade --",
-    "freeze": "npm --prefix mcp-server run freeze --"
+    "freeze": "npm --prefix mcp-server run freeze --",
+    "eval": "npm --prefix mcp-server run eval --",
+    "eval-report": "npm --prefix mcp-server run eval-report"
   }
 }

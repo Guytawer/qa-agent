@@ -9,7 +9,9 @@
     "approve": "node dist/approve.js",
     "review-knowledge": "node dist/review-knowledge.js",
     "grade": "node dist/grade.js",
-    "freeze": "node dist/freeze.js"
+    "freeze": "node dist/freeze.js",
+    "eval": "node dist/eval-run.js",
+    "eval-report": "node dist/eval-report.js"
   },
   "keywords": [],
   "author": "",
