@@ -1,0 +1,30 @@
+{"at":"2026-10-13T09:59:57.085Z","tool":"get_session","args":"{\"issue\":99001}","outcome":"ok"}
+{"at":"2026-10-13T09:59:57.553Z","tool":"get_issue","args":"{\"number\":99001}","outcome":"ok"}
+{"at":"2026-10-13T09:59:58.746Z","tool":"read_knowledge","args":"{}","outcome":"ok"}
+{"at":"2026-10-13T10:00:01.447Z","tool":"read_knowledge","args":"{\"area\":\"text-properties\"}","outcome":"ok"}
+{"at":"2026-10-13T10:00:01.850Z","tool":"read_knowledge","args":"{\"area\":\"bound-text\"}","outcome":"ok"}
+{"at":"2026-10-13T10:00:02.250Z","tool":"read_knowledge","args":"{\"area\":\"styles-and-history\"}","outcome":"ok"}
+{"at":"2026-10-13T10:00:02.600Z","tool":"read_knowledge","args":"{\"area\":\"files-and-export\"}","outcome":"ok"}
+{"at":"2026-10-13T10:00:02.798Z","tool":"read_knowledge","args":"{\"area\":\"project\"}","outcome":"ok"}
+{"at":"2026-10-13T10:00:04.308Z","tool":"search_cases","args":"{\"query\":\"text style toggle\"}","outcome":"ok"}
+{"at":"2026-10-13T10:00:04.780Z","tool":"search_cases","args":"{\"query\":\"text color\"}","outcome":"ok"}
+{"at":"2026-10-13T10:00:05.054Z","tool":"search_cases","args":"{\"query\":\"copy paste styles\"}","outcome":"ok"}
+{"at":"2026-10-13T10:00:05.415Z","tool":"search_cases","args":"{\"query\":\"arrow label text\"}","outcome":"ok"}
+{"at":"2026-10-13T10:00:05.804Z","tool":"search_cases","args":"{\"query\":\"export text SVG PNG\"}","outcome":"ok"}
+{"at":"2026-10-13T10:00:06.091Z","tool":"search_cases","args":"{\"query\":\"keyboard shortcut text\"}","outcome":"ok"}
+{"at":"2026-10-13T10:00:24.713Z","tool":"open_session","args":"{\"issue\":99001,\"questions\":\"1. **Control and where it shows.** What is the control's label and tooltip, and when does it show? *Suggested:* an \\\"Underline\\\" toggle in the text section of the properties panel, with the tooltip \\\"Underline — Ctrl+U\\\". It shows when a text, a shape with text or an arro","outcome":"ok"}
+{"at":"2026-10-13T10:00:48.828Z","tool":"record_answers","args":"{\"issue\":99001,\"answers\":\"All answers below are accepted suggestions: the user wrote \\\"Answers from the product owner: Accept all your suggested answers. For any question these do not cover, accept your suggested answer.\\\"\\n\\n1. **Control (accepted suggestion):** an \\\"Underline\\\" toggle in the text ","outcome":"ok"}
+{"at":"2026-10-13T10:00:53.414Z","tool":"get_session","args":"{\"issue\":99001}","outcome":"ok"}
+{"at":"2026-10-13T10:00:55.260Z","tool":"search_cases","args":"{\"query\":\"font size\"}","outcome":"ok"}
+{"at":"2026-10-13T10:00:55.760Z","tool":"search_cases","args":"{\"query\":\"several text elements new text style undo\"}","outcome":"ok"}
+{"at":"2026-10-13T10:00:55.956Z","tool":"search_cases","args":"{\"query\":\"live collaboration\"}","outcome":"ok"}
+{"at":"2026-10-13T10:01:33.722Z","tool":"submit_plan","args":"{\"issue\":99001,\"plan\":\"# Text properties\\nupdate C-004: underlined text turns red; underline follows the new color, and after opacity is lowered it follows the opacity too\\nupdate C-005: texts start with mixed underline; toggle shows off, one click underlines all three, a second click removes it fro","outcome":"ok"}
+{"at":"2026-10-13T10:01:43.448Z","tool":"get_session","args":"{\"issue\":99001}","outcome":"ok"}
+{"at":"2026-10-13T10:01:43.821Z","tool":"search_cases","args":"{\"query\":\"undo redo style change\"}","outcome":"ok"}
+{"at":"2026-10-13T10:02:34.133Z","tool":"save_changes","args":"{\"issue\":99001,\"content\":\"Scope: text underline (whole element) on desktop Chrome, Firefox, Safari and Edge, plus the mobile layout (TC-10). On macOS use Cmd instead of Ctrl. To read the exact font size, select the text and press Alt+/ to open the \\\"Properties\\\" panel; the \\\"F\\\" field shows the size","outcome":"ok"}
+{"at":"2026-10-13T10:02:37.196Z","tool":"propose_knowledge","args":"{\"area\":\"text-properties\",\"fact\":\"Underline is one property of the whole text element, set by an \\\"Underline\\\" toggle (tooltip \\\"Underline — Ctrl+U\\\") in the text section of the properties panel and by Ctrl+U / Cmd+U, both when the text is selected and while it is edited; Ctrl+U never opens the brow","outcome":"ok"}
+{"at":"2026-10-13T10:02:38.645Z","tool":"propose_knowledge","args":"{\"area\":\"text-properties\",\"fact\":\"The \\\"Underline\\\" toggle is shown when a text, a shape with text or an arrow with a label is selected, or when the Text tool is active; the last chosen underline value becomes the default for new text.\",\"source\":\"Approved answers 1 and 3 in the issue 99001 session, ","outcome":"ok"}
+{"at":"2026-10-13T10:02:39.946Z","tool":"propose_knowledge","args":"{\"area\":\"text-properties\",\"fact\":\"With several texts selected and only some underlined, the \\\"Underline\\\" toggle shows off; one click underlines all of them and a second click removes the underline from all of them.\",\"source\":\"Approved answer 4 in the issue 99001 session, 2026-10-13\",\"issue\":99001}","outcome":"ok"}
+{"at":"2026-10-13T10:02:41.646Z","tool":"propose_knowledge","args":"{\"area\":\"text-properties\",\"fact\":\"Underline is a straight line in every font, drawn under each line of the text across that line's full width (following text align, trailing spaces excluded), in the text color and opacity, scaled with font size, never overlapping the next line or clipped; RTL, CJK a","outcome":"ok"}
+{"at":"2026-10-13T10:02:43.045Z","tool":"propose_knowledge","args":"{\"area\":\"bound-text\",\"fact\":\"Underline works for text in shapes, arrow labels and sticky notes, can be set by selecting the container, and does not change wrapping or the container's size.\",\"source\":\"Approved answer 6 in the issue 99001 session, 2026-10-13\",\"issue\":99001}","outcome":"ok"}
+{"at":"2026-10-13T10:02:44.646Z","tool":"propose_knowledge","args":"{\"area\":\"styles-and-history\",\"fact\":\"Underline is kept on reload, in .excalidraw files, PNG and SVG export, by paste styles, by Ctrl+C/Ctrl+V, Ctrl+D, Alt+drag and library copies, and in live collaboration; one underline toggle is undone with a single undo, and scenes made before underline existed o","outcome":"ok"}

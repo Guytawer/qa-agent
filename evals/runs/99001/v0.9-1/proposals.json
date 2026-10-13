@@ -1,0 +1,58 @@
+[
+  {
+    "area": "text-properties",
+    "fact": "Underline is one property of the whole text element. It is set by an \"Underline\" toggle (tooltip \"Underline\") in the properties panel, which shows as pressed when the selected text is underlined. The toggle is shown when a text, a shape with text or an arrow with a label is selected, or when the Text tool is active.",
+    "source": "PO answers 1 and 2 in the issue 99001 session, approved by maxxx 2026-10-13 [answers approved by maxxx at 2026-10-13T09:57:54.725Z, fingerprint bd5acecdb345; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 1,
+    "proposed_at": "2026-10-13T09:59:33.882Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "Ctrl+U (Cmd+U on macOS) toggles underline on the selected texts, and on the whole element while a text is being edited. The browser's \"View page source\" never opens, and with no text selected Ctrl+U does nothing.",
+    "source": "PO answer 2 in the issue 99001 session, approved by maxxx 2026-10-13 [answers approved by maxxx at 2026-10-13T09:57:54.725Z, fingerprint bd5acecdb345; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 2,
+    "proposed_at": "2026-10-13T09:59:35.584Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "With several texts selected and only some underlined, the \"Underline\" toggle shows as not pressed. One click underlines all of them, a second click removes underline from all, and the last chosen underline value becomes the default for new text.",
+    "source": "PO answers 3 and 4 in the issue 99001 session, approved by maxxx 2026-10-13 [answers approved by maxxx at 2026-10-13T09:57:54.725Z, fingerprint bd5acecdb345; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 3,
+    "proposed_at": "2026-10-13T09:59:37.085Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "Each line of an underlined text gets its own straight underline as wide as that line, following the alignment. The underline uses the text's stroke color and opacity and scales with font size in every font. Right-to-left, CJK and emoji text get one continuous unclipped underline.",
+    "source": "PO answers 5 and 7 in the issue 99001 session, approved by maxxx 2026-10-13 [answers approved by maxxx at 2026-10-13T09:57:54.725Z, fingerprint bd5acecdb345; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 4,
+    "proposed_at": "2026-10-13T09:59:38.785Z"
+  },
+  {
+    "area": "bound-text",
+    "fact": "Underline works for text inside shapes, arrow labels and sticky note labels. It changes neither wrapping nor shape size and never touches the arrow line, and on a sticky note it follows the auto-fit shown size.",
+    "source": "PO answer 6 in the issue 99001 session, approved by maxxx 2026-10-13 [answers approved by maxxx at 2026-10-13T09:57:54.725Z, fingerprint bd5acecdb345; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 5,
+    "proposed_at": "2026-10-13T09:59:40.234Z"
+  },
+  {
+    "area": "styles-and-history",
+    "fact": "Underline is carried by paste styles, Ctrl+C then Ctrl+V, Ctrl+D, Alt+drag and the library, and one underline toggle is undone with one undo.",
+    "source": "PO answer 8 in the issue 99001 session, approved by maxxx 2026-10-13 [answers approved by maxxx at 2026-10-13T09:57:54.725Z, fingerprint bd5acecdb345; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 6,
+    "proposed_at": "2026-10-13T09:59:41.686Z"
+  },
+  {
+    "area": "files-and-export",
+    "fact": "Underline is kept after a page reload and in a saved .excalidraw file, appears in PNG and SVG export, and reaches other users in live collaboration. Files saved before underline existed open with no underline.",
+    "source": "PO answer 8 in the issue 99001 session, approved by maxxx 2026-10-13 [answers approved by maxxx at 2026-10-13T09:57:54.725Z, fingerprint bd5acecdb345; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 7,
+    "proposed_at": "2026-10-13T09:59:42.875Z"
+  }
+]

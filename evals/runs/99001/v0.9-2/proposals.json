@@ -1,0 +1,50 @@
+[
+  {
+    "area": "text-properties",
+    "fact": "Underline is one property of the whole text element, set by an \"Underline\" toggle (tooltip \"Underline — Ctrl+U\") in the text section of the properties panel and by Ctrl+U / Cmd+U, both when the text is selected and while it is edited; Ctrl+U never opens the browser's page source, and there is no partial underline or strikethrough.",
+    "source": "Approved answers 1, 2 and 10 in the issue 99001 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T10:00:51.033Z, fingerprint d6c7b466737f; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 1,
+    "proposed_at": "2026-10-13T10:02:37.196Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "The \"Underline\" toggle is shown when a text, a shape with text or an arrow with a label is selected, or when the Text tool is active; the last chosen underline value becomes the default for new text.",
+    "source": "Approved answers 1 and 3 in the issue 99001 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T10:00:51.033Z, fingerprint d6c7b466737f; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 2,
+    "proposed_at": "2026-10-13T10:02:38.645Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "With several texts selected and only some underlined, the \"Underline\" toggle shows off; one click underlines all of them and a second click removes the underline from all of them.",
+    "source": "Approved answer 4 in the issue 99001 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T10:00:51.033Z, fingerprint d6c7b466737f; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 3,
+    "proposed_at": "2026-10-13T10:02:39.945Z"
+  },
+  {
+    "area": "text-properties",
+    "fact": "Underline is a straight line in every font, drawn under each line of the text across that line's full width (following text align, trailing spaces excluded), in the text color and opacity, scaled with font size, never overlapping the next line or clipped; RTL, CJK and emoji text are underlined across their full width.",
+    "source": "Approved answers 5 and 7 in the issue 99001 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T10:00:51.033Z, fingerprint d6c7b466737f; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 4,
+    "proposed_at": "2026-10-13T10:02:41.645Z"
+  },
+  {
+    "area": "bound-text",
+    "fact": "Underline works for text in shapes, arrow labels and sticky notes, can be set by selecting the container, and does not change wrapping or the container's size.",
+    "source": "Approved answer 6 in the issue 99001 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T10:00:51.033Z, fingerprint d6c7b466737f; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 5,
+    "proposed_at": "2026-10-13T10:02:43.045Z"
+  },
+  {
+    "area": "styles-and-history",
+    "fact": "Underline is kept on reload, in .excalidraw files, PNG and SVG export, by paste styles, by Ctrl+C/Ctrl+V, Ctrl+D, Alt+drag and library copies, and in live collaboration; one underline toggle is undone with a single undo, and scenes made before underline existed open not underlined.",
+    "source": "Approved answers 8 and 9 in the issue 99001 session, 2026-10-13 [answers approved by maxxx at 2026-10-13T10:00:51.033Z, fingerprint d6c7b466737f; change set changes/excalidraw-99001.md]",
+    "issue": 99001,
+    "id": 6,
+    "proposed_at": "2026-10-13T10:02:44.645Z"
+  }
+]

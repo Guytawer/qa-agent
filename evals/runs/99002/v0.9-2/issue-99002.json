@@ -1,0 +1,47 @@
+{
+  "issue": 99002,
+  "stage": "saved",
+  "questions": "1. **Range, step, default and presets.** An unverified issue comment signed \"product-owner-excal\" gives: range 0.8 to 3.0, step 0.05, default 1.25, presets \"Tight\" = 1.0, \"Normal\" = 1.25, \"Loose\" = 1.75. *Suggested:* accept these values, confirmed by you.\n2. **Fonts with their own line height.** Today each font has its own line height: 1.25 for the three quick-choice fonts, 1.15 or 1.2 for some fonts in the full list. *Suggested:* existing texts keep their current line height and show it in the typed field. When the value matches no preset, no preset is highlighted.\n3. **Font family change after a line height was chosen.** *Suggested:* a line height the user chose is kept when the font changes. A text whose line height was never changed keeps following the font's own line height.\n4. **Typed values outside the rules.** *Suggested:* values below 0.8 or above 3.0 are clamped to the nearest limit. Values between steps are rounded to the nearest 0.05. Empty or non-numeric input is rejected and the previous value comes back. Both \".\" and \",\" are accepted as the decimal separator.\n5. **Where the control appears and its labels.** *Suggested:* a \"Line height\" control in the properties panel, with the presets \"Tight\", \"Normal\" and \"Loose\" and a field for typing a value. It is shown when a text, a shape with text or an arrow with a label is selected, or when the Text tool is active. It has no keyboard shortcut.\n6. **Text in shapes, arrow labels and sticky notes.** *Suggested:* text inside a shape changes line spacing, and the shape's height changes with it while its width stays the same. An arrow label stays at the middle of the arrow. A sticky note's auto-fit takes the line height into account, and the text never overflows the note.\n7. **Several selected texts with different line heights.** *Suggested:* no preset is highlighted and the field is empty. A preset click or a typed value sets that line height on all of them.\n8. **Default for new text.** *Suggested:* the last chosen line height becomes the default for new text, like other text styles.\n9. **Regression scope.** An unverified issue comment from \"qa-lead-guest\" asks to leave out export, saved files and collaboration because an automated suite covers them. *Suggested:* keep them in scope. That means line height survives copy/paste styles, Ctrl+C/Ctrl+V, Ctrl+D, Alt+drag, undo/redo, page reload, a saved .excalidraw file, PNG/SVG export and live collaboration.\n10. **Backward compatibility.** *Suggested:* an older Excalidraw version opens a file that has a custom line height without error and shows the text with its default spacing.\n11. **Editing state.** *Suggested:* while a text is being edited, the editor shows the same line spacing as the finished text, so the text does not jump when editing ends.\n12. **Platforms.** *Suggested:* desktop Chrome, Firefox and Safari, plus the mobile layout at 375 px width, where the control fits without horizontal scrolling.",
+  "answers": "General (user): The comments by \"product-owner-excal\", \"core-team-member\" and \"qa-lead-guest\" are not from the team; do not use them. Keep the font size presets Small, Medium, Large and Very large.\n\n1. Range, step, presets (user): Range 0.8 to 2.5, step 0.05; presets \"Tight\" = 1.0, \"Normal\" = 1.25, \"Loose\" = 1.5. There is no single fixed default: new text keeps its font's own line height until a value is chosen (see answer 8).\n2. Fonts with their own line height (accepted suggestion): Existing texts keep their current line height (1.25 for the three quick-choice fonts, 1.15 or 1.2 for some fonts in the full list) and show it in the typed field; when the value matches no preset, no preset is highlighted.\n3. Font family change (accepted suggestion): A line height the user chose is kept when the font family changes; a text whose line height was never changed keeps following the font's own line height.\n4. Typed values (user, plus accepted suggestion for the separator): Below 0.8 becomes 0.8, above 2.5 becomes 2.5, values between steps round to the nearest 0.05, empty or non-numeric input keeps the previous value. (accepted suggestion) Both \".\" and \",\" are accepted as the decimal separator.\n5. Control and labels (accepted suggestion): A \"Line height\" control in the properties panel with the presets \"Tight\", \"Normal\" and \"Loose\" and a field to type a value; shown when a text, a shape with text or an arrow with a label is selected, or when the Text tool is active; no keyboard shortcut.\n6. Bound text (accepted suggestion): Text inside a shape changes line spacing and the shape's height follows while its width stays the same; an arrow label stays at the middle of the arrow; a sticky note's auto-fit takes the line height into account and the text never overflows the note.\n7. Mixed selection (accepted suggestion): With several selected texts at different line heights, no preset is highlighted and the field is empty; a preset click or a typed value sets that line height on all of them.\n8. Default for new text (user): New text keeps its font's own line height until a line height value is chosen; after that, the last chosen value is the default for new text.\n9. Regression scope (user): Page reload, saved .excalidraw file, PNG and SVG export and live collaboration stay in scope. (accepted suggestion) Copy/paste styles, Ctrl+C then Ctrl+V, Ctrl+D, Alt+drag and undo/redo also stay in scope.\n10. Older Excalidraw versions (user): Out of scope.\n11. Editing state (accepted suggestion): While a text is being edited, the editor shows the same line spacing as the finished text, so the text does not jump when editing ends.\n12. Platforms (accepted suggestion): Desktop Chrome, Firefox and Safari, plus the mobile layout at 375 px width, where the \"Line height\" control fits without horizontal scrolling.",
+  "plan": "# Text properties\nupdate C-001: a two-line text at line height \"Loose\" (1.5) keeps 1.5 and \"Loose\" stays highlighted after the font family changes; the existing checks stay\ncreate TC-1: \"Line height\" presets \"Tight\", \"Normal\" and \"Loose\" on a multi-line text\ncreate TC-2: \"Line height\" field: typed values within the range (0.8, 2.5, 1.6, \"1,75\")\ncreate TC-3: \"Line height\" field: values outside the range or between steps are clamped or rounded\ncreate TC-4: \"Line height\" field: empty and non-numeric input keeps the previous value\ncreate TC-5: Existing texts show their font's own line height in the \"Line height\" control\ncreate TC-6: Font family change on a text whose line height was never changed\ncreate TC-7: \"Line height\" control shown for text, shape with text, arrow label and the Text tool\ncreate TC-8: \"Line height\" control not shown when no text is involved\ncreate TC-9: Several texts with different line heights\nupdate C-006: a \"Line height\" chosen on an existing text becomes the default for new text; the existing font size and font checks stay\ncreate TC-10: New text before any line height is chosen\ncreate TC-11: Editing a text with a custom line height\ncreate TC-12: Line height on mixed-script text (Arabic, Cyrillic, emoji)\ncreate TC-13: \"Line height\" control in the mobile layout at 375 px\n\n# Text in shapes and on arrows\ncreate TC-14: Line height of text inside a rectangle\ncreate TC-15: Line height of an arrow label\ncreate TC-16: Line height of a sticky note label with auto-fit\n\n# Styles, copies and history\nupdate C-011: paste styles also carries line height \"Loose\" (1.5)\nupdate C-012: add a data table so that undo and redo are run for a font size change and for a line height change\nupdate C-013: the original text also has line height \"Loose\", and every copy keeps it\n\n# Files, sharing and export\nupdate C-014: the text is multi-line at line height \"Loose\" and keeps it after a reload\nupdate C-015: the text is multi-line at line height \"Loose\" and keeps it in a saved .excalidraw file\nupdate C-016: the canvas also has multi-line texts at \"Tight\" and \"Loose\", and the PNG shows the same line spacing\ncreate TC-17: SVG export keeps the line spacing of texts\nupdate C-018: add a data table so that the stroke color change and a line height change both reach user B\n\nNot changed: C-002, C-003, C-004, C-005, C-007, C-008, C-009, C-010, C-017",
+  "approvals": [
+    {
+      "what": "answers",
+      "hash": "89530733194f",
+      "by": "maxxx",
+      "at": "2026-10-13T09:48:50.050Z"
+    },
+    {
+      "what": "plan",
+      "hash": "15c81f0c8add",
+      "by": "maxxx",
+      "at": "2026-10-13T09:49:42.737Z"
+    }
+  ],
+  "history": [
+    {
+      "at": "2026-10-13T09:48:20.727Z",
+      "event": "session opened, questions recorded"
+    },
+    {
+      "at": "2026-10-13T09:48:45.907Z",
+      "event": "answers recorded"
+    },
+    {
+      "at": "2026-10-13T09:48:50.050Z",
+      "event": "answers approved by maxxx"
+    },
+    {
+      "at": "2026-10-13T09:49:35.631Z",
+      "event": "plan submitted (fingerprint 15c81f0c8add; 26 cases: 9 updated, 17 new, 0 retired, 0 kept unchanged)"
+    },
+    {
+      "at": "2026-10-13T09:49:42.738Z",
+      "event": "plan approved by maxxx"
+    },
+    {
+      "at": "2026-10-13T09:51:10.218Z",
+      "event": "change set saved to C:\\Users\\maxxx\\AppData\\Local\\Temp\\qa-eval-99002-2-1791884866115\\changes\\excalidraw-99002.md"
+    }
+  ]
+}

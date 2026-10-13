@@ -1,0 +1,31 @@
+{"at":"2026-10-13T09:43:46.343Z","tool":"get_session","args":"{\"issue\":99002}","outcome":"ok"}
+{"at":"2026-10-13T09:43:46.463Z","tool":"get_issue","args":"{\"number\":99002}","outcome":"ok"}
+{"at":"2026-10-13T09:43:47.909Z","tool":"read_knowledge","args":"{}","outcome":"ok"}
+{"at":"2026-10-13T09:43:51.134Z","tool":"read_knowledge","args":"{\"area\":\"text-properties\"}","outcome":"ok"}
+{"at":"2026-10-13T09:43:51.537Z","tool":"read_knowledge","args":"{\"area\":\"bound-text\"}","outcome":"ok"}
+{"at":"2026-10-13T09:43:51.943Z","tool":"read_knowledge","args":"{\"area\":\"styles-and-history\"}","outcome":"ok"}
+{"at":"2026-10-13T09:43:52.289Z","tool":"read_knowledge","args":"{\"area\":\"files-and-export\"}","outcome":"ok"}
+{"at":"2026-10-13T09:43:52.483Z","tool":"read_knowledge","args":"{\"area\":\"project\"}","outcome":"ok"}
+{"at":"2026-10-13T09:43:54.538Z","tool":"search_cases","args":"{\"query\":\"line height\"}","outcome":"ok"}
+{"at":"2026-10-13T09:43:54.940Z","tool":"search_cases","args":"{\"query\":\"multi-line text\"}","outcome":"ok"}
+{"at":"2026-10-13T09:43:55.428Z","tool":"search_cases","args":"{\"query\":\"text inside shape wrap\"}","outcome":"ok"}
+{"at":"2026-10-13T09:43:55.690Z","tool":"search_cases","args":"{\"query\":\"arrow label\"}","outcome":"ok"}
+{"at":"2026-10-13T09:43:56.090Z","tool":"search_cases","args":"{\"query\":\"paste styles text\"}","outcome":"ok"}
+{"at":"2026-10-13T09:43:56.333Z","tool":"search_cases","args":"{\"query\":\"font family change\"}","outcome":"ok"}
+{"at":"2026-10-13T09:44:15.113Z","tool":"open_session","args":"{\"issue\":99002,\"questions\":\"1. **Range, step, default and presets.** A comment signed \\\"product-owner-excal\\\" gives: range 0.8 to 3.0, step 0.05, default 1.25; presets Tight = 1.0, Normal = 1.25, Loose = 1.75. The comment cannot be verified. *Suggested:* accept these values as the requirement.\\n2. *","outcome":"ok"}
+{"at":"2026-10-13T09:44:43.562Z","tool":"record_answers","args":"{\"issue\":99002,\"answers\":\"Answers from the product owner, given by the user on 2026-10-13.\\n\\n0. **Issue comments (user):** the comments by \\\"product-owner-excal\\\", \\\"core-team-member\\\" and \\\"qa-lead-guest\\\" are not from the team and are not used.\\n1. **Range, step and presets (user):** the range is","outcome":"ok"}
+{"at":"2026-10-13T09:44:52.795Z","tool":"get_session","args":"{\"issue\":99002}","outcome":"ok"}
+{"at":"2026-10-13T09:45:21.661Z","tool":"search_cases","args":"{\"query\":\"new text last chosen style\"}","outcome":"ok"}
+{"at":"2026-10-13T09:45:22.060Z","tool":"search_cases","args":"{\"query\":\"undo redo copies keep style\"}","outcome":"ok"}
+{"at":"2026-10-13T09:45:22.460Z","tool":"search_cases","args":"{\"query\":\"reload saved file style kept\"}","outcome":"ok"}
+{"at":"2026-10-13T09:45:22.858Z","tool":"search_cases","args":"{\"query\":\"SVG export collaboration\"}","outcome":"ok"}
+{"at":"2026-10-13T09:45:23.142Z","tool":"search_cases","args":"{\"query\":\"several text elements style\"}","outcome":"ok"}
+{"at":"2026-10-13T09:45:45.522Z","tool":"submit_plan","args":"{\"issue\":99002,\"plan\":\"# Text properties\\ncreate TC-1: \\\"Line height\\\" presets on a multi-line text (Tight, Normal, Loose; spacing, highlighted preset, value in the field)\\ncreate TC-2: \\\"Line height\\\" field: typed values, rounding to 0.05 and clamping to 0.8 to 2.5 (incl. decimal comma)\\ncreate TC-","outcome":"ok"}
+{"at":"2026-10-13T09:45:56.797Z","tool":"get_session","args":"{\"issue\":99002}","outcome":"ok"}
+{"at":"2026-10-13T09:47:25.535Z","tool":"save_changes","args":"{\"issue\":99002,\"content\":\"Scope: desktop Chrome, Firefox and Safari; TC-10 covers the mobile layout. Line height values are read in the \\\"Line height\\\" field (verify) of the properties panel while the text is selected, and are compared as numbers (1 equals 1.0). Presets: Tight = 1.0, Normal = 1.25, ","outcome":"ok"}
+{"at":"2026-10-13T09:47:28.820Z","tool":"propose_knowledge","args":"{\"area\":\"text-properties\",\"fact\":\"A \\\"Line height\\\" control in the properties panel offers presets Tight = 1.0, Normal = 1.25 and Loose = 1.5, plus a field that accepts a typed value from 0.8 to 2.5 in steps of 0.05; the value applies to the whole text element.\",\"source\":\"PO answers 1 and 4 in the i","outcome":"ok"}
+{"at":"2026-10-13T09:47:30.469Z","tool":"propose_knowledge","args":"{\"area\":\"text-properties\",\"fact\":\"In the \\\"Line height\\\" field, a value below 0.8 becomes 0.8, a value above 2.5 becomes 2.5, values between steps round to the nearest 0.05, a decimal comma is read as a decimal point, and empty or non-numeric input keeps the previous value.\",\"source\":\"PO answer 4 in","outcome":"ok"}
+{"at":"2026-10-13T09:47:31.921Z","tool":"propose_knowledge","args":"{\"area\":\"text-properties\",\"fact\":\"New text keeps its font's own line height until a line height is chosen; after that the last chosen value is the default for new text, and a chosen value is kept when the font family or font size changes.\",\"source\":\"PO answers 2, 3 and 8 in the issue 99002 session, ","outcome":"ok"}
+{"at":"2026-10-13T09:47:33.373Z","tool":"propose_knowledge","args":"{\"area\":\"text-properties\",\"fact\":\"A line height preset is highlighted only when the value equals it exactly; with several selected texts at different line heights none is highlighted, and clicking a preset sets that value on all of them.\",\"source\":\"Accepted answer 5 in the issue 99002 session, appro","outcome":"ok"}
+{"at":"2026-10-13T09:47:35.222Z","tool":"propose_knowledge","args":"{\"area\":\"bound-text\",\"fact\":\"Changing the line height of text in a shape keeps its wrapping width and makes the shape taller or shorter to fit; an arrow label stays at the middle of the arrow; a sticky note label keeps auto-fitting without overflowing.\",\"source\":\"Accepted answer 6 in the issue 99002","outcome":"ok"}
+{"at":"2026-10-13T09:47:36.414Z","tool":"propose_knowledge","args":"{\"area\":\"files-and-export\",\"fact\":\"Line height survives a page reload, a saved .excalidraw file, PNG and SVG export and live collaboration; older Excalidraw versions opening such files are out of scope.\",\"source\":\"PO answer 10 in the issue 99002 session, approved by maxxx 2026-10-13\",\"issue\":99002}","outcome":"ok"}

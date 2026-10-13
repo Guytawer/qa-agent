@@ -1,0 +1,47 @@
+{
+  "issue": 99001,
+  "stage": "saved",
+  "questions": "1. **Control and label.** What does the control look like and what is it called? *Suggested:* an \"Underline\" toggle button (tooltip \"Underline\", no separate menu entry) in the text section of the properties panel. It shows as pressed when the selected text is underlined. It appears when a text, a shape with text or an arrow with a label is selected, or when the Text tool is active.\n2. **Shortcut.** In browsers, Ctrl+U usually opens \"View page source\". Should Ctrl+U / Cmd+U override that? Does it work only when text is selected, and what does it do while a text is being edited? *Suggested:* Ctrl+U (Cmd+U on macOS) toggles underline on the selected text elements and the browser's default action is suppressed. While editing, it toggles underline for the whole element (there is no partial underline). With nothing or no text selected, it does nothing and the browser default is not triggered.\n3. **Mixed selection.** What happens when several texts are selected and only some are underlined? *Suggested:* the toggle shows as not pressed. One click or Ctrl+U underlines all of them, and a second click removes underline from all of them.\n4. **Default for new text.** Does the last chosen underline value carry over to new text, like font family and size do? *Suggested:* yes, the last chosen value becomes the default for new text.\n5. **Rendering.** How should the underline look? *Suggested:* every line of a multi-line or wrapped text is underlined, across the line's width with alignment followed. The underline uses the text stroke color and opacity and scales with font size. It is a straight line in every font, including the hand-drawn one. Descenders (g, y, p) may cross it.\n6. **Text in shapes, arrow labels and sticky notes.** *Suggested:* underline works for text inside shapes, arrow labels and sticky note labels. It changes neither the wrapping nor the shape size. For an arrow label it does not touch the arrow line. On a sticky note it follows the auto-fit size.\n7. **Scripts.** *Suggested:* right-to-left (Arabic, Hebrew), CJK and emoji text gets one continuous underline under the full line width, with no gaps and no clipping.\n8. **Persistence and sharing.** *Suggested:* underline is stored in the .excalidraw file and survives a page reload. It is carried by copy styles / paste styles, Ctrl+C / Ctrl+V, Ctrl+D, Alt+drag and the library. One toggle is undone with one undo. It appears in PNG and SVG export and reaches other users in live collaboration. Files saved before this change open with no underline.\n9. **Interaction with italic (issue 11404, not released).** Should combined underline + italic be in scope? *Suggested:* out of scope until italic ships.\n10. **Platforms.** *Suggested:* desktop Chrome, Firefox and Safari on Windows and macOS, plus the mobile layout (toggle reachable in the properties panel, no shortcut).",
+  "answers": "Source: the user relayed the product owner's answers (\"Accept all your suggested answers. For any question these do not cover, accept your suggested answer.\").\n\n1. **Control and label (accepted suggestion):** an \"Underline\" toggle button (tooltip \"Underline\", no separate menu entry) sits in the text section of the properties panel. It shows as pressed when the selected text is underlined. It appears when a text, a shape with text or an arrow with a label is selected, or when the Text tool is active.\n2. **Shortcut (accepted suggestion):** Ctrl+U (Cmd+U on macOS) toggles underline on the selected text elements, and the browser's default action (\"View page source\") is suppressed. While a text is being edited, Ctrl+U toggles underline for the whole element; there is no partial underline. With nothing or no text selected, Ctrl+U does nothing and the browser default is not triggered.\n3. **Mixed selection (accepted suggestion):** with several texts selected and only some underlined, the toggle shows as not pressed. One click or Ctrl+U underlines all of them, and a second click removes underline from all of them.\n4. **Default for new text (accepted suggestion):** yes, the last chosen underline value becomes the default for new text.\n5. **Rendering (accepted suggestion):** every line of a multi-line or wrapped text is underlined across that line's width, following the text alignment. The underline uses the text stroke color and opacity and scales with font size. It is a straight line in every font, including the hand-drawn one. Descenders (g, y, p) may cross it.\n6. **Text in shapes, arrow labels and sticky notes (accepted suggestion):** underline works for text inside shapes, arrow labels and sticky note labels. It changes neither the wrapping nor the shape size. For an arrow label it does not touch the arrow line. On a sticky note it follows the auto-fit size.\n7. **Scripts (accepted suggestion):** right-to-left (Arabic, Hebrew), CJK and emoji text gets one continuous underline under the full line width, with no gaps and no clipping.\n8. **Persistence and sharing (accepted suggestion):** underline is stored in the .excalidraw file and survives a page reload. It is carried by copy styles / paste styles, Ctrl+C / Ctrl+V, Ctrl+D, Alt+drag and the library. One toggle is undone with one undo. It appears in PNG and SVG export and reaches other users in live collaboration. Files saved before this change open with no underline.\n9. **Interaction with italic, issue 11404, not released (accepted suggestion):** combined underline and italic is out of scope until italic ships.\n10. **Platforms (accepted suggestion):** desktop Chrome, Firefox and Safari on Windows and macOS, plus the mobile layout, where the toggle is reachable in the properties panel and there is no shortcut.",
+  "plan": "# Text properties\ncreate TC-1: \"Underline\" toggle and Ctrl+U: underlining and removing underline on a text (data table: click the toggle, Ctrl+U / Cmd+U; browser page source does not open)\ncreate TC-2: \"Underline\" toggle: where it is shown (text, shape with text, arrow with label, Text tool active, shape without text)\ncreate TC-3: Ctrl+U with nothing or no text selected\ncreate TC-4: Ctrl+U while a text is being edited\ncreate TC-5: \"Underline\" toggle with several texts of mixed underline\nupdate C-006: add Underline to the chosen style; the new text is created underlined\ncreate TC-6: Underline on multi-line text with left, center and right alignment\ncreate TC-7: Underline follows text color and opacity\ncreate TC-8: Underline scales with font size\ncreate TC-9: Underline is a straight line in every font (Hand-drawn, Normal, Code, one font from the full list)\ncreate TC-10: Underline on right-to-left, CJK and emoji text\ncreate TC-11: \"Underline\" toggle in the mobile layout\n\n# Text in shapes and on arrows\ncreate TC-12: Underline on text inside a shape: wrapping and shape size unchanged\ncreate TC-13: Underline on an arrow label\ncreate TC-14: Underline on a sticky note label with auto-fit\n\n# Styles, copies and history\nupdate C-011: \"Source\" is also underlined; \"Target\" is underlined after paste styles\nupdate C-012: data table with two changes: font size Large (current check kept) and Underline; each undone with one undo and redone\nupdate C-013: original is also underlined; every copy is underlined\n\n# Files, sharing and export\nupdate C-014: text is also underlined; underline kept after reload\nupdate C-015: text is also underlined; underline kept in the saved file\ncreate TC-15: File saved before underline existed opens with no underline\nupdate C-016: canvas also contains an underlined text; PNG shows the underline as on the canvas\nupdate C-017: one text is underlined; SVG shows the underline on the second computer\nupdate C-018: user A also toggles Underline; user B sees the underline without reloading\n\nNot changed: C-001, C-002, C-003, C-004, C-005, C-007, C-008, C-009, C-010\n\nOut of scope: underline combined with italic (issue 11404, not released).",
+  "approvals": [
+    {
+      "what": "answers",
+      "hash": "bd5acecdb345",
+      "by": "maxxx",
+      "at": "2026-10-13T09:57:54.725Z"
+    },
+    {
+      "what": "plan",
+      "hash": "82be99e56401",
+      "by": "maxxx",
+      "at": "2026-10-13T09:58:38.122Z"
+    }
+  ],
+  "history": [
+    {
+      "at": "2026-10-13T09:57:27.755Z",
+      "event": "session opened, questions recorded"
+    },
+    {
+      "at": "2026-10-13T09:57:51.619Z",
+      "event": "answers recorded"
+    },
+    {
+      "at": "2026-10-13T09:57:54.725Z",
+      "event": "answers approved by maxxx"
+    },
+    {
+      "at": "2026-10-13T09:58:29.571Z",
+      "event": "plan submitted (fingerprint 82be99e56401; 24 cases: 9 updated, 15 new, 0 retired, 0 kept unchanged)"
+    },
+    {
+      "at": "2026-10-13T09:58:38.122Z",
+      "event": "plan approved by maxxx"
+    },
+    {
+      "at": "2026-10-13T09:59:30.525Z",
+      "event": "change set saved to C:\\Users\\maxxx\\AppData\\Local\\Temp\\qa-eval-99001-1-1791885423175\\changes\\excalidraw-99001.md"
+    }
+  ]
+}
